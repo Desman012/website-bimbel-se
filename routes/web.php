@@ -18,36 +18,36 @@ use Illuminate\Support\Facades\Route;
 
 // PUBLIC ROUTES
 Route::get('/', function () {
-    return view('landing.index');
+    return view('landing-index');
 })->name('landing');
 
 Route::get('/login', function () {
-    return view('auth.login');
+    return view('auth-login');
 })->name('login');
 
 Route::post('/login', function () {
     // proses login
-})->name('login.post');
+})->name('login-post');
 
 Route::get('/register', function () {
-    return view('auth.register');
+    return view('auth-register');
 })->name('register');
 
 Route::post('/register', function () {
     // proses register
-})->name('register.post');
+})->name('register-post');
 
 
 // ADMIN ROUTES
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 
     Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+        return view('admin-dashboard');
+    })->name('admin-dashboard');
 
     // Students
     Route::get('/students', function () {
-        return view('admin.students.index');
+        return view('admin-students-index');
     })->name('admin.students.index');
 
     Route::get('/students/create', function () {
