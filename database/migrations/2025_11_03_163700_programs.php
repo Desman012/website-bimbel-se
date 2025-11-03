@@ -13,7 +13,7 @@ public function up(): void
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->bigIncrements('id'); // Primary key
-            $table->string('nama_program', 50); // Contoh: Private, Bimbel
+            $table->string('name_program', 50); // Contoh: Private, Bimbel
             $table->timestamps(); // created_at & updated_at
         });
     }

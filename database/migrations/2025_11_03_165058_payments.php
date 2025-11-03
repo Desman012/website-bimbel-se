@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pembayarans', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->bigIncrements('id');
             
-            $table->unsignedBigInteger('siswa_id');
+            $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('admin_id')->nullable();
 
-            $table->string('bulan', 20);
-            $table->decimal('jumlah_bayar', 10, 2);
-            $table->string('bukti_bayar', 255);
+            $table->string('month', 20);
+            $table->decimal('amount_paid', 10, 2);
+            $table->string('payment_proof', 255);
             $table->enum('status', ['pending', 'verified', 'rejected'])->default('pending');
 
             $table->timestamps();
 
-            $table->foreign('siswa_id')->references('id')->on('siswas')->onDelete('cascade');
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('admin_id')->references('id')->on('admins')->onDelete('set null');
         });
     }
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pembayarans');
+        Schema::dropIfExists('payments');
     }
 };

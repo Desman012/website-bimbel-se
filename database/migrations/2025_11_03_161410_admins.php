@@ -14,8 +14,8 @@ return new class extends Migration
             Schema::create('admins', function (Blueprint $table) {
                 $table->bigIncrements('id'); 
                 $table->unsignedBigInteger('role_id'); 
-                $table->string('nama_lengkap', 100);
-                $table->text('alamat')->nullable();
+                $table->string('full_name', 100);
+                $table->text('address')->nullable();
                 $table->string('email', 100)->unique();
                 $table->string('password', 255);
                 $table->enum('status', ['active', 'inactive'])->default('active');

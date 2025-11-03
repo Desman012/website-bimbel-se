@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
         {
-            Schema::create('kelass', function (Blueprint $table) {
+            Schema::create('classes', function (Blueprint $table) {
                 $table->bigIncrements('id'); 
-                $table->unsignedBigInteger('jenjang_id'); 
-                $table->string('nama_kelas', 10); 
+                $table->unsignedBigInteger('level_id'); 
+                $table->string('name_class', 10); 
                 $table->timestamps(); 
 
-                $table->foreign('jenjang_id')->references('id')->on('jenjangs')->onDelete('cascade');
+                $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
             });
         }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kelass');
+        Schema::dropIfExists('classes');
     }
 };

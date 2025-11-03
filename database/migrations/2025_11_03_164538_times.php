@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('waktus', function (Blueprint $table) {
-            $table->bigIncrements('id'); // Primary key
-            $table->string('nama_waktu', 50); // Contoh: “Siang (12.00–13.00)”, “Sore (15.00–16.00)”
-            $table->timestamps(); // created_at & updated_at
+        Schema::create('times', function (Blueprint $table) {
+            $table->bigIncrements('id'); 
+            $table->string('name_time', 50); 
+            $table->timestamps(); 
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('waktus');
+        Schema::dropIfExists('times');
     }
 };

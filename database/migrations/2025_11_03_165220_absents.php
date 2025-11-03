@@ -11,19 +11,17 @@ return new class extends Migration
      */
     public function up(): void
         {
-            Schema::create('absensis', function (Blueprint $table) {
+            Schema::create('absents', function (Blueprint $table) {
                 $table->bigIncrements('id');
 
-                // Relasi ke siswa
-                $table->unsignedBigInteger('siswa_id');
+                $table->unsignedBigInteger('student_id');
 
-                $table->date('tanggal');
-                $table->enum('status_absen', ['hadir', 'tidak_hadir']);
+                $table->date('date');
+                $table->enum('attendance_status', ['present', 'absent']);
 
                 $table->timestamps();
 
-                // Foreign key constraint
-                $table->foreign('siswa_id')->references('id')->on('siswas')->onDelete('cascade');
+                $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             });
         }
 
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('absensis');
+        Schema::dropIfExists('absents');
     }
 };

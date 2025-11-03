@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kurikulums', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nama_kurikulum', 50);
-            $table->timestamps();
+        Schema::create('levels', function (Blueprint $table) {
+        $table->bigIncrements('id'); 
+        $table->string('name_level', 50); 
+        $table->timestamps(); 
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kurikulums');
+        Schema::dropIfExists('levels');
     }
 };
