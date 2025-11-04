@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->bigIncrements('id'); // ID unik siswa (primary key)
-            $table->unsignedBigInteger('role_id'); // FK ke roles.id
+            $table->bigIncrements('id'); 
+            $table->unsignedBigInteger('role_id'); 
             $table->string('full_name', 100);
             $table->text('address');
             $table->string('phone_number', 20);
@@ -23,14 +23,13 @@ return new class extends Migration
             $table->string('parent_email', 100)->nullable();
             $table->string('parent_phone', 20)->nullable();
             $table->unsignedBigInteger('levels_id');
-            $table->unsignedBigInteger('class_id')->nullable(); // TK/TKA bisa null
+            $table->unsignedBigInteger('class_id')->nullable(); 
             $table->unsignedBigInteger('programs_id');
             $table->unsignedBigInteger('_id');
             $table->unsignedBigInteger('time_les_id');
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->timestamps(); // created_at & updated_at
+            $table->timestamps(); 
 
-            // Relasi Foreign Key
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->foreign('levels_id')->references('id')->on('levels')->onDelete('cascade');
             $table->foreign('class_id')->references('id')->on('classes')->onDelete('set null');
