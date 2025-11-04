@@ -127,4 +127,3 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->group(function (
         return view('student.payment.history');
     })->name('student.payment.history');
 });
-
