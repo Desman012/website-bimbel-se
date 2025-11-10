@@ -14,11 +14,22 @@ class Students extends Authenticatable
 
     protected $table = 'students';
     protected $fillable = [
-        'email', 'password',
+        'full_name', 
+        'address',
+        'phone_number',
+        'student_email',
+        'password',
+        'parent_name',
+        'parent_email',
+        'parent_phone',
+        'programs_id',
+        'class_id',
+        'status',
     ];
 
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 
+        'remember_token',
     ];
 
     

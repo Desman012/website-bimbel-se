@@ -196,16 +196,16 @@ class DatabaseSeeder extends Seeder
         }
 
         // === REVIEWS ===
-        for ($i = 1; $i <= 10; $i++) {
-            DB::table('reviews')->insert([
-                'path_image' => 'review' . $i . '.jpg',
-                'name_student' => $faker->name(),
-                'school' => $faker->company(),
-                'review_text' => $faker->sentence(10),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
+        // for ($i = 1; $i <= 10; $i++) {
+        //     DB::table('reviews')->insert([
+        //         'path_image' => 'review' . $i . '.jpg',
+        //         'name_student' => $faker->name(),
+        //         'school' => $faker->company(),
+        //         'review_text' => $faker->sentence(10),
+        //         'created_at' => now(),
+        //         'updated_at' => now(),
+        //     ]);
+        // }
 
         $this->command->info('✅ Seeder berhasil dijalankan dengan semua data dummy!');
     }

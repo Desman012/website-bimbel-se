@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* --- Input field animation --- */
+.input-group {
+    position: relative;
+    margin-bottom: 1.75rem;
+}
+
+.input-field {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-bottom: 2px solid #e5e7eb;
+    outline: none;
+    transition: border-color 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.input-field:focus {
+    border-color: #6366f1; /* indigo-500 */
+}
+
+.input-label {
+    position: absolute;
+    top: 0.9rem;
+    left: 0.75rem;
+    color: #9ca3af;
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.2s ease;
+}
+
+/* Efek label naik saat aktif */
+.input-field:focus + .input-label,
+.input-field:not(:placeholder-shown) + .input-label {
+    top: -0.6rem;
+    left: 0.65rem;
+    font-size: 0.8rem;
+    color: #6366f1;
+    background-color: white;
+    padding: 0 0.3rem;
+}
+
+/* Step form button style */
+.next-btn, .back-btn, .submit-btn {
+  @apply px-5 py-2 rounded-full font-semibold transition-transform;
+}
+
+.next-btn {
+  @apply bg-golden text-white hover:-translate-y-1;
+}
+
+.back-btn {
+  @apply bg-gray-200 text-gray-700 hover:-translate-y-1;
+}
+
+.submit-btn {
+  @apply bg-crimson text-white hover:-translate-y-1;
+}
+
