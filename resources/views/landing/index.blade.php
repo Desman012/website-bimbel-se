@@ -4,10 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sinar Education | Belajar Jadi Menyenangkan</title>
-  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
   <style>
     html { scroll-behavior: smooth; }
   </style>

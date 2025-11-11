@@ -1,26 +1,24 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminStudentController;
 use App\Http\Controllers\AdminPaymentController;
 use App\Http\Controllers\AdminRegistrationController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AdminStudentController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentAttendanceController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentPaymentController;
-
+use Illuminate\Support\Facades\Route;
 
 // PUBLIC ROUTES
 Route::get('/', [HomeController::class, 'show'])->name('landing');
 
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login-post');
+// Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+// Route::post('/login', [AuthController::class, 'login'])->name('login-post');
 
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register-post');
-
+// Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+// Route::post('/register', [AuthController::class, 'register'])->name('register-post');
 
 // ADMIN ROUTES
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
@@ -45,9 +43,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/registrations/{id}', [AdminRegistrationController::class, 'show'])->name('admin.registrations.show');
 });
 
-
 // STUDENT ROUTES
-Route::middleware(['auth', 'role:student'])->prefix('student')->group(function () {
+Route::prefix('student')->group(function () {
 
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
 
@@ -57,8 +54,7 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->group(function (
     Route::get('/attendance/history', [StudentAttendanceController::class, 'history'])->name('student.attendance.history');
 
     // Payment
-    Route::get('/payment', [StudentPaymentController::class, 'index'])->name('student.payment.index');
-    Route::post('/payment', [StudentPaymentController::class, 'store'])->name('student.payment.store');
-    Route::get('/payment/history', [StudentPaymentController::class, 'history'])->name('student.payment.history');
+    Route::get('/payment', [StudentPaymentController::class, 'index'])->name('students.payment.index');
+    Route::post('/payment', [StudentPaymentController::class, 'store'])->name('students.payment.store');
+    Route::get('/payment-history', [StudentPaymentController::class, 'history'])->name('students.payment.history');
 });
-
