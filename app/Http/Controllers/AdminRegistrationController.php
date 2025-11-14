@@ -1,14 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Filament\Resources\AdminResource;
 use Illuminate\Http\Request;
 
 class AdminRegistrationController extends Controller
 {
     public function index()
     {
-        return view('admin.registrations.index');
+        return redirect(AdminResource::getUrl());;
     }
 
     public function show($id)

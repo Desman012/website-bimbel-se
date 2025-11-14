@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Classes;
+use App\Models\Prices;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +18,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/Classes/{level_id}', function ($level_id) {
+    return Classes::where('level_id', $level_id)->get();
+});
+
+Route::get('/prices/{level_id}/{class_id}', function ($level_id, $class_id) {
+    return Prices::where('level_id', $level_id)
+                ->where('class_id', $class_id)
+                ->first();
 });

@@ -1,107 +1,353 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
-  <meta charset="UTF-8" />
-  <title>Login Page</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrasi Siswa | Bimbel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    @vite(['resources/css/auth.css', 'resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        .required::after {
+            content: " *";
+            color: red;
+        }
+
+        input:invalid,
+        textarea:invalid,
+        select:invalid {
+            border-color: whitesmoke !important;
+        }
+    </style>
 </head>
 
-<body>
-  <!-- Section SING IN -->
-<div class="grid min-h-screen w-full grid-cols-12 overflow-hidden bg-[#422ED0]">
-      <!-- Left Section -->
-      <div class="element z-3 col-span-7 flex p-32 text-white" style="">
-        <div class="w-full min-w-sm flex flex-col justify-between ">
-          <div>
-            <!-- <h1 class="flex items-center text-2xl font-bold">Tapconnect <span class="ml-2 text-sm font-light">Over 3k+ users</span></h1> -->
-            <img src="https://www.psit.ac.in/assets/webp/PSIT_logo_Red.svg" alt="" style="filter: brightness(0) invert(1);" />
-          </div>
-          <div>
-            <h1 class="my-8 text-7xl leading-20 font-bold text-indigo-50">Enter your account and discover new experiences</h1>
-            <p class="mb-2 text-xl">You do not have an account?</p> 
-            <div class="flex h-12 justify-start items-center gap-x-6 dark:text-white">
-                <a class="group flex h-min items-center disabled:opacity-50 disabled:hover:opacity-50 hover:opacity-95 justify-center ring-none rounded-lg shadow-lg font-semibold py-2 px-4 font-dm focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-violet-500 border-b-violet-700 disabled:border-0 disabled:bg-violet-500 disabled:text-white ring-white text-white border-b-4 hover:border-0 active:border-0 hover:text-gray-100 active:bg-violet-800 active:text-gray-300 focus-visible:outline-violet-500 text-sm sm:text-base dark:bg-gray-700 dark:border-gray-700 dark:border-b-gray-900"
-                    href="">
-                   Create New User ( New Registration )
-                </a>
-                <a class="group flex h-min ring-none items-center justify-center hover:opacity-95 disabled:opacity-50 rounded-lg py-2 px-4 font-dm focus:outline-none !ring-transparent text-violet-800 border border-violet-500 border-b-violet-400 border-b-4 hover:border active:border bg-white hover:text-violet-900 hover:bg-gray-50 active:bg-gray-100 active:text-violet-600 focus-visible:outline-violet-600 focus-visible:ring-violet-700 text-sm sm:text-base dark:bg-gray-700 dark:border-gray-700 dark:border-b-gray-900 dark:text-white"
-                    href="">
-                    <svg aria-hidden="true" class="h-3 w-3 flex-none fill-violet-600 group-active:fill-current">
-                        <path
-                            d="m9.997 6.91-7.583 3.447A1 1 0 0 1 1 9.447V2.553a1 1 0 0 1 1.414-.91L9.997 5.09c.782.355.782 1.465 0 1.82Z">
-                        </path>
-                    </svg>
-                    <span class="ml-3">Create Parent Login</span>
-                </a>
+<body class="min-h-screen bg-gradient-to-r from-orange-50 to-red-50 overflow-x-hidden">
+    <div class="grid lg:grid-cols-2 min-h-screen">
+        <!-- LEFT SECTION: FORM -->
+        <div class="flex justify-center w-[600px] items-center bg-white rounded-tr-[44px] rounded-br-[44px] shadow-lg ">
+            <div class="w-full max-w-[450px] px-6 py-8">
+                <h2 class="text-3xl lg:text-4xl font-bold mb-6 text-start">
+                    PENDAFTARAN AKUN SISWA
+                </h2>
+
+                <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" id="registerForm">
+                    @csrf
+
+                    {{-- STEP 1: DATA AKUN --}}
+                    <div class="step" id="step-1">
+                        <h3 class="text-xl font-semibold mb-2 text-crimson">1. Data Akun</h3>
+                        <p class="text-sm text-gray-500 mb-4">Masukkan email dan password kamu!</p>
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Email</label>
+                        <input type="email" id="email" name="email" placeholder="contoh: jhondoe@mail.com"
+                            class="w-full mb-3 border-b border-gray-300 px-3 py-2 text-base focus:ring-2 focus:ring-golden focus:outline-none"
+                            required />
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Password</label>
+                        <div class="relative mb-4">
+                            <input type="password" id="password" name="password" placeholder="lebih 8 karakter"
+                                class="w-full border-b border-gray-300 px-3 py-2 text-base focus:ring-2 focus:ring-golden focus:outline-none pr-10"
+                                required />
+                            <span id="togglePassword" class="absolute right-2 top-2 cursor-pointer text-gray-500">
+                                <i class="fa-regular fa-eye"></i>
+                            </span>
+                        </div>
+
+                        <div class="flex justify-end">
+                            <button type="button" id="next1"
+                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold opacity-60 cursor-not-allowed transition-transform">Selanjutnya</button>
+                        </div>
+                    </div>
+
+                    {{-- STEP 2: DATA DIRI --}}
+                    <div class="step hidden" id="step-2">
+                        <h3 class="text-xl font-semibold mb-2 text-crimson">2. Data Diri</h3>
+                        <p class="text-sm text-gray-500 mb-4">Isi informasi akun kamu dengan lengkap ya!</p>
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Nama Lengkap</label>
+                        <input type="text" id="full-name" name="full-name" placeholder="contoh: Jhon Doe"
+                            class="w-full mb-3 border-b border-gray-300 px-3 py-2 text-base focus:ring-2 focus:ring-golden focus:outline-none"
+                            oninput="this.value = this.value.replace(/[^a-zA-ZÀ-ž\s]/g, '');" required />
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Nomor Whatsapp</label>
+                        <input type="text" id="phone" name="phone" placeholder="contoh: 085123xxxx"
+                            maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                            class="w-full mb-6 border-b border-gray-300 px-3 py-2 text-base focus:ring-2 focus:ring-golden focus:outline-none"
+                            required />
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Alamat</label>
+                        <textarea id="address" name="address" placeholder="contoh: Jl. Merdeka No. 123, Karawang"
+                            class="w-full mb-3 border-b border-gray-300 px-3 py-2 text-base focus:ring-2 focus:ring-golden focus:outline-none resize-none"
+                            required></textarea>
+
+                        <div class="flex justify-between">
+                            <button type="button" onclick="prevStep(1)"
+                                class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:-translate-y-1 transition-transform">Kembali</button>
+                            <button type="button" id="next2"
+                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold opacity-60 cursor-not-allowed transition-transform">Selanjutnya</button>
+                        </div>
+                    </div>
+
+                    {{-- STEP 3: DATA ORANG TUA --}}
+                    <div class="step hidden" id="step-3">
+                        <h3 class="text-xl font-semibold mb-2 text-crimson">3. Data Orang Tua</h3>
+                        <p class="text-sm text-gray-500 mb-4">Masukkan informasi orang tua atau wali kamu.</p>
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Nama Orang Tua</label>
+                        <input type="text" id="parent-name" name="parent-name" placeholder="contoh: Budi Santoso"
+                            class="w-full mb-3 border-b border-gray-300 px-3 py-2 text-base focus:ring-2 focus:ring-golden focus:outline-none"
+                            oninput="this.value = this.value.replace(/[^a-zA-ZÀ-ž\s]/g, '');" required />
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Email Orang Tua</label>
+                        <input type="email" id="parent-email" name="parent-email"
+                            placeholder="contoh: budisantoso@mail.com"
+                            class="w-full mb-3 border-b border-gray-300 px-3 py-2 text-base focus:ring-2 focus:ring-golden focus:outline-none"
+                            required />
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Nomor Whatsapp Orang Tua</label>
+                        <input type="text" id="parent-phone" name="parent-phone" placeholder="contoh: 085123xxxx"
+                            maxlength="13" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                            class="w-full mb-6 border-b border-gray-300 px-3 py-2 text-base focus:ring-2 focus:ring-golden focus:outline-none"
+                            required />
+
+                        <div class="flex justify-between">
+                            <button type="button" onclick="prevStep(2)"
+                                class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:-translate-y-1 transition-transform">Kembali</button>
+                            <button type="button" id="next3"
+                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold opacity-60 cursor-not-allowed transition-transform">Selanjutnya</button>
+                        </div>
+                    </div>
+
+                    {{-- STEP 4: DATA BIMBEL --}}
+                    <div class="step hidden" id="step-4">
+                        <h3 class="text-xl font-semibold mb-2 text-crimson">4. Data Bimbel</h3>
+                        <p class="text-sm text-gray-500 mb-4">Masukan data bimbel yang ingin kamu ikuti.</p>
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Program</label>
+                        <select name="program-id" id="programSelect"
+                            class="w-full mb-3 border-b border-gray-300 px-3 py-2 focus:ring-2 focus:ring-golden focus:outline-none"
+                            required>
+                            <option value="" disabled selected>Pilih Program</option>
+                            @foreach ($programs as $program)
+                                <option value="{{ $program->id }}">{{ $program->name_program }}</option>
+                            @endforeach
+                        </select>
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Kurikulum</label>
+                        <select name="curriculum-id" id="curriculumSelect"
+                            class="w-full mb-3 border-b border-gray-300 px-3 py-2 focus:ring-2 focus:ring-golden focus:outline-none"
+                            required>
+                            <option value="" disabled selected>Pilih Kurikulum</option>
+                            @foreach ($curriculums as $curriculum)
+                                <option value="{{ $curriculum->id }}">{{ $curriculum->name_curriculum }}</option>
+                            @endforeach
+                        </select>
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Jenjang</label>
+                        <select name="level-id" id="jenjangSelect"
+                            class="w-full mb-3 border-b border-gray-300 px-3 py-2 focus:ring-2 focus:ring-golden focus:outline-none"
+                            required>
+                            <option value="" disabled selected>Pilih Jenjang</option>
+                            @foreach ($levels as $level)
+                                <option value="{{ $level->id }}">{{ $level->name_level }}</option>
+                            @endforeach
+                        </select>
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Kelas</label>
+                        <select name="class-id" id="kelasSelect"
+                            class="w-full mb-6 border-b border-gray-300 px-3 py-2 focus:ring-2 focus:ring-golden focus:outline-none"
+                            required>
+                            <option value="" disabled selected>Pilih Kelas</option>
+                        </select>
+
+                        <div class="flex justify-between">
+                            <button type="button" onclick="prevStep(3)"
+                                class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:-translate-y-1 transition-transform">Kembali</button>
+                            <button type="button" onclick="nextStep(5)"
+                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold hover:-translate-y-1 transition-transform">Selanjutnya</button>
+                        </div>
+                    </div>
+
+                    {{-- STEP 5: PEMBAYARAN --}}
+                    <div class="step hidden" id="step-5">
+                        <h3 class="text-xl font-semibold mb-2 text-crimson">5. Bukti Pembayaran</h3>
+                        <p class="text-sm text-gray-500 mb-4">Unggah bukti pembayaran untuk melanjutkan pendaftaran.
+                        </p>
+
+                        <div class="mb-4">
+                            <p class="text-gray-700 font-semibold">Nominal Pembayaran:</p>
+                            <p id="nominalDisplay" class="text-lg font-bold text-crimson">Rp -</p>
+                            <input type="hidden" name="amount-paid" id="amount-paid">
+                        </div>
+
+                        <div class="mb-4">
+                            <p class="text-gray-700 font-semibold">Nomor Rekening:</p>
+                            <p class="text-base font-medium">BCA 1234567890 a.n Bimbel Sinar Education</p>
+                        </div>
+
+                        <label class="block mb-1 font-semibold text-gray-700 required">Upload Bukti Pembayaran</label>
+                        <input type="file" name="payment-proof" accept="image/*"
+                            class="w-full mb-6 border-gray-300 px-3 py-2 focus:ring-2 focus:ring-golden focus:outline-none"
+                            required />
+
+                        <div class="flex justify-between">
+                            <button type="button" onclick="prevStep(4)"
+                                class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:-translate-y-1 transition-transform">Kembali</button>
+                            <button type="submit"
+                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold hover:-translate-y-1 transition-transform">Daftar
+                                Sekarang</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-
-          </div>
-          <div class="mb-0 hidden">
-            <h2 class="mb-4 text-4xl font-bold text-indigo-50">Welcome to <span class="text-4xl" style='font-family: "Times New Roman", Times, serif;'>PSIT</span></h2>
-            <p class="text-xl text-indigo-50">The access to this website is limited to the institute Management, Faculty and Students only (Login to your accounts to navigate the website). Visitors may kindly visit <a href="#" class="text-xl text-indigo-100"> www.psit.ac.in</a> for information about the institutes.</p>
-
-            <!-- <p class="mt-4 text-indigo-50">Vision : To achieve excellence in professional education and create an ecosystem for the holistic development of all stakeholders <br>
-            Mission
-To provide an environment of effective learning and innovation transforming students into dynamic, responsible and productive professionals in their respective fields, who are capable of adapting to the changing needs of the industry and society.
-            </p> -->
-          </div>
         </div>
-      </div>
 
-      <!-- Right Section -->
-      <div class="relative z-3 col-span-5 flex rounded-tl-[44px] bg-white">
-        <div class="absolute top-4 right-0 -left-4 z-2 h-full w-full rounded-tl-[44px] bg-white/50"></div>
-        <div class="z-10 w-full">
-          <div class="z-4 mx-auto mt-20 max-w-sm bg-white p-4 sm:p-10 lg:max-w-lg xl:max-w-xl">
-            <h2 class="mb-10 text-4xl font-bold text-slate-600">Hi, Welcome! 👋</h2>
-            <!-- <p class="mb-6 text-gray-500">Pranveer Singh Institute of Technology</p> -->
+        <!-- RIGHT SECTION -->
+        <div class="flex flex-col justify-center px-16 text-gray-900 mr-6 bg-gradient-to-r from-orange-50 to-red-50">
+            <div class="w-[600px]">
 
-            <!-- Email -->
-            <input type="email" placeholder="Email" class="mb-6 w-full border-b border-gray-300 px-4 py-5 text-lg font-medium text-slate-700 focus:ring-2 focus:ring-indigo-400 focus:outline-none" />
-
-            <!-- Password -->
-            <input type="password" placeholder="Password" class="mb-6 w-full border-b border-gray-300 px-4 py-5 text-lg font-medium text-slate-700 focus:ring-2 focus:ring-indigo-400 focus:outline-none" />
-
-            <!-- Remember Me and Forgot Password -->
-            <div class="mb-10 flex items-center justify-between">
-              <label class="flex items-center space-x-2">
-                <input type="checkbox" class="form-checkbox text-indigo-600" checked />
-                <span class="font-medium text-gray-600">Remember me</span>
-              </label>
-              <a href="#" class="text-lg font-medium text-indigo-600 hover:underline">Forgot password?</a>
+                <img src="{{ Vite::asset('resources/img/logo-panjang.png') }}" alt="Logo"
+                    class="w-[295px] mb-3 brightness-0 invert-0" />
+                <h1 class="text-4xl font-bold text-red-500 leading-tight mb-4">
+                    Gabung Bersama Bimbel<br> <span class="text-orange-600"> Sinar Education</span>
+                </h1>
+                <p class="text-lg mb-4 mr-6 text-gray-800">
+                    Belajar lebih seru dan efektif bersama mentor berpengalaman yang siap membimbingmu meraih potensi
+                    terbaik!
+                </p>
+                <p class="text-lg text-gray-500">
+                    Sudah punya akun?
+                </p>
+                <a href="{{ route('login') }}"
+                    class="mt-2 w-[100px] justify-start items-start flex px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg hover:-translate-y-1 transition-transform">
+                    Masuk
+                </a>
             </div>
-
-            <!-- Login Button -->
-            <!-- <button class="mb-4 w-full rounded-lg bg-indigo-600 py-3 font-bold text-white transition hover:bg-indigo-700">Log In</button> -->
-            <button class="mb-6 w-full transform-gpu rounded-full bg-gradient-to-r from-blue-500 to-purple-500 px-8 py-4 font-bold text-white transition-transform hover:-translate-y-1 hover:shadow-lg">Click me!</button>
-
-            <!-- Or -->
-            <div class="mb-6 flex items-center justify-center">
-              <span class="w-1/5 border-b border-white lg:w-1/4"></span>
-              <span class="mx-2 text-xs text-gray-400">OR</span>
-              <span class="w-1/5 border-b border-white lg:w-1/4"></span>
-            </div>
-
-            <!-- Social Login -->
-            <div class="flex space-x-4">
-              <button class="flex w-1/2 items-center justify-center rounded-lg border border-gray-300 py-2 font-medium text-slate-700 hover:bg-gray-50">
-                <img src="https://www.svgrepo.com/show/303108/facebook-1-logo.svg" class="mr-2 h-5 w-5" alt="Facebook" />
-                Facebook
-              </button>
-              <button class="flex w-1/2 items-center justify-center rounded-lg border border-gray-300 py-2 font-medium text-slate-700 hover:bg-gray-50">
-                <img src="https://www.svgrepo.com/show/355037/google.svg" class="mr-2 h-5 w-5" alt="Google" />
-                Google
-              </button>
-            </div>
-
-            <!-- Sign Up -->
-            <p class="mt-12 text-center text-sm text-gray-500">Don’t have an account? <a href="#" class="text-indigo-600 hover:underline">Sign up</a></p>
-          </div>
         </div>
-      </div>
     </div>
+
+    <script>
+        let currentStep = 1;
+
+        function showStep(step) {
+            document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`step-${step}`).classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function nextStep(step) {
+            currentStep = step;
+            showStep(step);
+        }
+
+        function prevStep(step) {
+            currentStep = step;
+            showStep(step);
+        }
+
+        // Show / Hide Password
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('password');
+        togglePassword.addEventListener('click', () => {
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                togglePassword.innerHTML = '<i class="fa-regular fa-eye-slash"></i>';
+            } else {
+                passwordField.type = 'password';
+                togglePassword.innerHTML = '<i class="fa-regular fa-eye"></i>';
+            }
+        });
+
+
+        // Validasi Step 1
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const next1 = document.getElementById('next1');
+
+        function validateStep1() {
+            if (email.validity.valid && password.value.trim() !== '') {
+                next1.classList.remove('opacity-60', 'cursor-not-allowed');
+                next1.onclick = () => nextStep(2);
+            } else {
+                next1.classList.add('opacity-60', 'cursor-not-allowed');
+                next1.onclick = null;
+            }
+        }
+        email.addEventListener('input', validateStep1);
+        password.addEventListener('input', validateStep1);
+
+        // Validasi Step 2
+        const full_name = document.getElementById('full-name');
+        const phone = document.getElementById('phone');
+        const address = document.getElementById('address');
+        const next2 = document.getElementById('next2');
+
+        function validateStep2() {
+            if (full_name.value.trim() && phone.value.trim() && address.value.trim()) {
+                next2.classList.remove('opacity-60', 'cursor-not-allowed');
+                next2.onclick = () => nextStep(3);
+            } else {
+                next2.classList.add('opacity-60', 'cursor-not-allowed');
+                next2.onclick = null;
+            }
+        }
+        [full_name, phone, address].forEach(el => el.addEventListener('input', validateStep2));
+
+        // Validasi Step 3
+        const parent_name = document.getElementById('parent-name');
+        const parent_email = document.getElementById('parent-email');
+        const parent_phone = document.getElementById('parent-phone');
+        const next3 = document.getElementById('next3');
+
+        function validateStep3() {
+            if (parent_name.value.trim() && parent_email.validity.valid && parent_phone.value.trim()) {
+                next3.classList.remove('opacity-60', 'cursor-not-allowed');
+                next3.onclick = () => nextStep(4);
+            } else {
+                next3.classList.add('opacity-60', 'cursor-not-allowed');
+                next3.onclick = null;
+            }
+        }
+        [parent_name, parent_email, parent_phone].forEach(el => el.addEventListener('input', validateStep3));
+
+        // validasi step 4
+
+        // --- Ambil kelas berdasarkan jenjang ---
+        const jenjangSelect = document.getElementById('jenjangSelect');
+        const kelasSelect = document.getElementById('kelasSelect');
+        const nominalDisplay = document.getElementById('nominalDisplay');
+        const amountPaid = document.getElementById('amount-paid');
+
+
+        jenjangSelect.addEventListener('change', async () => {
+            const jenjangId = jenjangSelect.value;
+            kelasSelect.innerHTML = `<option disabled selected>Memuat kelas...</option>`;
+            try {
+                const res = await fetch(`/api/Classes/${jenjangId}`);
+                const data = await res.json();
+                kelasSelect.innerHTML = `<option disabled selected>Pilih Kelas</option>`;
+                data.forEach(k => {
+                    kelasSelect.innerHTML += `<option value="${k.id}">${k.name_class}</option>`;
+                });
+            } catch (err) {
+                kelasSelect.innerHTML = `<option disabled selected>Gagal memuat kelas</option>`;
+            }
+        });
+
+        // --- Ambil nominal harga berdasarkan kelas dan jenjang ---
+        kelasSelect.addEventListener('change', async () => {
+            const jenjangId = jenjangSelect.value;
+            const kelasId = kelasSelect.value;
+            try {
+                const res = await fetch(`/api/prices/${jenjangId}/${kelasId}`);
+                const data = await res.json();
+                nominalDisplay.textContent = `Rp ${data.price.toLocaleString('id-ID').replace(/\./g, ',')}`;
+            } catch {
+                nominalDisplay.textContent = 'Rp -';
+            }
+            amountPaid.value = data.price;
+        });
+    </script>
 </body>
 
 </html>

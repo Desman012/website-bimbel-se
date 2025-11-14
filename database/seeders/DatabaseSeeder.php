@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $roleAdmin = DB::table('roles')->where('name_role', 'Admin')->first();
         for ($i = 0; $i < 3; $i++) {
             DB::table('admins')->insert([
-                'role_id' => $roleAdmin->id,
+                'role_id' => 1,
                 'full_name' => $faker->name(),
                 'address' => $faker->address(),
                 'email' => $faker->unique()->safeEmail(),
