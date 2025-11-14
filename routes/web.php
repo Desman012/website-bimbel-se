@@ -1,14 +1,13 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminStudentController;
 use App\Http\Controllers\AdminPaymentController;
 use App\Http\Controllers\AdminRegistrationController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AdminStudentController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentAttendanceController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentPaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -64,7 +63,6 @@ Route::middleware(['role:1'])->prefix('admin')->group(function () {
     Route::get('/registrations/{id}', [AdminRegistrationController::class, 'show'])->name('admin.registrations.show');
 });
 
-
 // STUDENT ROUTES
 Route::middleware(['role:2'])->prefix('students')->group(function () {
 
@@ -80,4 +78,3 @@ Route::middleware(['role:2'])->prefix('students')->group(function () {
     Route::post('/payment', [StudentPaymentController::class, 'store'])->name('students.payment.store');
     Route::get('/payment-history', [StudentPaymentController::class, 'history'])->name('students.payment.history');
 });
-
