@@ -10,4 +10,8 @@ class HomeController extends Controller
     {
         return view('landing.index');
     }
+    public function logout()
+    {
+        return view('auth.logout');
+    }
 }

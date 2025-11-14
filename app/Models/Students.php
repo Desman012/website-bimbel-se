@@ -14,7 +14,7 @@ class Students extends Authenticatable
 
     protected $table = 'students';
     protected $fillable = [
-        'full_name', 
+        'full_name',
         'address',
         'phone_number',
         'student_email',
@@ -25,14 +25,16 @@ class Students extends Authenticatable
         'programs_id',
         'class_id',
         'status',
+        'role_id',
+
     ];
 
     protected $hidden = [
-        'password', 
+        'password',
         'remember_token',
     ];
 
-    
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];

@@ -2,13 +2,14 @@
 
 namespace App\Providers;
 
-use App\Actions\Fortify\CreateNewUser;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Admins;
+use App\Models\Students;
+use App\Actions\Fortify\CreateNewStudents;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
-use App\Models\Admins;
-use App\Models\Students;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -16,6 +17,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
+
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -33,7 +36,68 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Fortify::createUsersUsing(CreateNewUser::class);
+
+
+        // ===== Login 2 Role =====
+        Fortify::authenticateUsing(function (Request $request) {
+            $admin = Admins::where('email', $request->email)->first();
+            if ($admin && Hash::check($request->password, $admin->password)) {
+                Auth::guard('admin')->login($admin);
+
+                // Simpan info tambahan di session
+                session([
+                    'role_id' => $admin->role_id,
+                    'name' => $admin->full_name,
+                    'email' => $admin->email,
+                ]);
+
+                return $admin;
+            }
+
+            $student = Students::where('student_email', $request->email)->first();
+            if ($student && Hash::check($request->password, $student->password)) {
+                Auth::guard('student')->login($student);
+
+                // Simpan info tambahan di session
+                session([
+                    'role_id' => $student->role_id,
+                    'name' => $student->full_name,
+                    'email' => $student->student_email,
+                ]);
+
+                return $student;
+            }
+
+            return null;
+        });
+
+
+        // ===== Login Response Redirect Berdasarkan Role =====
+        $this->app->instance(LoginResponseContract::class, new class implements LoginResponseContract {
+            public function toResponse($request)
+            {
+                $role_id = session('role_id');
+
+                if ($role_id == 1) {
+                    return redirect()->intended('/admin/dashboard');
+                } elseif ($role_id == 2) {
+                    return redirect()->intended('/students/dashboard');
+                }
+
+                return redirect('/');
+            }
+        });
+
+        // Views
+        Fortify::loginView(function () {
+            return view('auth.login'); // Bisa tambahkan switch guard di form
+        });
+
+        Fortify::registerView(function () {
+            return view('auth.register');
+        });
+
+        Fortify::createUsersUsing(CreateNewStudents::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
@@ -47,31 +111,6 @@ class FortifyServiceProvider extends ServiceProvider
 
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
-        });
-
-        
-        // ===== Login Admin =====
-        Fortify::authenticateUsing(function (Request $request) {
-            if ($request->guard == 'admin') {
-                $admin = Admins::where('email', $request->email)->first();
-                if ($admin && Hash::check($request->password, $admin->password)) {
-                    return $admin;
-                }
-            } elseif ($request->guard == 'student') { // Login Siswa
-                $student = Students::where('email', $request->email)->first();
-                if ($student && Hash::check($request->password, $student->password)) {
-                    return $student;
-                }
-            }
-        });
-
-        // Views
-        Fortify::loginView(function () {
-            return view('auth.login'); // Bisa tambahkan switch guard di form
-        });
-
-        Fortify::registerView(function () {
-            return view('auth.register');
         });
     }
 }

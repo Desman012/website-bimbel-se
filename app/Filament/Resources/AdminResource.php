@@ -4,9 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AdminResource\Pages;
 use App\Models\Admins;
+use App\Models\Role;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Form;
@@ -29,10 +29,25 @@ class AdminResource extends Resource
     // Variabel statis untuk menyimpan password mentah (belum di-hash)
     protected static ?string $newlyGeneratedPassword = null;
 
+    public static function getSlug(): string
+    {
+        return 'data-admin';
+    }
+
+    public static function getNavigationLabel(): string
+{
+    return 'Data Admin';
+}
+
+public static function getPluralLabel(): string
+{
+    return 'Data Admin';
+}
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                
                 TextInput::make('full_name')
                     ->label('Nama Lengkap')
                     ->maxLength(100)
@@ -47,12 +62,9 @@ class AdminResource extends Resource
 
                 Select::make('role_id')
                     ->label('Peran (Role)')
-                    // Menggunakan DB facade karena Model Role tidak di-import
-                    ->options(DB::table('roles')->pluck('name_role', 'id')->toArray())
+                    ->options(Role::pluck('name_role', 'id'))
                     ->searchable()
                     ->required(),
-
-                // Field password dihilangkan karena di-generate otomatis saat CREATE
 
                 Textarea::make('address')
                     ->label('Alamat')
@@ -83,11 +95,11 @@ class AdminResource extends Resource
                     ->searchable(),
                 
                 // Relasi harus ada di Model Admins: public function role() { return $this->belongsTo(Role::class); }
-                TextColumn::make('role.name') 
-                    ->label('Peran')
-                    ->badge()
-                    ->color('primary')
-                    ->sortable(),
+                // TextColumn::make('role.name') 
+                //     ->label('Peran')
+                //     ->badge()
+                //     ->color('primary')
+                //     ->sortable(),
 
                 TextColumn::make('status')
                     ->badge()
@@ -126,13 +138,11 @@ class AdminResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManageAdmins::route('/'),
+            // Halaman List/Index
+            'index' => Pages\ListAdmins::route('/'),
         ];
     }
 
-    // =========================================================================
-    // HOOK: GENERATE PASSWORD SEBELUM CREATE
-    // =========================================================================
     protected static function mutateFormDataBeforeCreate(array $data): array
     {
         // 1. Generate password acak
@@ -140,18 +150,15 @@ class AdminResource extends Resource
 
         // 2. Hash password acak untuk disimpan di database
         $data['password'] = Hash::make(self::$newlyGeneratedPassword);
-        
-        // Opsional: Pastikan role_id ada jika validasi form tidak mencukupi
+
         if (empty($data['role_id'])) {
-             $data['role_id'] = 3; // Ganti 3 dengan ID role default jika tidak terpilih
-        }
+        // Beri nilai default, misalnya ID 3 (Asumsi 'Staff')
+        $data['role_id'] = 3; 
+    }
 
         return $data;
     }
-    
-    // =========================================================================
-    // HOOK: KIRIM EMAIL SETELAH CREATE (Struktur sudah dibersihkan dari duplikasi)
-    // =========================================================================
+
     protected static function afterCreate(array $data, Admins $record): void
     {
         if (self::$newlyGeneratedPassword) {
@@ -159,7 +166,7 @@ class AdminResource extends Resource
                 // Kirim email notifikasi ke Admin baru
                 Mail::to($record->email)->send(new AdminCreatedNotification(
                     $record->full_name, 
-                    $record->email, // Baris ini dan berikutnya adalah yang menyebabkan error argumen jika Mailable lama
+                    $record->email, 
                     self::$newlyGeneratedPassword 
                 ));
 
@@ -182,4 +189,6 @@ class AdminResource extends Resource
         // Reset variabel statis
         self::$newlyGeneratedPassword = null;
     }
+
+    
 }

@@ -38,6 +38,11 @@
                 <h2 class="text-4xl font-bold mb-8 text-start">
                     Hai, Selamat Datang <br> Kembali!
                 </h2>
+                @if ($errors->any())
+                    <div class="mb-4 text-sm text-red-600 font-semibold">
+                        {{ $errors->first() }}
+                    </div>
+                @endif
 
                 <form method="POST" action="{{ route('login') }}">
                     @csrf

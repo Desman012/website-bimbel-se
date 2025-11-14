@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Levels;
+use App\Models\Programs;
+use App\Models\Curriculums;
 
 class AuthController extends Controller
 {
@@ -18,7 +21,10 @@ class AuthController extends Controller
 
     public function showRegister()
     {
-        return view('auth.register');
+        $levels = Levels::all();
+        $programs = Programs::all();
+        $curriculums = Curriculums::all();
+        return view('auth.register', compact(['levels','programs','curriculums']));
     }
 
     public function register(Request $request)
