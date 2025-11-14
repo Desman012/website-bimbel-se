@@ -48,18 +48,18 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // === CLASSES ===
-        $levelData = DB::table('levels')->get();
-        foreach ($levelData as $level) {
-            for ($i = 1; $i <= 3; $i++) {
-                DB::table('classes')->insert([
-                    'level_id' => $level->id,
-                    'name_class' => "Kelas {$i} {$level->name_level}",
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-        }
+        // // === CLASSES ===
+        // $levelData = DB::table('levels')->get();
+        // foreach ($levelData as $level) {
+        //     for ($i = 1; $i <= 3; $i++) {
+        //         DB::table('classes')->insert([
+        //             'level_id' => $level->id,
+        //             'name_class' => "Kelas {$i} {$level->name_level}",
+        //             'created_at' => now(),
+        //             'updated_at' => now(),
+        //         ]);
+        //     }
+        // }
 
         // === PROGRAMS ===
         $programs = ['Private', 'Bimbel', 'Try Out'];
@@ -91,44 +91,44 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // === PRICES ===
-        $classData = DB::table('classes')->get();
-        foreach ($levelData as $level) {
-            foreach ($classData as $class) {
-                if ($class->level_id == $level->id) {
-                    DB::table('prices')->insert([
-                        'level_id' => $level->id,
-                        'class_id' => $class->id,
-                        'price' => $faker->numberBetween(300000, 700000),
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
-                }
-            }
-        }
+        // //=== PRICES ===
+        // $classData = DB::table('classes')->get();
+        // foreach ($levelData as $level) {
+        //     foreach ($classData as $class) {
+        //         if ($class->level_id == $level->id) {
+        //             DB::table('prices')->insert([
+        //                 'level_id' => $level->id,
+        //                 'class_id' => $class->id,
+        //                 'price' => $faker->numberBetween(300000, 700000),
+        //                 'created_at' => now(),
+        //                 'updated_at' => now(),
+        //             ]);
+        //         }
+        //     }
+        // }
 
-        // === STUDENTS ===
-        for ($i = 1; $i <= 15; $i++) {
-            DB::table('students')->insert([
-                'role_id' => 2, // siswa
-                'full_name' => $faker->name(),
-                'address' => $faker->address(),
-                'phone_number' => $faker->phoneNumber(),
-                'student_email' => $faker->unique()->safeEmail(),
-                'password' => Hash::make('password'),
-                'parent_name' => $faker->name('male'),
-                'parent_email' => $faker->safeEmail(),
-                'parent_phone' => $faker->phoneNumber(),
-                'levels_id' => $faker->numberBetween(1, count($levels)),
-                'class_id' => $faker->numberBetween(1, $classData->count()),
-                'programs_id' => $faker->numberBetween(1, count($programs)),
-                '_id' => $faker->numberBetween(1, count($curriculums)),
-                'time_les_id' => $faker->numberBetween(1, count($times)),
-                'status' => $faker->randomElement(['active', 'inactive']),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }
+        // // === STUDENTS ===
+        // for ($i = 1; $i <= 15; $i++) {
+        //     DB::table('students')->insert([
+        //         'role_id' => 2, // siswa
+        //         'full_name' => $faker->name(),
+        //         'address' => $faker->address(),
+        //         'phone_number' => $faker->phoneNumber(),
+        //         'student_email' => $faker->unique()->safeEmail(),
+        //         'password' => Hash::make('password'),
+        //         'parent_name' => $faker->name('male'),
+        //         'parent_email' => $faker->safeEmail(),
+        //         'parent_phone' => $faker->phoneNumber(),
+        //         'levels_id' => $faker->numberBetween(1, count($levels)),
+        //         'class_id' => $faker->numberBetween(1, $classData->count()),
+        //         'programs_id' => $faker->numberBetween(1, count($programs)),
+        //         '_id' => $faker->numberBetween(1, count($curriculums)),
+        //         'time_les_id' => $faker->numberBetween(1, count($times)),
+        //         'status' => $faker->randomElement(['active', 'inactive']),
+        //         'created_at' => now(),
+        //         'updated_at' => now(),
+        //     ]);
+        // }
 
         // === PAYMENTS ===
         for ($i = 1; $i <= 30; $i++) {
