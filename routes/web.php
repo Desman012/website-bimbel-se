@@ -36,6 +36,11 @@ Route::middleware(['role'])->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     // Route::post('/register', [AuthController::class, 'register'])->name('register-post');
 });
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 46d92c5e4ec37e4779355a11ca12a9d4616c0d35
 // ADMIN ROUTES
 Route::middleware(['role:1'])->prefix('admin')->group(function () {
     Route::get('/cek-admin', function () {
