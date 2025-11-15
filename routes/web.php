@@ -41,8 +41,6 @@ Route::middleware(['role:1'])->prefix('admin')->group(function () {
     Route::get('/cek-admin', function () {
         dd(auth('admin')->user());
     });
-
-
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     // Students
@@ -65,7 +63,6 @@ Route::middleware(['role:1'])->prefix('admin')->group(function () {
 
 // STUDENT ROUTES
 Route::middleware(['role:2'])->prefix('students')->group(function () {
-
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('students.dashboard');
 
     // Attendance
