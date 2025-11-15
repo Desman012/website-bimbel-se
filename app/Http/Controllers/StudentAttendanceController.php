@@ -1,14 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 
 class StudentAttendanceController extends Controller
 {
     public function index()
     {
-        return view('student.attendance.index');
+        return view('students.attendance.index');
     }
 
     public function store(Request $request)

@@ -1,5 +1,5 @@
 {
-    "name": "laravel/laravel",
+    "name": "website-bimbel-se/laravel-app",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
     "keywords": [
@@ -9,7 +9,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "filament/filament": "3.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/fortify": "^1.31",
         "laravel/framework": "^10.10",

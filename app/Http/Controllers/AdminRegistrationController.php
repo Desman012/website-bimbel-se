@@ -8,7 +8,7 @@ class AdminRegistrationController extends Controller
 {
     public function index()
     {
-        return redirect(AdminResource::getUrl());;
+        return view('admin.registrations.index');
     }
 
     public function show($id)

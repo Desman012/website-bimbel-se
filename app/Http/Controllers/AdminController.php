@@ -9,6 +9,6 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        return redirect(AdminResource::getUrl());;
+        return view('admins.index');
     }
 }
