@@ -29,13 +29,19 @@ Route::get('/logout', [HomeController::class, 'logout'])->name('logout-view');
 // PUBLIC ROUTES
 Route::middleware(['role'])->group(function () {
     Route::get('/', [HomeController::class, 'show'])->name('landing');
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    // Route::post('/login', [AuthController::class, 'login'])->name('login-post');
+    
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    // Route::post('/register', [AuthController::class, 'register'])->name('register-post');
+});
 
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     // Route::post('/login', [AuthController::class, 'login'])->name('login-post');
 
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     // Route::post('/register', [AuthController::class, 'register'])->name('register-post');
-});
+// });
 // ADMIN ROUTES
 Route::middleware(['role:1'])->prefix('admin')->group(function () {
     Route::get('/cek-admin', function () {
@@ -64,6 +70,8 @@ Route::middleware(['role:1'])->prefix('admin')->group(function () {
 // STUDENT ROUTES
 Route::middleware(['role:2'])->prefix('students')->group(function () {
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('students.dashboard');
+
+    Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
 
     // Attendance
     Route::get('/attendance', [StudentAttendanceController::class, 'index'])->name('students.attendance.index');

@@ -25,7 +25,11 @@ class Students extends Authenticatable
         'programs_id',
         'class_id',
         'status',
+<<<<<<< Updated upstream
         'role_id',
+=======
+            'role_id',
+>>>>>>> Stashed changes
 
     ];
 
