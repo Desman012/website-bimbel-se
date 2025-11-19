@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
+
 Route::post('/logout', function () {
     // Logout dari semua guard yang mungkin aktif
     Auth::guard('admin')->logout();
@@ -24,28 +25,23 @@ Route::post('/logout', function () {
 })->name('logout');
 
 Route::get('/logout', [HomeController::class, 'logout'])->name('logout-view');
-
+Route::get('/forgot-password', [HomeController::class, 'forgotpassword'])->name('forgot-password');
 
 // PUBLIC ROUTES
 Route::middleware(['role'])->group(function () {
     Route::get('/', [HomeController::class, 'show'])->name('landing');
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     // Route::post('/login', [AuthController::class, 'login'])->name('login-post');
-    
+
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     // Route::post('/register', [AuthController::class, 'register'])->name('register-post');
 });
 
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    // Route::post('/login', [AuthController::class, 'login'])->name('login-post');
-
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    // Route::post('/register', [AuthController::class, 'register'])->name('register-post');
-// });
 // ADMIN ROUTES
-Route::middleware(['role:1'])->prefix('admin')->group(function () {
+Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () {
     Route::get('/cek-admin', function () {
-        dd(auth('admin')->user());
+        // Print semua data user
+        dd(Auth::user());
     });
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -68,7 +64,11 @@ Route::middleware(['role:1'])->prefix('admin')->group(function () {
 });
 
 // STUDENT ROUTES
-Route::middleware(['role:2'])->prefix('students')->group(function () {
+Route::middleware(['auth:student', 'role:2'])->prefix('students')->group(function () {
+    Route::get('/cek-siswa', function () {
+        // Print semua data user
+        ddd(Auth::user());
+    });
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('students.dashboard');
 
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');

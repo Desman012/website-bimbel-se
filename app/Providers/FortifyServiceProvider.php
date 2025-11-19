@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
+use App\Actions\Fortify\ResetUserPassword;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admins;
 use App\Models\Students;
 use App\Actions\Fortify\CreateNewStudents;
-use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +18,10 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
+use Illuminate\Support\Facades\Log;
+
+use Illuminate\Support\Facades\Password;
+
 
 
 
@@ -36,35 +40,21 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
-
         // ===== Login 2 Role =====
-        Fortify::authenticateUsing(function (Request $request) {
+        // Custom login Fortify
+        Fortify::authenticateUsing(function ($request) {
+
+            // 1) Coba login sebagai Admin
             $admin = Admins::where('email', $request->email)->first();
             if ($admin && Hash::check($request->password, $admin->password)) {
                 Auth::guard('admin')->login($admin);
-
-                // Simpan info tambahan di session
-                session([
-                    'role_id' => $admin->role_id,
-                    'name' => $admin->full_name,
-                    'email' => $admin->email,
-                ]);
-
                 return $admin;
             }
 
+            // 2) Coba login sebagai Student
             $student = Students::where('student_email', $request->email)->first();
             if ($student && Hash::check($request->password, $student->password)) {
                 Auth::guard('student')->login($student);
-
-                // Simpan info tambahan di session
-                session([
-                    'role_id' => $student->role_id,
-                    'name' => $student->full_name,
-                    'email' => $student->student_email,
-                ]);
-
                 return $student;
             }
 
@@ -97,11 +87,47 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.register');
         });
 
+Fortify::requestPasswordResetLinkView(function () {
+    return view('auth.forgot-password');
+});
+
+Fortify::resetPasswordView(function ($request) {
+    return view('auth.reset-password', ['request' => $request]);
+});
+
+
+// Fortify::sendPasswordResetLinkResponseUsing(function ($request, $status) {
+//     // Debug: catat email dan status
+//     Log::info('Reset password requested for: '.$request->email);
+//     Log::info('Status: '.$status);
+
+//     return back()->with('status', __($status));
+// });
+
+// Fortify::sendPasswordResetFailedResponseUsing(function ($request, $status) {
+//     Log::warning('Failed reset password for: '.$request->email);
+//     Log::warning('Status: '.$status);
+
+//     return back()->withErrors(['email' => __($status)]);
+// });
+
+
+        Fortify::requestPasswordResetLinkView(function () {
+    return view('auth.forgot-password');
+});
+
+Fortify::resetPasswordView(function ($request) {
+    return view('auth.reset-password', ['request' => $request]);
+});
+
+Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+
         Fortify::createUsersUsing(CreateNewStudents::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
+
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());

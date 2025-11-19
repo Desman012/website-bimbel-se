@@ -38,19 +38,19 @@ return [
 
     'guards' => [
         'web' => [
-        'driver' => 'session',
-        'provider' => 'users',
-    ],
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
 
-    'admin' => [
-        'driver' => 'session',
-        'provider' => 'admins',
-    ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
 
-    'student' => [
-        'driver' => 'session',
-        'provider' => 'students',
-    ],
+        'student' => [
+            'driver' => 'session',
+            'provider' => 'students',
+        ],
     ],
 
 
@@ -73,19 +73,19 @@ return [
 
     'providers' => [
         'users' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\User::class,
-    ],
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
 
-    'admins' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\Admins::class,
-    ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admins::class,
+        ],
 
-    'students' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\Students::class,
-    ],
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Students::class,
+        ],
     ],
 
 
@@ -110,19 +110,19 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'users',
-            'table' => 'password_reset_tokens',
-            'expire' => 60,
+            'provider' => 'students', // karena pakai model Students
+            'table' => 'password_resets',
+            'expire' => 60,           // link berlaku 60 menit
             'throttle' => 60,
         ],
         'admins' => [
         'provider' => 'admins',
-        'table' => 'password_reset_tokens',
+        'table' => 'password_resets',
         'expire' => 60,
     ],
     'students' => [
         'provider' => 'students',
-        'table' => 'password_reset_tokens',
+        'table' => 'password_resets',
         'expire' => 60,
     ],
     ],

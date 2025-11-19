@@ -14,4 +14,9 @@ class HomeController extends Controller
     {
         return view('auth.logout');
     }
+
+    public function forgotpassword()
+    {
+        return view('auth.forgot-password');
+    }
 }
