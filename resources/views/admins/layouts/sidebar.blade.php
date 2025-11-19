@@ -1,15 +1,15 @@
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar elevation-4
-    bg-gradient-to-b 
-    from-[#F9EAB4] 
-    to-[#F5993D]">
+  <aside class="main-sidebar elevation-4 bg-[#F9EAB4]">
     <!-- Brand Logo -->
     <a href="../../index3.html" class="brand-link">
       <img src="{{ Vite::asset('resources/img/logo.png') }}"
            alt="AdminLTE Logo"
            class="brand-image"
            style="opacity: .8">
-      <span class="brand-text font-weight-light">Sinar Education</span>
+          <h1 class="text-2xl font-bold">
+            <span class="brand-text text-orange-600">Sinar</span>
+            <span class="brand-text text-red-600">Education</span>
+          </h1>
     </a>
       <!-- Sidebar Menu -->
       <nav class="mt-2">

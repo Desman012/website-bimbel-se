@@ -126,7 +126,7 @@
             <div class="mt-4">
                 {{ $admins->links() }}
             </div>
-
+            
         </div>
 </div>
     </section>
