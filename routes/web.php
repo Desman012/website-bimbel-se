@@ -66,10 +66,10 @@ Route::middleware(['role:1'])->prefix('admin')->group(function () {
     Route::get('/registrations', [AdminRegistrationController::class, 'index'])->name('admin.registrations.index');
     Route::get('/registrations/create', [AdminRegistrationController::class, 'create'])->name('admin.registrations.create');
     Route::post('/registrations', [AdminRegistrationController::class, 'store'])->name('admin.registrations.store');
-    Route::get('/registrations/{id}', [AdminRegistrationController::class, 'show'])->name('admin.registrations.show');
-    Route::get('/registrations/{id}/edit', [AdminRegistrationController::class, 'edit'])->name('admin.registrations.edit');
-    Route::put('/registrations/{id}', [AdminRegistrationController::class, 'update'])->name('admin.registrations.update');
-    Route::delete('/registrations/{id}', [AdminRegistrationController::class, 'destroy'])->name('admin.registrations.destroy');
+    Route::get('/registrations/{admin}', [AdminRegistrationController::class, 'show'])->name('admin.registrations.show');
+    Route::get('/registrations/{admin}/edit', [AdminRegistrationController::class, 'edit'])->name('admin.registrations.edit');
+    Route::put('/registrations/{admin}', [AdminRegistrationController::class, 'update'])->name('admin.registrations.update');
+    Route::delete('/registrations/{admin}', [AdminRegistrationController::class, 'destroy'])->name('admin.registrations.destroy');
 });
 
 // STUDENT ROUTES

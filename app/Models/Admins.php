@@ -20,7 +20,7 @@ class Admins extends Authenticatable
         'email',    
         'password',
         'status',
-            'role_id',
+        'role_id',
 
     ];
 
@@ -33,25 +33,5 @@ class Admins extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-     public function getFilamentAvatarUrl(): ?string
-    {
-        return null;
-    }
-
-    public function getFilamentName(): string
-    {
-        return $this->full_name ?? $this->email ?? 'Admin';
-    }
-
-    // ⭐ FIX WAJIB UNTUK FILAMENT V3
-    public function getNameAttribute(): string
-    {
-        return $this->full_name ?? $this->email ?? 'Admin';
-    }
-
-public function getEmailAttribute($value): string
-{
-    return $value ?? 'no-email@example.com';
-}
 }
 

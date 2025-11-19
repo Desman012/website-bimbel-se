@@ -23,59 +23,59 @@ class AdminRegistrationController extends Controller
         $request->validate([
             'full_name' => 'required|string|max:255',
             'address' => 'required|string|max:500',
-            'email' => 'required|string|email|max:255|unique:admins',
-            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|string|email|max:255|unique:admins,email',
+            'password'  => 'nullable|string|min:8|confirmed',
             'status' => 'required|in:active,inactive',
         ]);
 
-        Admins::create([
+        $admin = Admins::create([
             'full_name' => $request->full_name,
             'address' => $request->address,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'status' => $request->status,
+            'password' => $request->filled('password') ? Hash::make($request->password) : null,
+            'status' => 'active',
+            'role_id' => 1,
         ]);
 
-        return redirect()->route('admin.registrations.index')
-                         ->with('success', 'Admin sukses dibuat.');
+        return redirect()->route('admin.registrations.index');
     }
 
-    public function show($id)
+    public function show(Admins $admin)
     {
-        return view('admins.show', compact('id'));
+        return view('admins.show', compact('admin'));
     }
 
-    public function edit($id)
+    public function edit(Admins $admin)
     {
-        return view('admins.edit', compact('id'));
+        return view('admins.edit', compact('admin'));
     }
 
-    public function update(Request $request, Admins $admins)
+    public function update(Request $request, Admins $admin)
     {
         $request->validate([
             'full_name' => 'required|string|max:255',
             'address' => 'required|string|max:500',
-            'email' => 'required|string|email|max:255|unique:admins',
+            'email' => 'required|string|email|max:255|unique:admins,email,',
             'password' => 'required|string|min:8|confirmed',
             'status' => 'required|in:active,inactive',
         ]);
         
-        $admins->update([
+        $admin->update([
             'email' => $request->email,
             'full_name' => $request->full_name,
         ]);
 
         if ($request->filled('password')) {
-            $admins->update(['password' => Hash::make($request->password)]);
+            $admin->update(['password' => Hash::make($request->password)]);
         }
 
         return redirect()->route('admin.registrations.index')
                          ->with('success', 'Informasi admin telah di update.');
     }
 
-    public function destroy(Admins $admins)
+    public function destroy(Admins $admin)
     {
-        $admins->delete();
+        $admin->delete();
 
          return redirect()->route('admin.registrations.index')
                          ->with('success', 'Admin berhasil dihapus.');

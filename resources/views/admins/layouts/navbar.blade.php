@@ -40,7 +40,7 @@
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
             <div class="user-panel d-flex align-items-center">
-              <span class="d-none d-lg-inline text-muted">{{ Auth::user()->name ?? 'Admin' }}</span>
+              <span class="d-none d-lg-inline text-muted">{{ Auth::user()->full_name ?? 'Admin' }}</span>
                 <div class="image mr-2">
                     <img src="{{ Auth::user()->profile_photo_url ?? asset('adminlte/dist/img/default-user.png') }}" 
                          class="img-circle elevation-1" 
