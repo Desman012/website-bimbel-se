@@ -76,8 +76,6 @@ Route::middleware(['auth:student', 'role:2'])->prefix('students')->group(functio
     });
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('students.dashboard');
 
-    Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
-
     // Attendance
     Route::get('/attendance', [StudentAttendanceController::class, 'index'])->name('students.attendance.index');
     Route::post('/attendance', [StudentAttendanceController::class, 'store'])->name('students.attendance.store');

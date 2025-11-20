@@ -48,6 +48,12 @@ class FortifyServiceProvider extends ServiceProvider
             $admin = Admins::where('email', $request->email)->first();
             if ($admin && Hash::check($request->password, $admin->password)) {
                 Auth::guard('admin')->login($admin);
+                session([
+                    'role_id' => $admin->role_id,
+                    'name' => $admin->full_name,
+                    'email' => $admin->email,
+                ]);
+
                 return $admin;
             }
 
@@ -55,6 +61,12 @@ class FortifyServiceProvider extends ServiceProvider
             $student = Students::where('student_email', $request->email)->first();
             if ($student && Hash::check($request->password, $student->password)) {
                 Auth::guard('student')->login($student);
+                 session([
+                    'role_id' => $student->role_id,
+                    'name' => $student->full_name,
+                    'email' => $student->student_email,
+                ]);
+
                 return $student;
             }
 
