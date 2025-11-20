@@ -21,6 +21,13 @@
       <div class="text-sm text-gray-400">11 Nov, 2025</div>
     </div>
 
+    <!-- flash message -->
+    @if(session('success'))
+      <div class="mt-4 p-3 rounded-lg bg-green-50 text-green-700 text-sm">
+        {{ session('success') }}
+      </div>
+    @endif
+
     <!-- Working Time -->
     <div class="mt-6 bg-amber-50 rounded-2xl p-5 text-center">
       <h3 class="text-sm font-semibold text-gray-600 mb-3">Attendance Time</h3>
@@ -29,9 +36,15 @@
         <span id="hours">--</span><span>:</span><span id="minutes">--</span><span class="text-lg" id="ampm">--</span>
       </div>
       <p class="text-xs text-gray-500 mt-2">Jl. Kampung Siluman No. 123, Tambun Selatan</p>
-      <button class="mt-4 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold py-2 px-6 rounded-xl shadow">
-        Checkout
-      </button>
+
+      <!-- replaced button with POST form -->
+     <form action="{{ route('students.attendance.store') }}" method="POST" class="mt-4" id="attendanceForm">
+        @csrf
+        <button type="submit" id="checkoutBtn" disabled class="w-full bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold py-2 px-6 rounded-xl shadow opacity-50 cursor-not-allowed">
+          Checkout
+        </button>
+      </form>
+      <p id="scheduleMsg" class="text-xs text-gray-500 mt-2">Akan tersedia pada 19:00 WIB</p>
     </div>
 
     <!-- Total Attendance -->
@@ -103,6 +116,36 @@
       document.getElementById('hours').textContent = String(hours).padStart(2, '0');
       document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
       document.getElementById('ampm').textContent = ampm;
+
+      // schedule check: enable only during 19:00 - 19:59 (client time)
+      const checkoutBtn = document.getElementById('checkoutBtn');
+      const scheduleMsg = document.getElementById('scheduleMsg');
+
+      const hour24 = now.getHours();
+      const hour = 13;
+      const allowed = (hour24 === hour); // semua menit jam 19
+
+      if (allowed) {
+        checkoutBtn.disabled = false;
+        checkoutBtn.classList.remove('opacity-50','cursor-not-allowed');
+        scheduleMsg.textContent = 'Tersedia sekarang — silakan Checkout';
+      } else {
+        checkoutBtn.disabled = true;
+        if (!checkoutBtn.classList.contains('opacity-50')) {
+          checkoutBtn.classList.add('opacity-50','cursor-not-allowed');
+        }
+        // hitung waktu tersisa sampai jam yang ditentukan
+        let target = new Date(now);
+        if (hour24 > hour) {
+          // jika lewat dari jam 19 hari ini, target besok 
+          target.setDate(target.getDate() + 1);
+        }
+        target.setHours(hour, 0, 0, 0);
+        const diffMs = target - now;
+        const diffH = Math.floor(diffMs / (1000 * 60 * 60));
+        const diffM = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+        scheduleMsg.textContent = `Akan tersedia dalam ${diffH} jam ${diffM} menit (${hour}:00 WIB)`;
+      }
     }
 
     updateClock(); // panggil pertama kali

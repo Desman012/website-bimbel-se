@@ -16,9 +16,9 @@ class StudentPaymentController extends Controller
     $authUser = Auth::guard('student')->user(); 
     $id = $authUser->id; // relasi ke tabel lain 
     
-    if (! $authUser || ! $authUser->student) { 
-        return redirect()->back()->with('status', 'Akun ini tidak memiliki data siswa.'); 
-    } 
+    // if (! $authUser || ! $authUser->student) { 
+    //     return redirect()->back()->with('status', 'Akun ini tidak memiliki data siswa.'); 
+    // } 
     
     $monthNow = now()->format('F Y'); 
     $levels_id = $authUser->levels_id; 
@@ -39,7 +39,7 @@ class StudentPaymentController extends Controller
     return view('students.payment.index', compact( 'levels_id', 'class_id', 'authUser', 'monthNow', 'amountPaid', 'existingPayment' )); 
     } 
     public function store(Request $request) { 
-        $student = Auth::user(); // karena student yang login 
+        $authUser = Auth::guard('student')->user(); // karena student yang login 
 
         // Ambil harga berdasarkan level & class 
         $price = Prices::where('level_id', (int) $authUser->levels_id) 
@@ -54,7 +54,7 @@ class StudentPaymentController extends Controller
         $request->validate([ 'month' => 'required|string', 'payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:2048', ]); 
         
         // Cek apakah sudah upload bulan ini 
-        $exists = Payment::where('student_id', $student->id) 
+        $exists = Payment::where('student_id', $authUser->id) 
         ->where('month', $request->month) ->where('status', 'pending') 
         ->exists(); if ($exists) { return redirect()->back()->with('status', 'Sudah upload bulan ini.'); } 
         
@@ -63,7 +63,7 @@ class StudentPaymentController extends Controller
         
         // Simpan pembayaran 
         Payment::create([ 
-            'student_id' => $student->id, 
+            'student_id' => $authUser->id, 
             'admin_id' => null, 
             'month' => $request->month, 
             'amount_paid' => $price->price, 
@@ -74,8 +74,8 @@ class StudentPaymentController extends Controller
 
     public function history() { 
         $authUser = Auth::guard('student')->user(); 
-        if (empty($authUser)) { return redirect()->back()->with('status', 'Akun ini tidak memiliki data siswa.'); 
-        } 
+        // if (empty($authUser)) { return redirect()->back()->with('status', 'Akun ini tidak memiliki data siswa.'); 
+        // } 
 
         $id = $authUser->id; 
         $payments = Payment::where('student_id', $id) ->orderBy('created_at', 'desc') ->get(); 

@@ -16,34 +16,36 @@
               <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
               <li class="nav-item has-treeview">
-                  <a href="{{ route('admin.dashboard') }}" class="nav-link">
+                  <a href="{{ route('students.dashboard') }}" class="nav-link">
                       <i class="nav-icon fas fa-tachometer-alt"></i>
                       <p>
                           Dashboard
                       </p>
                   </a>
+
+                  {{-- <li class="nav-header">MODIFIER</li>
+          <li class="nav-item">
+            <a href="{{ route('admin.registrations.index') }}" class="nav-link">
+              <i class="nav-icon far fa-calendar-alt"></i>
+              <p>
+                Admin
+              </p>
+            </a>
+          </li> --}}
+
               <li class="nav-item">
-                  <a href="../widgets.html" class="nav-link">
-                      <i class="nav-icon fas fa-th"></i>
-                      <p>
-                          Landing Page
-                      </p>
-                  </a>
-              </li>
-              <li class="nav-header">MODIFIER</li>
-              <li class="nav-item">
-                  <a href="{{ route('admin.registrations.index') }}" class="nav-link">
-                      <i class="nav-icon far fa-calendar-alt"></i>
-                      <p>
-                          Admin
-                      </p>
-                  </a>
-              </li>
-              <li class="nav-item">
-                  <a href="../gallery.html" class="nav-link">
+                  <a href="{{ route('students.payment.index') }}" class="nav-link">
                       <i class="nav-icon far fa-image"></i>
                       <p>
-                          Siswa
+                          Pembayaran
+                      </p>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="{{ route('students.payment.history') }}" class="nav-link">
+                      <i class="nav-icon far fa-image"></i>
+                      <p>
+                          Riwayat Pembayaran
                       </p>
                   </a>
               </li>

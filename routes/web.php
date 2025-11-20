@@ -117,7 +117,7 @@ Route::post('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
-Route::get('/logout', [HomeController::class, 'logout'])->name('logout-view');
+// Route::get('/logout', [HomeController::class, 'logout'])->name('logout-view');
 Route::get('/forgot-password', [HomeController::class, 'forgotpassword'])->name('forgot-password');
 
 // PUBLIC ROUTES
