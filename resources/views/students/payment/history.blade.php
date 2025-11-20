@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Siswa | Sinar Education</title>
+    <title>Riwayat Pembayaran | Sinar Education</title>
 
     <!-- AdminLTE + Tailwind -->
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/css/adminlte.min.css') }}">

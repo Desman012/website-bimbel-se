@@ -23,15 +23,6 @@
                       </p>
                   </a>
               <li class="nav-item">
-                  <a href="../widgets.html" class="nav-link">
-                      <i class="nav-icon fas fa-th"></i>
-                      <p>
-                          Landing Page
-                      </p>
-                  </a>
-              </li>
-              <li class="nav-header">MODIFIER</li>
-              <li class="nav-item">
                   <a href="{{ route('admin.registrations.index') }}" class="nav-link">
                       <i class="nav-icon far fa-calendar-alt"></i>
                       <p>
@@ -40,7 +31,7 @@
                   </a>
               </li>
               <li class="nav-item">
-                  <a href="../gallery.html" class="nav-link">
+                  <a href="#" class="nav-link">
                       <i class="nav-icon far fa-image"></i>
                       <p>
                           Siswa

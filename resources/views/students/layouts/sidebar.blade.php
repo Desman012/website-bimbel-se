@@ -22,6 +22,7 @@
                           Dashboard
                       </p>
                   </a>
+              </li>
 
                   {{-- <li class="nav-header">MODIFIER</li>
           <li class="nav-item">
@@ -33,6 +34,14 @@
             </a>
           </li> --}}
 
+          <li class="nav-item has-treeview">
+                  <a href="{{ route('students.attendance.index') }}" class="nav-link">
+                      <i class="nav-icon fas fa-tachometer-alt"></i>
+                      <p>
+                          Absensi
+                      </p>
+                  </a>
+              </li>
               <li class="nav-item">
                   <a href="{{ route('students.payment.index') }}" class="nav-link">
                       <i class="nav-icon far fa-image"></i>
