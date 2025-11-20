@@ -47,7 +47,13 @@ class FortifyServiceProvider extends ServiceProvider
             $admin = Admins::where('email', $request->email)->first();
             if ($admin && Hash::check($request->password, $admin->password)) {
                 Auth::guard('admin')->login($admin);
-                
+                // Simpan info tambahan di session
+                session([
+                    'role_id' => $admin->role_id,
+                    'name' => $admin->full_name,
+                    'email' => $admin->email,
+                ]);
+
                 return $admin;
             }
 
@@ -55,6 +61,12 @@ class FortifyServiceProvider extends ServiceProvider
             $student = Students::where('student_email', $request->email)->first();
             if ($student && Hash::check($request->password, $student->password)) {
                 Auth::guard('student')->login($student);
+                session([
+                    'role_id' => $student->role_id,
+                    'name' => $student->full_name,
+                    'email' => $student->student_email,
+                ]);
+
                 return $student;
             }
 
@@ -87,41 +99,41 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.register');
         });
 
-// Fortify::requestPasswordResetLinkView(function () {
-//     return view('auth.forgot-password');
-// });
+        // Fortify::requestPasswordResetLinkView(function () {
+        //     return view('auth.forgot-password');
+        // });
 
-// Fortify::resetPasswordView(function ($request) {
-//     return view('auth.reset-password', ['request' => $request]);
-// });
-
-
-// Fortify::sendPasswordResetLinkResponseUsing(function ($request, $status) {
-//     // Debug: catat email dan status
-//     Log::info('Reset password requested for: '.$request->email);
-//     Log::info('Status: '.$status);
-
-//     return back()->with('status', __($status));
-// });
-
-// Fortify::sendPasswordResetFailedResponseUsing(function ($request, $status) {
-//     Log::warning('Failed reset password for: '.$request->email);
-//     Log::warning('Status: '.$status);
-
-//     return back()->withErrors(['email' => __($status)]);
-// });
+        // Fortify::resetPasswordView(function ($request) {
+        //     return view('auth.reset-password', ['request' => $request]);
+        // });
 
 
- Fortify::requestPasswordResetLinkView(function () {
-    return view('auth.forgot-password');
-});
+        // Fortify::sendPasswordResetLinkResponseUsing(function ($request, $status) {
+        //     // Debug: catat email dan status
+        //     Log::info('Reset password requested for: '.$request->email);
+        //     Log::info('Status: '.$status);
 
-Fortify::resetPasswordView(function ($request) {
-    return view('auth.reset-password', ['request' => $request]);
-});
+        //     return back()->with('status', __($status));
+        // });
 
-// Custom send reset link
-Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+        // Fortify::sendPasswordResetFailedResponseUsing(function ($request, $status) {
+        //     Log::warning('Failed reset password for: '.$request->email);
+        //     Log::warning('Status: '.$status);
+
+        //     return back()->withErrors(['email' => __($status)]);
+        // });
+
+
+        Fortify::requestPasswordResetLinkView(function () {
+            return view('auth.forgot-password');
+        });
+
+        Fortify::resetPasswordView(function ($request) {
+            return view('auth.reset-password', ['request' => $request]);
+        });
+
+        // Custom send reset link
+        Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
 
         Fortify::createUsersUsing(CreateNewStudents::class);

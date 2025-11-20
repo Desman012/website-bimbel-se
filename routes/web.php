@@ -40,7 +40,7 @@ Route::post('/forgot-password', function (Request $request) {
     // Kirim email
     $resetLink = url("/reset-password?token=$token&email=$email&guard=$guard");
 
-    Mail::raw("Klik link ini untuk reset password: $resetLink", function ($message) use ($email) {
+    Mail::raw("Klik link ini untuk reset password:\n$resetLink", function ($message) use ($email) {
         $message->to($email)->subject('Reset Password');
     });
 
@@ -117,7 +117,7 @@ Route::post('/logout', function () {
     return redirect('/login');
 })->name('logout');
 
-Route::get('/logout', [HomeController::class, 'logout'])->name('logout-view');
+// Route::get('/logout', [HomeController::class, 'logout'])->name('logout-view');
 Route::get('/forgot-password', [HomeController::class, 'forgotpassword'])->name('forgot-password');
 
 // PUBLIC ROUTES
@@ -131,10 +131,9 @@ Route::middleware(['role'])->group(function () {
 });
 
 // ADMIN ROUTES
-Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () {
+Route::middleware(['auth:admin','role:1'])->prefix('admin')->group(function () {
     Route::get('/cek-admin', function () {
-        // Print semua data user
-        dd(Auth::user());
+        dd(Auth::guard('admin')->user());
     });
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -153,18 +152,20 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
 
     // ADMIN ROUTES
     Route::get('/registrations', [AdminRegistrationController::class, 'index'])->name('admin.registrations.index');
-    Route::get('/registrations/{id}', [AdminRegistrationController::class, 'show'])->name('admin.registrations.show');
+    Route::get('/registrations/create', [AdminRegistrationController::class, 'create'])->name('admin.registrations.create');
+    Route::post('/registrations', [AdminRegistrationController::class, 'store'])->name('admin.registrations.store');
+    Route::get('/registrations/{admin}', [AdminRegistrationController::class, 'show'])->name('admin.registrations.show');
+    Route::get('/registrations/{admin}/edit', [AdminRegistrationController::class, 'edit'])->name('admin.registrations.edit');
+    Route::put('/registrations/{admin}', [AdminRegistrationController::class, 'update'])->name('admin.registrations.update');
+    Route::delete('/registrations/{admin}', [AdminRegistrationController::class, 'destroy'])->name('admin.registrations.destroy');
 });
  
 // STUDENT ROUTES
-Route::middleware(['auth:student', 'role:2'])->prefix('students')->group(function () {
-    Route::get('/cek-siswa', function () {
-        // Print semua data user
-        ddd(Auth::user());
+Route::middleware(['auth:student','role:2'])->prefix('students')->group(function () {
+     Route::get('/cek-siswa', function () {
+        dd(Auth::guard('student')->user()->levels_id);
     });
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('students.dashboard');
-
-    Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
 
     // Attendance
     Route::get('/attendance', [StudentAttendanceController::class, 'index'])->name('students.attendance.index');
@@ -175,4 +176,5 @@ Route::middleware(['auth:student', 'role:2'])->prefix('students')->group(functio
     Route::get('/payment', [StudentPaymentController::class, 'index'])->name('students.payment.index');
     Route::post('/payment', [StudentPaymentController::class, 'store'])->name('students.payment.store');
     Route::get('/payment-history', [StudentPaymentController::class, 'history'])->name('students.payment.history');
+    // Route::get('/payment/cancel/{id}', [StudentPaymentController::class, 'cancel'])->name('students.payment.cancel');
 });

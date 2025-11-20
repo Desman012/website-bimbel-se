@@ -1,14 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Filament\Resources\AdminResource;
-
 use Illuminate\Http\Request;
+use App\Models\Payment;
+use App\Models\Students;
 
 class AdminController extends Controller
 {
     public function dashboard()
     {
-        return view('admins.index');
+        $totalSiswa = Students::count();
+        $sudahBayar = Payment::where('status' , 'verified')->count();
+        
+        return view('admins.index', compact(
+            'totalSiswa',
+            'sudahBayar'
+        ));
     }
 }

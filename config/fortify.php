@@ -15,11 +15,9 @@ return [
     |
     */
 
-
-    'guard' => null, // Jangan dipaksa ke web
+    'guard' => null,
     'provider' => null,
     'model' => null,
-
     /*
     |--------------------------------------------------------------------------
     | Fortify Password Broker
