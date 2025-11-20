@@ -2,28 +2,34 @@
 
 namespace App\Actions\Fortify;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\ResetsUserPasswords;
+use App\Models\Admins;
+use App\Models\Students;
 
-class ResetUserPassword implements ResetsUserPasswords
+class ResetUserPassword
 {
-    use PasswordValidationRules;
-
-    /**
-     * Validate and reset the user's forgotten password.
-     *
-     * @param  array<string, string>  $input
-     */
-    public function reset(User $user, array $input): void
+    public function reset($input)
     {
-        Validator::make($input, [
-            'password' => $this->passwordRules(),
-        ])->validate();
+        $email = $input['email'];
+        $password = $input['password'];
 
-        $user->forceFill([
-            'password' => Hash::make($input['password']),
-        ])->save();
+        // Cek admin
+        $user = Admins::where('email', $email)->first();
+
+        // Jika tidak ada, cek student
+        if(!$user){
+            $user = Students::where('student_email', $email)->first();
+        }
+
+        if(!$user){
+            return back()->withErrors(['email' => 'Email tidak ditemukan']);
+        }
+
+        // Reset password
+        $user->password = Hash::make($password);
+        $user->save();
+
+        return $user;
     }
 }

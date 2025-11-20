@@ -16,9 +16,10 @@ return [
     */
 
 
-    'guard' => 'web',
-    'provider' => 'students',
-    'model' => App\Models\Students::class,
+    'guard' => null, // Jangan dipaksa ke web
+    'provider' => null,
+    'model' => null,
+
     /*
     |--------------------------------------------------------------------------
     | Fortify Password Broker
@@ -49,7 +50,7 @@ return [
 
     'username' => 'email',
 
-    'email' => 'email',
+    'email' => 'student_email',
 
     /*
     |--------------------------------------------------------------------------
@@ -147,7 +148,7 @@ return [
 
     'features' => [
         Features::registration(),
-        Features::resetPasswords(),
+        Features::resetPasswords(),   // wajib untuk lupa password
         Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),

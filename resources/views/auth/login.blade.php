@@ -65,7 +65,7 @@
                         <label class="flex items-center gap-2 text-gray-600">
                             <input type="checkbox" class="text-crimson" checked /> Ingat saya
                         </label>
-                        <a href="{{ route('password.request') }}" class="text-crimson hover:underline transition">Lupa
+                        <a href="{{ route('forgot-password') }}" class="text-crimson hover:underline transition">Lupa
                             Password?</a>
                     </div>
 
