@@ -19,7 +19,6 @@ use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Illuminate\Support\Facades\Log;
-
 use Illuminate\Support\Facades\Password;
 
 
@@ -48,6 +47,7 @@ class FortifyServiceProvider extends ServiceProvider
             $admin = Admins::where('email', $request->email)->first();
             if ($admin && Hash::check($request->password, $admin->password)) {
                 Auth::guard('admin')->login($admin);
+                
                 return $admin;
             }
 
@@ -87,13 +87,13 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.register');
         });
 
-Fortify::requestPasswordResetLinkView(function () {
-    return view('auth.forgot-password');
-});
+// Fortify::requestPasswordResetLinkView(function () {
+//     return view('auth.forgot-password');
+// });
 
-Fortify::resetPasswordView(function ($request) {
-    return view('auth.reset-password', ['request' => $request]);
-});
+// Fortify::resetPasswordView(function ($request) {
+//     return view('auth.reset-password', ['request' => $request]);
+// });
 
 
 // Fortify::sendPasswordResetLinkResponseUsing(function ($request, $status) {
@@ -112,7 +112,7 @@ Fortify::resetPasswordView(function ($request) {
 // });
 
 
-        Fortify::requestPasswordResetLinkView(function () {
+ Fortify::requestPasswordResetLinkView(function () {
     return view('auth.forgot-password');
 });
 
@@ -120,7 +120,9 @@ Fortify::resetPasswordView(function ($request) {
     return view('auth.reset-password', ['request' => $request]);
 });
 
+// Custom send reset link
 Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+
 
         Fortify::createUsersUsing(CreateNewStudents::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);

@@ -12,7 +12,100 @@ use App\Http\Controllers\StudentPaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use App\Actions\Fortify\ResetUserPassword;
+use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+
+
+Route::post('/forgot-password', function (Request $request) {
+    $email = $request->email;
+
+    // Cek di table admins & students
+    $guard = null;
+    if (\App\Models\Admins::where('email', $email)->exists()) {
+        $guard = 'admin';
+    } elseif (\App\Models\Students::where('student_email', $email)->exists()) {
+        $guard = 'student';
+    }
+
+    if (!$guard) {
+        Log::warning("Email tidak terdaftar: $email");
+        return back()->withErrors(['email' => 'Email tidak terdaftar']);
+    }
+
+    $token = app(ResetUserPassword::class)->createToken($email, $guard);
+
+    // Kirim email
+    $resetLink = url("/reset-password?token=$token&email=$email&guard=$guard");
+
+    Mail::raw("Klik link ini untuk reset password: $resetLink", function ($message) use ($email) {
+        $message->to($email)->subject('Reset Password');
+    });
+
+    Log::info("Email reset password dikirim ke: $email");
+
+    return back()->with('status', 'Link reset password sudah dikirim ke email Anda.');
+})->name('forgot-password');
+
+Route::post('/reset-password-submit', function (Request $request) {
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|confirmed|min:6',
+        'token' => 'required',
+        'guard' => 'required',
+    ]);
+
+    $record = DB::table('password_resets')
+        ->where('email', $request->email)
+        ->where('guard', $request->guard)
+        ->first();
+
+    if (!$record || $record->token !== $request->token) {
+        Log::warning("Token reset password invalid untuk: " . $request->email);
+        return back()->withErrors(['email' => 'Token reset password tidak valid']);
+    }
+
+    app(ResetUserPassword::class)->reset($request->email, $request->password, $request->guard);
+
+    return redirect('/login')->with('status', 'Password berhasil direset.');
+});
+
+// Tampilkan form reset password
+Route::get('/reset-password', function (Request $request) {
+    $token = $request->token;
+    $email = $request->email;
+    $guard = $request->guard;
+
+    // Cek token ada di tabel password_resets
+    $record = DB::table('password_resets')
+        ->where('email', $email)
+        ->where('guard', $guard)
+        ->first();
+
+    if (!$record || $record->token !== $token) {
+        return redirect('/forgot-password')->withErrors(['email' => 'Token reset password tidak valid atau sudah digunakan']);
+    }
+
+    // Tampilkan view reset-password
+    return view('auth.reset-password', [
+        'token' => $token,
+        'email' => $email,
+        'guard' => $guard,
+    ]);
+});
+// Route::get('/test-email', function () {
+//     try {
+//         Mail::raw('Test email', function ($message) {
+//             $message->to('2310631170071@student.unsika.ac.id')
+//                     ->subject('Test SMTP');
+//         });
+//         return 'Email sent!';
+//     } catch (\Exception $e) {
+//         return $e->getMessage();
+//     }
+// });
 
 Route::post('/logout', function () {
     // Logout dari semua guard yang mungkin aktif
@@ -62,7 +155,7 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/registrations', [AdminRegistrationController::class, 'index'])->name('admin.registrations.index');
     Route::get('/registrations/{id}', [AdminRegistrationController::class, 'show'])->name('admin.registrations.show');
 });
-
+ 
 // STUDENT ROUTES
 Route::middleware(['auth:student', 'role:2'])->prefix('students')->group(function () {
     Route::get('/cek-siswa', function () {

@@ -9,18 +9,18 @@
 <body class="flex justify-center items-center min-h-screen bg-gray-100">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
         <h1 class="text-2xl font-bold text-center text-crimson mb-4">Atur Ulang Password</h1>
-        <form method="POST" action="{{ route('password.update') }}">
+        <form method="POST" action="{{ url('/reset-password-submit') }}">
     @csrf
-    <input type="hidden" name="token" value="{{ $token }}">
-    <input type="email" name="email" value="{{ $email }}" required>
+    <input type="hidden" name="token" value="{{ request()->token }}">
+    <input type="hidden" name="email" value="{{ request()->email }}">
+    <input type="hidden" name="guard" value="{{ request()->guard }}">
     <input type="password" name="password" placeholder="Password Baru" required>
     <input type="password" name="password_confirmation" placeholder="Konfirmasi Password" required>
     <button type="submit">Reset Password</button>
-
-    @if(session('status')) <p>{{ session('status') }}</p> @endif
-    @error('email') <p>{{ $message }}</p> @enderror
-    @error('password') <p>{{ $message }}</p> @enderror
 </form>
+@if(session('status')) <p>{{ session('status') }}</p> @endif
+@error('email') <p>{{ $message }}</p> @enderror
+@error('password') <p>{{ $message }}</p> @enderror
     </div>
 </body>
 </html>
