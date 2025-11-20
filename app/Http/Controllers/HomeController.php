@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Facilities;
+use App\Models\Reviews;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function show()
     {
-        return view('landing.index');
+        $reviews = Reviews::all();
+        $facilities = Facilities::all();
+        return view('landing.index', compact(['reviews','facilities']));
     }
     public function logout()
     {
