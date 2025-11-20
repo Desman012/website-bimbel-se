@@ -23,21 +23,20 @@
 
         <nav class="flex-1">
             <ul class="space-y-5">
-                <li>
-                    <a href="#" class="flex items-center text-gray-700 hover:text-[#B73438] transition">
-                        <span class="ml-2">Dashboard</span>
+                    <a href="{{ route('students.dashboard') }}" class="text-gray-700 hover:text-[#B73438] transition block">
+                        Dashboard
                     </a>
                 </li>
 
                 <li>
-                    <a href="#" class="flex items-center text-gray-700 hover:text-[#B73438] transition">
-                        <span class="ml-2">Landing Page</span>
+                    <a href="{{ route('landing') }}" class="text-gray-700 hover:text-[#B73438] transition block">
+                        Landing Page
                     </a>
                 </li>
 
                 <li>
-                    <a href="#" class="flex items-center text-gray-700 font-semibold text-[#B73438]">
-                        <span class="ml-2">Siswa</span>
+                    <a href="#" class="text-[#B73438] font-semibold block">
+                        Siswa
                     </a>
                 </li>
             </ul>

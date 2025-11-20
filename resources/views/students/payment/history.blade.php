@@ -23,13 +23,13 @@
         <nav class="flex-1">
             <ul class="space-y-5">
                 <li>
-                    <a href="#" class="text-gray-700 hover:text-[#B73438] transition block">
+                    <a href="{{ route('students.dashboard') }}" class="text-gray-700 hover:text-[#B73438] transition block">
                         Dashboard
                     </a>
                 </li>
 
                 <li>
-                    <a href="#" class="text-gray-700 hover:text-[#B73438] transition block">
+                    <a href="{{ route('landing') }}" class="text-gray-700 hover:text-[#B73438] transition block">
                         Landing Page
                     </a>
                 </li>

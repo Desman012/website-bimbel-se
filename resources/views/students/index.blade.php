@@ -2,86 +2,107 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Siswa</title>
+    <title>Dashboard Siswa | Sinar Education</title>
+
+    <!-- AdminLTE + Tailwind -->
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/css/adminlte.min.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100">
+<body class="hold-transition sidebar-mini layout-fixed bg-gray-100">
 
-    <div class="max-w-6xl mx-auto mt-10">
+<div class="wrapper">
 
-        <!-- Judul -->
-        <h1 class="text-3xl font-bold mb-6">Dashboard Siswa</h1>
+    <!-- NAVBAR -->
+    @include('students.layouts.navbar')
 
-        <!-- GRID UTAMA -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- SIDEBAR -->
+    @include('students.layouts.sidebar')
 
-            <!-- Pengingat Absensi -->
-            <div class="p-6 rounded-xl shadow bg-[#FFF7CC] flex justify-between items-center">
-                <div>
-                    <h2 class="text-xl font-semibold mb-2 text-gray-700">Pengingat Absensi Hari Ini</h2>
+    <!-- CONTENT WRAPPER -->
+    <div class="content-wrapper">
+
+        <!-- HEADER -->
+        <section class="content-header px-4 pt-4">
+            <h1 class="text-2xl font-semibold text-gray-800">Dashboard Siswa</h1>
+        </section>
+
+        <!-- MAIN CONTENT -->
+        <section class="content px-4 pb-4">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- CARD 1: Pengingat Absensi -->
+                <div class="p-6 bg-white shadow rounded-xl border">
+                    <h2 class="text-lg font-semibold text-gray-700 mb-3">Absensi Hari Ini</h2>
 
                     @if($attendanceToday)
-                        @if($attendanceToday->attendance_status == 'present')
-                            <p class="text-green-600 text-lg font-bold">Sudah Absen ✔</p>
+                        @if($attendanceToday->attendance_status === 'present')
+                            <p class="text-green-600 font-semibold">✔ Kamu sudah absen hari ini.</p>
                         @else
-                            <p class="text-red-600 text-lg font-bold">Tidak Hadir ❌</p>
+                            <p class="text-red-600 font-semibold">✘ Kamu tidak hadir hari ini.</p>
                         @endif
                     @else
-                        <p class="text-yellow-600 text-lg font-bold">Belum Absen Hari Ini!</p>
+                        <p class="text-orange-600 font-semibold">⚠ Belum melakukan absensi hari ini.</p>
                     @endif
                 </div>
 
-                <div class="bg-blue-500 text-white p-4 rounded-full shadow">
-                    <i class="fa fa-calendar-check text-3xl"></i>
-                </div>
-            </div>
+                <!-- CARD 2: Statistik Masuk -->
+                <div class="p-6 bg-white shadow rounded-xl border">
+                    <h2 class="text-lg font-semibold mb-3 text-gray-700">Statistik Absensi</h2>
 
-            <!-- Statistik Kehadiran -->
-            <div class="p-6 rounded-xl shadow bg-[#FFF7CC] flex justify-between items-center">
-                <div>
-                    <h2 class="text-xl font-semibold mb-2 text-gray-700">Statistik Kehadiran</h2>
-
-                    <div class="mt-3">
-                        <p class="text-3xl font-bold text-green-600">{{ $totalMasuk }}</p>
-                        <p class="text-gray-600">Hadir</p>
-                        <p class="text-3xl font-bold text-red-600 mt-4">{{ $totalTidakMasuk }}</p>
-                        <p class="text-gray-600">Tidak Hadir</p>
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600">Total Masuk</p>
+                            <p class="text-2xl font-bold text-green-600">{{ $totalMasuk }}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600">Tidak Masuk</p>
+                            <p class="text-2xl font-bold text-red-600">{{ $totalTidakMasuk }}</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bg-green-500 text-white p-4 rounded-full shadow">
-                    <i class="fa fa-user-check text-3xl"></i>
-                </div>
-            </div>
+                <!-- CARD 3: Status Pembayaran -->
+                <div class="p-6 bg-white shadow rounded-xl border">
+                    <h2 class="text-lg font-semibold text-gray-700 mb-3">Status Pembayaran</h2>
 
-            <!-- Alert Pembayaran -->
-            <div class="p-6 rounded-xl shadow bg-[#FFF7CC] flex justify-between items-center">
-                <div>
-                    <h2 class="text-xl font-semibold mb-2 text-gray-700">Pembayaran Bulanan</h2>
+                    @php
+                        $month = now()->translatedFormat('F Y');
+                    @endphp
 
-                    @if($payment === 'paid')
-                        <p class="text-green-600 text-lg font-bold">Sudah Lunas ✔</p>
+                    <p class="text-gray-600 mb-2">Bulan: <b>{{ $month }}</b></p>
 
-                    @elseif($payment === 'due')
-                        <p class="text-yellow-600 text-lg font-bold">Belum Dibayar ⚠</p>
-
-                    @elseif($payment === 'late')
-                        <p class="text-red-600 text-lg font-bold">Terlambat Membayar ❌</p>
-
+                    @if(!$payment)
+                        <p class="text-red-600 font-semibold">
+                            ❌ Kamu belum melakukan pembayaran bulan ini.
+                        </p>
                     @else
-                        <p class="text-gray-600">Belum ada informasi pembayaran.</p>
+                        @if($payment->status === 'pending')
+                            <p class="text-yellow-600 font-semibold">⏳ Menunggu verifikasi.</p>
+                        @elseif($payment->status === 'success' || $payment->status === 'verified')
+                            <p class="text-green-600 font-semibold">✔ Pembayaran sudah diterima.</p>
+                        @else
+                            <p class="text-red-600 font-semibold">❌ Pembayaran ditolak.</p>
+                        @endif
                     @endif
                 </div>
 
-                <div class="bg-red-500 text-white p-4 rounded-full shadow">
-                    <i class="fa fa-wallet text-3xl"></i>
-                </div>
             </div>
 
-        </div>
+            <!-- WELCOME CARD -->
+            <div class="mt-8 bg-white p-8 rounded-xl shadow border">
+                <h2 class="text-xl font-bold text-gray-800">
+                    Selamat datang, {{ $authUser->full_name }}! 👋
+                </h2>
+                <p class="text-gray-600 mt-2">
+                    Berikut adalah ringkasan aktivitasmu hari ini di Sinar Education.
+                </p>
+            </div>
+
+        </section>
     </div>
+</div>
 
 </body>
 </html>
