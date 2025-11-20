@@ -131,10 +131,9 @@ Route::middleware(['role'])->group(function () {
 });
 
 // ADMIN ROUTES
-Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () {
+Route::middleware(['auth:admin','role:1'])->prefix('admin')->group(function () {
     Route::get('/cek-admin', function () {
-        // Print semua data user
-        dd(Auth::user());
+        dd(Auth::guard('admin')->user());
     });
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -162,10 +161,9 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
 });
  
 // STUDENT ROUTES
-Route::middleware(['auth:student', 'role:2'])->prefix('students')->group(function () {
-    Route::get('/cek-siswa', function () {
-        // Print semua data user
-        ddd(Auth::user());
+Route::middleware(['auth:student','role:2'])->prefix('students')->group(function () {
+     Route::get('/cek-siswa', function () {
+        dd(Auth::guard('student')->user()->levels_id);
     });
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('students.dashboard');
 
@@ -178,4 +176,5 @@ Route::middleware(['auth:student', 'role:2'])->prefix('students')->group(functio
     Route::get('/payment', [StudentPaymentController::class, 'index'])->name('students.payment.index');
     Route::post('/payment', [StudentPaymentController::class, 'store'])->name('students.payment.store');
     Route::get('/payment-history', [StudentPaymentController::class, 'history'])->name('students.payment.history');
+    // Route::get('/payment/cancel/{id}', [StudentPaymentController::class, 'cancel'])->name('students.payment.cancel');
 });

@@ -9,13 +9,24 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
-    protected $table = 'payments';
 
     protected $fillable = [
-        'student_id', // pastikan user login sebagai student
-            'month',
-            'amount_paid',
-            'payment_proof',
-            'status',
+        'student_id',
+        'admin_id',
+        'month',
+        'amount_paid',
+        'payment_proof',
+        'status',
     ];
+
+    // Relasi opsional (kalau tabel students dan admins sudah ada)
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
 }
