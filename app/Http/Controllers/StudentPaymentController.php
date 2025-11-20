@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Models\Prices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,43 +11,138 @@ class StudentPaymentController extends Controller
 {
     public function index()
     {
-        return view('students.payment.index');
+        // CEK USER LOGIN
+        $authUser = Auth::guard('student')->user();
+        $id = $authUser->id; // relasi ke tabel lain
+
+        // if (! $authUser || ! $authUser->student) {
+        //     return redirect()->back()->with('status', 'Akun ini tidak memiliki data siswa.');
+        // }
+
+        $monthNow = now()->format('F Y');
+        $levels_id = $authUser->levels_id;
+        $class_id = $authUser->class_id;
+        // CEK BUKTI YANG MASIH PENDING
+        $existingPayment = Payment::where('id', $id)
+            ->where('month', $monthNow)
+            ->where('status', 'pending')
+            ->first();
+
+        // AMBIL HARGA DARI PRICES
+        $price = Prices::where('level_id', $authUser->levels_id)
+            ->where('class_id', $authUser->class_id)
+            ->first();
+        $amountPaid = $price ? $price->price : 0;
+
+        return view('students.payment.index', compact(
+            'levels_id',
+            'class_id',
+            'authUser',
+            'monthNow',
+            'amountPaid',
+            'existingPayment'
+        ));
     }
 
     public function store(Request $request)
     {
-        // Validasi data
+        $student = Auth::user(); // karena student yang login
+
+        // Ambil harga berdasarkan level & class
+        $price = Prices::where('level_id', (int) $authUser->level_id)
+            ->where('class_id', (int) $authUser->class_id)
+            ->first();
+
+        if (! $price) {
+            return redirect()->back()->with('status', 'Harga belum diatur.');
+        }
+
+        // Validasi upload
         $request->validate([
-            'tanggal' => 'required|date',
-            'periode' => 'required|string',
-            'jenjang' => 'required|string',
-            'jenis_paket' => 'required|string',
-            'nominal' => 'required|numeric',
-            'bukti' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'month' => 'required|string',
+            'payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // Upload bukti pembayaran
-        $path = $request->file('bukti')->store('bukti_pembayaran', 'public');
+        // Cek apakah sudah upload bulan ini
+        $exists = Payment::where('student_id', $student->id)
+            ->where('month', $request->month)
+            ->where('status', 'pending')
+            ->exists();
 
-        // Simpan ke tabel payments
+        if ($exists) {
+            return redirect()->back()->with('status', 'Sudah upload bulan ini.');
+        }
+
+        // Upload
+        $path = $request->file('payment_proof')->store('bukti_pembayaran', 'public');
+
+        // Simpan pembayaran
         Payment::create([
-            'student_id' => Auth::id(), // pastikan user login sebagai student
-            'month' => $request->periode,
-            'amount_paid' => $request->nominal,
+            'student_id' => $student->id,
+            'admin_id' => null,
+            'month' => $request->month,
+            'amount_paid' => $price->price,
             'payment_proof' => $path,
             'status' => 'pending',
         ]);
 
-        // Redirect dengan status
-        return redirect()->back()->with('status', 'Process');
+        return redirect()->back()->with('status', 'Upload berhasil!');
     }
 
     public function history()
     {
-        $payments = \App\Models\Payment::where('student_id', \Illuminate\Support\Facades\Auth::id())
+        $authUser = Auth::guard('student')->user();
+
+        if (empty($authUser)) {
+            return redirect()->back()->with('status', 'Akun ini tidak memiliki data siswa.');
+        }
+
+        $id = $authUser->id;
+
+        $payments = Payment::where('student_id', $id)
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('students.payment.history', compact('payments'));
+        $monthNow = now()->format('F Y');
+
+        $price = Prices::where('level_id', $authUser->level_id)
+            ->where('class_id', $authUser->class_id)
+            ->first();
+
+        $amountPaid = $price ? $price->price : 0;
+
+        return view('students.payment.history', compact(
+            'payments',
+            'monthNow',
+            'amountPaid'
+        ));
+    }
+
+    public function cancel($id)
+    {
+        $authUser = Auth::user();
+
+        if (! $authUser || ! $authUser->student) {
+            return redirect()->back()->with('status', 'Akun ini tidak memiliki data siswa.');
+        }
+
+        $student = $authUser->student;
+
+        $payment = Payment::findOrFail($id);
+
+        // Cek kepemilikan
+        if ($payment->student_id !== $student->id) {
+            abort(403);
+        }
+
+        // Hapus file jika ada
+        $filePath = storage_path('app/public/'.$payment->payment_proof);
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+
+        $payment->delete();
+
+        return redirect()->back()->with('status', 'Pembayaran berhasil dibatalkan.');
     }
 }

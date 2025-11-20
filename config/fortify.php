@@ -16,9 +16,9 @@ return [
     */
 
 
-    'guard' => 'web',
-    'provider' => 'students',
-    'model' => App\Models\Students::class,
+    'guard' => null,
+    'provider' => null,
+    'model' => null,
     /*
     |--------------------------------------------------------------------------
     | Fortify Password Broker
@@ -49,7 +49,7 @@ return [
 
     'username' => 'email',
 
-    'email' => 'email',
+    'email' => 'student_email',
 
     /*
     |--------------------------------------------------------------------------

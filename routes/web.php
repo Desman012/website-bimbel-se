@@ -36,16 +36,10 @@ Route::middleware(['role'])->group(function () {
     // Route::post('/register', [AuthController::class, 'register'])->name('register-post');
 });
 
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    // Route::post('/login', [AuthController::class, 'login'])->name('login-post');
-
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    // Route::post('/register', [AuthController::class, 'register'])->name('register-post');
-// });
 // ADMIN ROUTES
-Route::middleware(['role:1'])->prefix('admin')->group(function () {
+Route::middleware(['auth:admin','role:1'])->prefix('admin')->group(function () {
     Route::get('/cek-admin', function () {
-        dd(auth('admin')->user());
+        dd(Auth::guard('admin')->user());
     });
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
@@ -68,10 +62,11 @@ Route::middleware(['role:1'])->prefix('admin')->group(function () {
 });
 
 // STUDENT ROUTES
-Route::middleware(['role:2'])->prefix('students')->group(function () {
+Route::middleware(['auth:student','role:2'])->prefix('students')->group(function () {
+     Route::get('/cek-siswa', function () {
+        dd(Auth::guard('student')->user()->levels_id);
+    });
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('students.dashboard');
-
-    Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('student.dashboard');
 
     // Attendance
     Route::get('/attendance', [StudentAttendanceController::class, 'index'])->name('students.attendance.index');
@@ -82,4 +77,5 @@ Route::middleware(['role:2'])->prefix('students')->group(function () {
     Route::get('/payment', [StudentPaymentController::class, 'index'])->name('students.payment.index');
     Route::post('/payment', [StudentPaymentController::class, 'store'])->name('students.payment.store');
     Route::get('/payment-history', [StudentPaymentController::class, 'history'])->name('students.payment.history');
+    // Route::get('/payment/cancel/{id}', [StudentPaymentController::class, 'cancel'])->name('students.payment.cancel');
 });
