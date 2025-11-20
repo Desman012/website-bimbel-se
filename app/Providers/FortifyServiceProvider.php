@@ -19,7 +19,6 @@ use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Illuminate\Support\Facades\Log;
-
 use Illuminate\Support\Facades\Password;
 
 
@@ -48,6 +47,7 @@ class FortifyServiceProvider extends ServiceProvider
             $admin = Admins::where('email', $request->email)->first();
             if ($admin && Hash::check($request->password, $admin->password)) {
                 Auth::guard('admin')->login($admin);
+                // Simpan info tambahan di session
                 session([
                     'role_id' => $admin->role_id,
                     'name' => $admin->full_name,
@@ -61,7 +61,7 @@ class FortifyServiceProvider extends ServiceProvider
             $student = Students::where('student_email', $request->email)->first();
             if ($student && Hash::check($request->password, $student->password)) {
                 Auth::guard('student')->login($student);
-                 session([
+                session([
                     'role_id' => $student->role_id,
                     'name' => $student->full_name,
                     'email' => $student->student_email,
@@ -99,40 +99,42 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.register');
         });
 
-Fortify::requestPasswordResetLinkView(function () {
-    return view('auth.forgot-password');
-});
+        // Fortify::requestPasswordResetLinkView(function () {
+        //     return view('auth.forgot-password');
+        // });
 
-Fortify::resetPasswordView(function ($request) {
-    return view('auth.reset-password', ['request' => $request]);
-});
+        // Fortify::resetPasswordView(function ($request) {
+        //     return view('auth.reset-password', ['request' => $request]);
+        // });
 
 
-// Fortify::sendPasswordResetLinkResponseUsing(function ($request, $status) {
-//     // Debug: catat email dan status
-//     Log::info('Reset password requested for: '.$request->email);
-//     Log::info('Status: '.$status);
+        // Fortify::sendPasswordResetLinkResponseUsing(function ($request, $status) {
+        //     // Debug: catat email dan status
+        //     Log::info('Reset password requested for: '.$request->email);
+        //     Log::info('Status: '.$status);
 
-//     return back()->with('status', __($status));
-// });
+        //     return back()->with('status', __($status));
+        // });
 
-// Fortify::sendPasswordResetFailedResponseUsing(function ($request, $status) {
-//     Log::warning('Failed reset password for: '.$request->email);
-//     Log::warning('Status: '.$status);
+        // Fortify::sendPasswordResetFailedResponseUsing(function ($request, $status) {
+        //     Log::warning('Failed reset password for: '.$request->email);
+        //     Log::warning('Status: '.$status);
 
-//     return back()->withErrors(['email' => __($status)]);
-// });
+        //     return back()->withErrors(['email' => __($status)]);
+        // });
 
 
         Fortify::requestPasswordResetLinkView(function () {
-    return view('auth.forgot-password');
-});
+            return view('auth.forgot-password');
+        });
 
-Fortify::resetPasswordView(function ($request) {
-    return view('auth.reset-password', ['request' => $request]);
-});
+        Fortify::resetPasswordView(function ($request) {
+            return view('auth.reset-password', ['request' => $request]);
+        });
 
-Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+        // Custom send reset link
+        Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+
 
         Fortify::createUsersUsing(CreateNewStudents::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);

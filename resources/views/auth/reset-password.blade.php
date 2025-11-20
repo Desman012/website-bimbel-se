@@ -7,6 +7,7 @@
     <title>Ubah Password | Bimbel Sinar Education</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+<<<<<<< HEAD
 
 <body class="h-screen bg-gradient-to-r from-orange-50 to-red-50 flex items-center justify-center">
 
@@ -75,6 +76,23 @@
 
         <a href="{{ route('login') }}"
             class="mt-6 text-crimson hover:underline transition text-sm">Kembali ke halaman login</a>
+=======
+<body class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="bg-white p-8 rounded-lg shadow-md w-96">
+        <h1 class="text-2xl font-bold text-center text-crimson mb-4">Atur Ulang Password</h1>
+        <form method="POST" action="{{ url('/reset-password-submit') }}">
+    @csrf
+    <input type="hidden" name="token" value="{{ request()->token }}">
+    <input type="hidden" name="email" value="{{ request()->email }}">
+    <input type="hidden" name="guard" value="{{ request()->guard }}">
+    <input type="password" name="password" placeholder="Password Baru" required>
+    <input type="password" name="password_confirmation" placeholder="Konfirmasi Password" required>
+    <button type="submit">Reset Password</button>
+</form>
+@if(session('status')) <p>{{ session('status') }}</p> @endif
+@error('email') <p>{{ $message }}</p> @enderror
+@error('password') <p>{{ $message }}</p> @enderror
+>>>>>>> 4f22cbd7352808a4c52ca2ea0e4ee7de1e4427bd
     </div>
 
 </body>
