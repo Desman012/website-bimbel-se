@@ -40,7 +40,7 @@ Route::post('/forgot-password', function (Request $request) {
     // Kirim email
     $resetLink = url("/reset-password?token=$token&email=$email&guard=$guard");
 
-    Mail::raw("Klik link ini untuk reset password: $resetLink", function ($message) use ($email) {
+    Mail::raw("Klik link ini untuk reset password:\n$resetLink", function ($message) use ($email) {
         $message->to($email)->subject('Reset Password');
     });
 
