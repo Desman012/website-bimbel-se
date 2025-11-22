@@ -69,7 +69,7 @@
       <div class="flex-1" data-aos="fade-right">
         <h3 class="text-4xl md:text-5xl font-bold leading-tight">
           
-          <span class="text-yellow-300">Solusi Belajar untuk SD, SMP, SMA</span>
+          <span class="text-yellow-300">Solusi Belajar untuk SD, SMP, & SMA</span>
         </h3>
         <p class="mt-4 text-lg opacity-90">
           Bimbingan belajar menjadi salah satu kebutuhan penting bagi siswa yang ingin meningkatkan prestasi akademik. Dengan metode belajar yang tepat, siswa bisa lebih mudah memahami pelajaran serta siap menghadapi berbagai ujian sekolah maupun tes masuk perguruan tinggi. Bimbel Sinar Education, yang berlokasi di Tambun Selatan, Kabupaten Bekasi, hadir sebagai solusi terbaik dengan layanan bimbingan belajar berkualitas untuk siswa dari tingkat PAUD hingga SMA serta persiapan UTBK.
