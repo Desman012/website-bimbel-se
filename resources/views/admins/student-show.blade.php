@@ -37,7 +37,7 @@
                     <div class="row mb-2 mt-1">
                         <div class="col-sm-6 pl-4">
                             <div class="flex items-center">
-                                <a href="{{ route('admin.registrations.index') }}"
+                                <a href="{{ route('admin.students.index') }}"
                                     class="text-gray-600 hover:text-yellow-700 mr-4 text-l">
                                     <i class="fas fa-arrow-left"></i>
                                 </a>

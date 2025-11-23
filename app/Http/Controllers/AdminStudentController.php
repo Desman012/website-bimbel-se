@@ -47,25 +47,32 @@ class AdminStudentController extends Controller
 
     public function update(Request $request, $student)
     {
-        // 1. Validasi Data Input
-        $validatedData = $request->validate([
-            'nama_lengkap' => 'required|string|max:255',
-            'no_siswa' => 'required|string|max:20|unique:students,no_siswa,' . $student,
-            'levels_id' => 'required|exists:levels,id', // Perhatikan, ini harus sesuai dengan nama input Jenjang di form
-            'no_orang_tua' => 'nullable|string|max:20',
-            'status_akun' => 'required|in:Aktif,Nonaktif,Diblokir', // Sesuaikan dengan opsi yang Anda miliki
-        ]);
+    // 1. Validasi Data
+    $validatedData = $request->validate([
+        'full_name'    => 'required|string|max:255',
+        'phone_number' => 'required|string|max:20|unique:students,phone_number,' . $student, // Asumsi 'No. Siswa' adalah phone_number
+        'parent_phone' => 'nullable|string|max:20', // Asumsi 'No. Orang Tua' adalah parent_phone
+        'status'       => 'required|in:active,inactive',
+        'address'      => 'nullable|string',
+    ]);
 
-        // 2. Cari Data Siswa (Find the record)
-        // Ambil data siswa berdasarkan ID yang dilewatkan
-        $studentData = Students::findOrFail($student);
+    // 2. Cari Data Siswa (Find the record)
+    $students = Students::findOrFail($student);
 
-        // 3. Update Data Siswa dan Simpan (Update and Save)
-        $studentData->update($validatedData);
+    // 3. Update Data Siswa dan Simpan (Update and Save)
+    $updateData = [
+        'full_name'    => $validatedData['full_name'],
+        'phone_number' => $validatedData['phone_number'],
+        'parent_phone' => $validatedData['parent_phone'],
+        'status'       => $validatedData['status'],
+        'address'      => $validatedData['address'],
+    ];
 
-        // 4. Redirect dan Berikan Pesan Sukses
-        return redirect()->route('admin.students.index', $studentData->id)
-            ->with('success', 'Data siswa berhasil diperbarui!');
+    // Lakukan update:
+    $students->update($updateData);
+
+    // 4. Redirect 
+    return redirect()->route('admin.students.index', $students->id);
     }
 
     public function destroy($id)
