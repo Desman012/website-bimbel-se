@@ -158,6 +158,15 @@ Route::middleware(['auth:admin','role:1'])->prefix('admin')->group(function () {
     Route::get('/registrations/{admin}/edit', [AdminRegistrationController::class, 'edit'])->name('admin.registrations.edit');
     Route::put('/registrations/{admin}', [AdminRegistrationController::class, 'update'])->name('admin.registrations.update');
     Route::delete('/registrations/{admin}', [AdminRegistrationController::class, 'destroy'])->name('admin.registrations.destroy');
+    
+    // ADMIN STUDENT ROUTES
+    Route::get('/students', [AdminStudentController::class, 'index'])->name('admin.students.index');
+    Route::get('/students/create', [AdminStudentController::class, 'create'])->name('admin.students.create');
+    Route::get('/students/{student}', [AdminStudentController::class, 'show'])->name('admin.students.show');
+    Route::get('/students/{student}/edit', [AdminStudentController::class, 'edit'])->name('admin.students.edit');
+    Route::post('/students', [AdminStudentController::class, 'store'])->name('admin.students.store');
+    Route::put('/students/{student}', [AdminStudentController::class, 'update'])->name('admin.students.update');
+    Route::delete('/students/{student}', [AdminStudentController::class, 'destroy'])->name('admin.students.destroy');
 });
  
 // STUDENT ROUTES

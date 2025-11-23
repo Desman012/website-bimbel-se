@@ -38,7 +38,7 @@
                         <a href="{{ route('admin.registrations.index') }}" class="text-gray-600 hover:text-yellow-700 mr-4 text-l">
                             <i class="fas fa-arrow-left"></i>
                         </a>
-                        <h1 class="text-xl font-semibold">Edit: {{ $admin->full_name }}</h1>
+                        <h1 class="text-xl font-semibold">Edit Admin</h1>
                     </div>
                 </div>
                 <div class="col-sm-6">

@@ -49,6 +49,11 @@
     <!-- Main content -->
     <section class="content">
       <div class="container mx-auto p-4">
+        <div class="mb-4 bg-yellow-100 p-8 rounded-xl shadow border">
+          <h2 class="text-xl font-bold text-gray-800">
+            Selamat datang, {{ Auth::guard('admin')->user()->full_name ?? 'Admin' }}! 👋
+          </h2>
+        </div>
         <div class="flex flex-wrap -mx-2"> 
             <x-dashboard-card 
                 title="Total Siswa"
@@ -73,6 +78,9 @@
                 bgColor="bg-yellow-100" 
                 iconBgColor="bg-green-600" 
             />
+        </div>
+        <div class="mt-4 bg-yellow-100 p-8 rounded-xl shadow border">
+          <h2 class="text-xl font-bold text-gray-800">      
         </div>
       </div>
     </section>
