@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Actions\Fortify\ResetUserPassword;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Students;
+use App\Models\Admins;
+use App\Mail\ResetPasswordMail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -24,9 +26,9 @@ Route::post('/forgot-password', function (Request $request) {
 
     // Cek di table admins & students
     $guard = null;
-    if (\App\Models\Admins::where('email', $email)->exists()) {
+    if (Admins::where('email', $email)->exists()) {
         $guard = 'admin';
-    } elseif (\App\Models\Students::where('student_email', $email)->exists()) {
+    } elseif (Students::where('student_email', $email)->exists()) {
         $guard = 'student';
     }
 
@@ -35,14 +37,14 @@ Route::post('/forgot-password', function (Request $request) {
         return back()->withErrors(['email' => 'Email tidak terdaftar']);
     }
 
+    // Buat token
     $token = app(ResetUserPassword::class)->createToken($email, $guard);
 
-    // Kirim email
+    // Reset link
     $resetLink = url("/reset-password?token=$token&email=$email&guard=$guard");
 
-    Mail::raw("Klik link ini untuk reset password:\n$resetLink", function ($message) use ($email) {
-        $message->to($email)->subject('Reset Password');
-    });
+    // Kirim email dengan template cantik
+    Mail::to($email)->send(new ResetPasswordMail($resetLink));
 
     Log::info("Email reset password dikirim ke: $email");
 
@@ -131,7 +133,7 @@ Route::middleware(['role'])->group(function () {
 });
 
 // ADMIN ROUTES
-Route::middleware(['auth:admin','role:1'])->prefix('admin')->group(function () {
+Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () {
     Route::get('/cek-admin', function () {
         dd(Auth::guard('admin')->user());
     });
@@ -159,10 +161,10 @@ Route::middleware(['auth:admin','role:1'])->prefix('admin')->group(function () {
     Route::put('/registrations/{admin}', [AdminRegistrationController::class, 'update'])->name('admin.registrations.update');
     Route::delete('/registrations/{admin}', [AdminRegistrationController::class, 'destroy'])->name('admin.registrations.destroy');
 });
- 
+
 // STUDENT ROUTES
-Route::middleware(['auth:student','role:2'])->prefix('students')->group(function () {
-     Route::get('/cek-siswa', function () {
+Route::middleware(['auth:student', 'role:2'])->prefix('students')->group(function () {
+    Route::get('/cek-siswa', function () {
         dd(Auth::guard('student')->user()->levels_id);
     });
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('students.dashboard');
