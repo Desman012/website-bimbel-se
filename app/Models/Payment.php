@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Students;
+use App\Models\Admins;
 
 
 class Payment extends Model
@@ -22,11 +24,11 @@ class Payment extends Model
     // Relasi opsional (kalau tabel students dan admins sudah ada)
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Students::class);
     }
 
     public function admin()
     {
-        return $this->belongsTo(Admin::class);
+        return $this->belongsTo(Admins::class);
     }
 }
