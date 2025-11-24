@@ -23,6 +23,14 @@
                       </p>
                   </a>
               </li>
+              <li class="nav-item has-treeview">
+                  <a href="{{ route('admin.landing') }}" class="nav-link">
+                      <i class="nav-icon fas fa-tachometer-alt"></i>
+                      <p>
+                          Manajemen Landing Page
+                      </p>
+                  </a>
+              </li>
               <li class="nav-item">
                   <a href="{{ route('admin.students.registration.index') }}" class="nav-link">
                       <i class="nav-icon far fa-calendar-alt"></i>
