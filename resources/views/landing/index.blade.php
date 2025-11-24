@@ -16,6 +16,10 @@
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
   />
+  
+  <!-- CDN Flaticon UIcons -->
+<link rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
   html { scroll-behavior: smooth; }
@@ -44,7 +48,6 @@
 </style>
 </head>
 <body class="font-sans text-gray-800">
-
   <!-- NAVBAR -->
   <nav class="bg-white shadow-md fixed top-0 w-full z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -103,7 +106,52 @@
   </section>
 
   <!-- ABOUT -->
-  <section id="about" class="py-20 bg-white">
+ 
+{{-- <section id="about" class="py-20 bg-gradient-to-br from-orange-100 via-yellow-100 to-orange-300">
+  <div class="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-10">
+
+    <!-- LEFT: GALERI SLIDER -->
+    <div class="w-full">
+        <div class="swiper mySwiper rounded-xl shadow-lg">
+            <div class="swiper-wrapper">
+
+                <div class="swiper-slide">
+                    <img src="{{ Vite::asset('resources/img/foto1(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Vite::asset('resources/img/foto2(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Vite::asset('resources/img/foto3(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Vite::asset('resources/img/foto4(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                </div>
+
+            </div>
+
+            <!-- TOMBOL PREV & NEXT -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+
+    <!-- RIGHT: DESKRIPSI -->
+    <div class="max-w-6xl mx-auto px-6 text-center" data-aos="fade-up">
+      <h3 class="text-3xl font-bold text-orange-600 mb-4">Tentang Kami</h3>
+      <p class="text-gray-700 max-w-3xl mx-auto leading-relaxed">
+        Bimbel Sinar Education adalah lembaga bimbingan belajar yang telah berdiri lebih dari 5 tahun dan fokus memberikan pendampingan belajar bagi siswa SD, SMP, SMA, hingga persiapan UTBK (SNBT). Dengan motto <strong>Your Bright Future Starts Here</strong>, Sinar Education berkomitmen membantu siswa belajar secara lebih terarah, efektif, dan menyenangkan.
+        <br><br>
+        Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhasil mendampingi banyak siswa mencapai prestasi terbaik di sekolah bahkan hingga lolos ke perguruan tinggi favorit.
+      </p>
+    </div>
+
+  </div>
+</section> --}}
+
+
+
+  <section id="about" class="py-20 bg-gradient-to-br from-orange-100 via-yellow-100 to-orange-300">
     <div class="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-10">
 
     <!-- LEFT: GALERI SLIDER -->
@@ -396,13 +444,15 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
         <h4 class="text-2xl font-bold mb-4">Sinar Education</h4>
 
         <p class="mb-3">
-          <span class="font-bold">📍 Alamat:</span>
+          <i class="fa-solid fa-location-dot fs-5 px-1"></i>
+          <span class="font-bold">Alamat:</span>
           Desa Mangunjaya, Kp. Siluman Tambun Selatan Gang Sawo 1, Jln Pendidikan,  
           Rt 03, Rw18 No.52, Mangunjaya, Kec. Tambun Sel., Kabupaten Bekasi, Jawa Barat 17510
         </p>
 
         <p class="mb-6">
-          <span class="font-bold">📞 Telepon:</span> 0857-3340-1530
+          <i class="fa-solid fa-phone fs-5 px-1"></i>
+          <span class="font-bold">Telepon:</span> 0857-3340-1530
         </p>
 
         <!-- WA Buttons -->
@@ -410,65 +460,19 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
           <a href="https://wa.me/6285714609869"
              target="_blank"
              class="text-white underline underline-offset-2 hover:text-orange-200 transition">
-            Admin 1 (WhatsApp)
+             <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
+             +6285714609869 (Admin 1) 
           </a>
 
           <a href="https://wa.me/628567734085"
              target="_blank"
              class="text-white underline underline-offset-2 hover:text-orange-200 transition">
-            Admin 2 (WhatsApp)
+             <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
+             +628567734085 (Admin 2)
           </a>
         </div>
 
-        <!-- Social Media -->
-        <div class="flex items-center gap-6 mt-8 text-white">
-
-          <!-- Instagram -->
-          <a href="https://www.instagram.com/sinareducation_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-             target="_blank"
-             class="hover:text-orange-200 transition">
-            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 
-              5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2c1.66 0 3 1.34 3 
-              3v10c0 1.66-1.34 3-3 3H7c-1.66 0-3-1.34-3-3V7c0-1.66 
-              1.34-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 
-              000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-2a1.5 
-              1.5 0 100 3 1.5 1.5 0 000-3z"/>
-            </svg>
-          </a>
-
-          <!-- TikTok -->
-          <a href="https://www.tiktok.com/@sinareducation01?is_from_webapp=1&sender_device=pc"
-             target="_blank"
-             class="hover:text-orange-200 transition">
-            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12.766 2h3.09c.145 1.26.756 2.432 1.73 
-              3.295.92.82 2.146 1.29 3.414 1.33v3.18a7.136 
-              7.136 0 01-3.73-1.03v7.58c0 2.39-1.28 4.58-3.36 
-              5.74-2.02 1.11-4.52 1.08-6.51-.09a6.613 6.613 
-              0 01-3.28-5.71c-.03-2.26 1.11-4.36 3.03-5.54 
-              1.27-.78 2.77-1.1 4.24-.93v3.29c-.52-.17-1.09-.14-1.6.1-.86.42-1.4 
-              1.29-1.39 2.24 0 1.39 1.12 2.52 2.51 
-              2.52a2.52 2.52 0 002.5-2.52V2z"/>
-            </svg>
-          </a>
-
-          <!-- YouTube -->
-          <a href="https://youtube.com/@sinareducationofficial5005?si=cc9T44ITGwIGjJn_"
-             target="_blank"
-             class="hover:text-orange-200 transition">
-            <svg width="36" height="36" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M23.5 6.2s-.2-1.7-.8-2.5c-.8-.9-1.6-.9-2-1-2.8-.2-7-.2-7-.2h-.1s-4.2 
-              0-7 .2c-.4 0-1.2.1-2 1-.6.8-.8 2.5-.8 2.5S3 
-              8.1 3 10v1.9c0 1.9.2 3.8.2 3.8s.2 
-              1.7.8 2.5c.8.9 1.9.9 2.4 1 1.8.2 6.8.2 
-              6.8.2s4.2 0 7-.2c.4 0 1.2-.1 2-1 
-              .6-.8.8-2.5.8-2.5s.2-1.9.2-3.8V10c0-1.9-.2-3.8-.2-3.8zM9.75 
-              14.7V8.3l6.25 3.2-6.25 3.2z"/>
-            </svg>
-          </a>
-
-        </div>
+        
       </div>
 
       <!-- Kanan: MAP -->
@@ -491,10 +495,42 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
 
 
   <!-- FOOTER -->
-  <footer class="bg-red-800 text-white py-4 text-center">
-    <p>&copy; 2025 Sinar Education – Tambun. Semua Hak Dilindungi.</p>
-    <i class="fi fi-brands-instagram"></i>
-  </footer>
+<footer class="bg-red-900 text-white py-8">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+
+    <!-- Copyright -->
+    <p class="text-center md:text-left">
+      &copy; 2025 Sinar Education – Tambun. Semua Hak Dilindungi.
+    </p>
+
+    <!-- Social Media Icons -->
+    <div class="flex items-center gap-6">
+
+      <!-- Instagram -->
+      <i class="fa-brands fa-instagram fs-5 px-1"></i>
+      <a href="https://www.instagram.com/sinareducation_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+         target="_blank"
+         class="hover:scale-110 transition">
+      </a>
+
+      <!-- TikTok -->
+      <i class="fa-brands fa-tiktok fs-5 px-1"></i>
+      <a href="https://www.tiktok.com/@sinareducation01?is_from_webapp=1&sender_device=pc"
+         target="_blank"
+         class="hover:scale-110 transition">
+      </a>
+
+      <!-- YouTube -->
+      <i class="fa-brands fa-youtube fs-5 px-1"></i>
+      <a href="https://youtube.com/@sinareducationofficial5005?si=cc9T44ITGwIGjJn_"
+         target="_blank"
+         class="hover:scale-110 transition">
+      </a>
+
+    </div>
+
+  </div>
+</footer>
 
   <!-- AOS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
