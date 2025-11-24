@@ -135,10 +135,8 @@ Route::middleware(['role'])->group(function () {
 
 // ADMIN ROUTES
 Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () {
-    // Route::get('/cek-admin', function () {
-    //     dd(Auth::guard('admin')->user());
-    // });
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    // Dashboard
+    Route::get('/dashboard/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     // Students
     Route::get('/students', [AdminStudentController::class, 'index'])->name('admin.students.index');
@@ -174,7 +172,7 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     // ROUTE PENDAFTARAN
     Route::get('/student-registration', [AdminStudentRegistrationController::class, 'index'])->name('admin.students.registration.index');
     Route::get('/student-registration/data', [AdminStudentRegistrationController::class, 'getData'])->name('admin.students.registration.data');
-Route::get('/student-registration/{id}', [AdminStudentRegistrationController::class, 'show'])->name('admin.students.registration.show');
+    Route::get('/student-registration/{id}', [AdminStudentRegistrationController::class, 'show'])->name('admin.students.registration.show');
 
 });
 
