@@ -36,20 +36,26 @@
                 <p class="text-xs text-gray-500 mt-2">Jl. Kampung Siluman No. 123, Tambun Selatan</p>
 
                 <form action="{{ route('students.attendance.store') }}" method="POST" class="mt-4" id="attendanceForm">
-                    @csrf
-                    <button type="submit" id="checkoutBtn"
-                        {{ isset($hasAttended) && $hasAttended ? 'disabled' : '' }}
-                        class="w-full bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold py-2 px-6 rounded-xl shadow {{ (isset($hasAttended) && $hasAttended) ? 'opacity-50 cursor-not-allowed' : '' }}">
-                        Checkout
-                    </button>
-                </form>
-                <p id="scheduleMsg" class="text-xs text-gray-500 mt-2">
-                    @if(isset($hasAttended) && $hasAttended)
-                        Anda sudah absen hari ini
-                    @else
-                        Akan tersedia pada 10:00 WIB
-                    @endif
-                </p>
+        @csrf
+        <button type="submit" id="checkoutBtn"
+            {{ (isset($canAttend) && $canAttend) ? '' : 'disabled' }}
+            class="w-full bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold py-2 px-6 rounded-xl shadow {{ (isset($canAttend) && $canAttend) ? '' : 'opacity-50 cursor-not-allowed' }}">
+            Checkout
+        </button>
+    </form>
+    <p id="scheduleMsg" class="text-xs text-gray-500 mt-2">
+        @if(isset($hasAttended) && $hasAttended)
+            Anda sudah absen hari ini
+        @elseif(isset($todaySchedules) && count($todaySchedules) === 0)
+            Tidak ada jadwal hari ini.
+        @else
+            @if(isset($canAttend) && $canAttend)
+                Tersedia sekarang untuk jadwal Anda.
+            @else
+                Akses hanya pada waktu sesi yang terdaftar untuk hari ini.
+            @endif
+        @endif
+    </p>
             </div>
 
             <!-- Total Attendance (dari DB per bulan) -->
@@ -167,9 +173,12 @@ navigator.geolocation.getCurrentPosition(pos => {
         @endforeach
     ];
 
-    // flag dari server apakah sudah absen
+    // sesi semua tetap untuk tampilan; tetapi JS aktivasi tombol hanya berdasarkan jadwal hari ini:
+    const allowedSessions = {!! json_encode($todaySchedules ?? []) !!};
     const hasAttended = {!! json_encode(isset($hasAttended) ? $hasAttended : false) !!};
+    const serverCanAttend = {!! json_encode(isset($canAttend) ? $canAttend : false) !!};
 
+    // helper parse sama seperti sebelumnya
     function parseTimeToDate(timeStr, baseDate) {
         const parts = timeStr.split(':').map(Number);
         const d = new Date(baseDate);
@@ -197,28 +206,40 @@ navigator.geolocation.getCurrentPosition(pos => {
         const checkoutBtn = document.getElementById('checkoutBtn');
         const scheduleMsg = document.getElementById('scheduleMsg');
 
-        // jika sudah absen, disable permanen dan tampilkan pesan
         if (hasAttended) {
             checkoutBtn.disabled = true;
-            if (!checkoutBtn.classList.contains('opacity-50')) {
-                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            }
+            checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
             scheduleMsg.textContent = 'Anda sudah absen hari ini';
-            return; // hentikan pengecekan sesi
+            return;
         }
 
-        // cek apakah sekarang berada di salah satu sesi
+        // jika server sudah menandai boleh hadir (double-check), biarkan aktif
+        if (serverCanAttend) {
+            checkoutBtn.disabled = false;
+            checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            scheduleMsg.textContent = 'Tersedia sekarang untuk jadwal Anda.';
+            return;
+        }
+
+        // selain itu, cek allowedSessions hari ini (sisi klien hanya sebagai safeguard)
+        if (!allowedSessions || allowedSessions.length === 0) {
+            checkoutBtn.disabled = true;
+            checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            scheduleMsg.textContent = 'Tidak ada jadwal hari ini.';
+            return;
+        }
+
         const nowTs = new Date(now);
-        let activeSession = null;
+        let active = null;
         let nextSession = null;
         let soonestDiff = Infinity;
 
-        sessions.forEach(s => {
-            const start = parseTimeToDate(s.start, nowTs);
-            const end = parseTimeToDate(s.end, nowTs);
+        allowedSessions.forEach(s => {
+            const start = parseTimeToDate(s.times_in, nowTs);
+            const end = parseTimeToDate(s.times_out, nowTs);
 
             if (nowTs >= start && nowTs < end) {
-                activeSession = s;
+                active = s;
             } else if (nowTs < start) {
                 const diff = start - nowTs;
                 if (diff < soonestDiff) {
@@ -226,7 +247,6 @@ navigator.geolocation.getCurrentPosition(pos => {
                     nextSession = s;
                 }
             } else {
-                // session already passed today; consider tomorrow's same session
                 const startTomorrow = new Date(start);
                 startTomorrow.setDate(startTomorrow.getDate() + 1);
                 const diff = startTomorrow - nowTs;
@@ -237,20 +257,22 @@ navigator.geolocation.getCurrentPosition(pos => {
             }
         });
 
-        if (activeSession) {
+        if (active) {
             checkoutBtn.disabled = false;
             checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-            scheduleMsg.textContent = `Tersedia sekarang — ${activeSession.name} (${activeSession.start} - ${activeSession.end})`;
+            scheduleMsg.textContent = `Tersedia sekarang — ${active.name_time} (${active.times_in} - ${active.times_out})`;
         } else {
             checkoutBtn.disabled = true;
-            if (!checkoutBtn.classList.contains('opacity-50')) {
-                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
-            }
+            checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
             if (nextSession) {
                 const time = msToHourMin(soonestDiff);
-                scheduleMsg.textContent = `Akan tersedia dalam ${time.h} jam ${time.m} menit pada ${nextSession.name} mulai ${nextSession.start}`;
+                if(now.getHours() > nextSession["times_out"].split(":")[0] && now.getMinutes() > nextSession["times_out"].split(":")[1]){
+                    scheduleMsg.textContent = `Anda terlambat absensi`;
+                }else{
+                    scheduleMsg.textContent = `Akan tersedia dalam ${time.h} jam ${time.m} menit pada ${nextSession.name_time} mulai ${nextSession.times_in}`;
+                }
             } else {
-                scheduleMsg.textContent = 'Tidak ada sesi terjadwal';
+                scheduleMsg.textContent = 'Tidak ada sesi terjadwal untuk hari ini.';
             }
         }
     }
