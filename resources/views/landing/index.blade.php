@@ -21,6 +21,11 @@
 <link rel="stylesheet" 
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+  
+  <!-- CDN Flaticon UIcons -->
+<link rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
   html { scroll-behavior: smooth; }
 
@@ -397,11 +402,15 @@
         <p class="mb-3">
           <i class="fa-solid fa-location-dot fs-5 px-1"></i>
           <span class="font-bold">Alamat:</span>
+          <i class="fa-solid fa-location-dot fs-5 px-1"></i>
+          <span class="font-bold">Alamat:</span>
           Desa Mangunjaya, Kp. Siluman Tambun Selatan Gang Sawo 1, Jln Pendidikan,  
           Rt 03, Rw18 No.52, Mangunjaya, Kec. Tambun Sel., Kabupaten Bekasi, Jawa Barat 17510
         </p>
 
         <p class="mb-6">
+          <i class="fa-solid fa-phone fs-5 px-1"></i>
+          <span class="font-bold">Telepon:</span> 0857-3340-1530
           <i class="fa-solid fa-phone fs-5 px-1"></i>
           <span class="font-bold">Telepon:</span> 0857-3340-1530
         </p>
@@ -413,6 +422,8 @@
              class="text-white underline underline-offset-2 hover:text-orange-200 transition">
              <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
              +6285714609869 (Admin 1) 
+             <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
+             +6285714609869 (Admin 1) 
           </a>
 
           <a href="https://wa.me/628567734085"
@@ -420,9 +431,12 @@
              class="text-white underline underline-offset-2 hover:text-orange-200 transition">
              <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
              +628567734085 (Admin 2)
+             <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
+             +628567734085 (Admin 2)
           </a>
         </div>
 
+        
         
       </div>
 
@@ -446,6 +460,42 @@
 
 
   <!-- FOOTER -->
+<footer class="bg-red-900 text-white py-8">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+
+    <!-- Copyright -->
+    <p class="text-center md:text-left">
+      &copy; 2025 Sinar Education – Tambun. Semua Hak Dilindungi.
+    </p>
+
+    <!-- Social Media Icons -->
+    <div class="flex items-center gap-6">
+
+      <!-- Instagram -->
+      <i class="fa-brands fa-instagram fs-5 px-1"></i>
+      <a href="https://www.instagram.com/sinareducation_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+         target="_blank"
+         class="hover:scale-110 transition">
+      </a>
+
+      <!-- TikTok -->
+      <i class="fa-brands fa-tiktok fs-5 px-1"></i>
+      <a href="https://www.tiktok.com/@sinareducation01?is_from_webapp=1&sender_device=pc"
+         target="_blank"
+         class="hover:scale-110 transition">
+      </a>
+
+      <!-- YouTube -->
+      <i class="fa-brands fa-youtube fs-5 px-1"></i>
+      <a href="https://youtube.com/@sinareducationofficial5005?si=cc9T44ITGwIGjJn_"
+         target="_blank"
+         class="hover:scale-110 transition">
+      </a>
+
+    </div>
+
+  </div>
+</footer>
 <footer class="bg-red-900 text-white py-8">
   <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
 
