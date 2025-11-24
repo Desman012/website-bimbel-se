@@ -10,7 +10,7 @@ class HomeController extends Controller
 {
     public function show()
     {
-        $reviews = Reviews::all();
+        $reviews = Reviews::orderBy('created_at', 'desc')->limit(6)->get();
         $facilities = Facilities::all();
         return view('landing.index', compact(['reviews','facilities']));
     }

@@ -16,6 +16,10 @@
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
   />
+  
+  <!-- CDN Flaticon UIcons -->
+<link rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
   html { scroll-behavior: smooth; }
@@ -27,6 +31,11 @@
   .float-hover:hover {
     transform: translateY(-6px);
     box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  }
+
+  .nav-link-active {
+    color: #fb923c; /* orange-400 */
+    font-weight: 700;
   }
 
   /* Slow Fade on Scroll */
@@ -44,7 +53,6 @@
 </style>
 </head>
 <body class="font-sans text-gray-800">
-
   <!-- NAVBAR -->
   <nav class="bg-white shadow-md fixed top-0 w-full z-50 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -88,7 +96,7 @@
         <p class="mt-4 text-lg opacity-90">
           Bimbingan belajar menjadi salah satu kebutuhan penting bagi siswa yang ingin meningkatkan prestasi akademik. Dengan metode belajar yang tepat, siswa bisa lebih mudah memahami pelajaran serta siap menghadapi berbagai ujian sekolah maupun tes masuk perguruan tinggi. Bimbel Sinar Education, yang berlokasi di Tambun Selatan, Kabupaten Bekasi, hadir sebagai solusi terbaik dengan layanan bimbingan belajar berkualitas untuk siswa dari tingkat PAUD hingga SMA serta persiapan UTBK.
         </p>
-        <a href="#contact"
+        <a href="{{route('register')}}"
           class="mt-6 inline-block px-6 py-3 bg-white text-red-600 font-semibold rounded-lg hover:scale-110 hover:shadow-lg transition-all duration-300 animate-pulse">
           Daftar Sekarang
         </a>        
@@ -103,7 +111,7 @@
   </section>
 
   <!-- ABOUT -->
-  <section id="about" class="py-20 bg-white">
+  <section id="about" class="py-20 bg-gradient-to-br from-orange-50 via-yellow-100 to-orange-100">
     <div class="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-10">
 
     <!-- LEFT: GALERI SLIDER -->
@@ -137,9 +145,10 @@
     <div class="max-w-6xl mx-auto px-6 text-center" data-aos="fade-up">
       <h3 class="text-3xl font-bold text-orange-600 mb-4">Tentang Kami</h3>
       <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed">
-        Bimbel Sinar Education adalah lembaga bimbingan belajar yang telah berdiri lebih dari 5 tahun dan fokus memberikan pendampingan belajar bagi siswa SD, SMP, SMA, hingga persiapan UTBK (SNBT). Dengan motto <strong>Your Bright Future Starts Here</strong>, Sinar Education berkomitmen membantu siswa belajar secara lebih terarah, efektif, dan menyenangkan.
+        Bimbel Sinar Education adalah lembaga bimbingan belajar yang telah berdiri lebih dari 5 tahun dan fokus memberikan pendampingan belajar bagi siswa SD, SMP, SMA, hingga persiapan UTBK (SNBT). Dengan motto <strong class="bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent">
+  Your Bright Future Starts Here</strong>, Sinar Education berkomitmen membantu siswa belajar secara lebih terarah, efektif, dan menyenangkan.</p>
 
-Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhasil mendampingi banyak siswa mencapai prestasi terbaik di sekolah bahkan hingga lolos ke perguruan tinggi favorit.
+      <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed"> Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhasil mendampingi banyak siswa mencapai prestasi terbaik di sekolah bahkan hingga lolos ke perguruan tinggi favorit.
       </p>
     </div>
 
@@ -184,7 +193,7 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
 
 
   <!-- FASILITAS (dari template 1 digabung) -->
-  <section id="fasilitas" class="py-20 bg-white">
+  <section id="fasilitas" class="py-20 bg-gradient-to-br from-orange-50 via-yellow-100 to-orange-100">
     <h3 class="text-3xl font-bold text-orange-600 text-center mb-10" data-aos="zoom-in">
       Fasilitas Pembelajaran
     </h3>
@@ -200,7 +209,42 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
   </section>
 
   <!-- REVIEW -->
-  <section id="review" class="py-20 bg-white">
+  {{-- <section id="review" class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-6 text-center"> 
+    <h3 class="text-3xl font-bold text-orange-600 mb-10" data-aos="zoom-in">
+      Apa Kata Mereka?
+    </h3>
+
+    <!-- Swiper Container -->
+    <div class="swiper myReviewSwiper">
+      <div class="swiper-wrapper">
+
+        @foreach ($reviews as $review)
+        <div class="swiper-slide">
+          <div class="p-6 bg-orange-50 rounded-lg shadow hover:shadow-lg transition h-full">
+            <p class="italic text-gray-700">"{{ $review->review_text }}"</p>
+            <h5 class="mt-4 font-semibold text-red-500">– {{ $review->name_student }}</h5>
+            <h5 class="font-semibold text-yellow-500">{{ $review->school }}</h5>
+          </div>
+        </div>
+        @endforeach
+
+      </div>
+
+      <!-- Navigation -->
+      <div class="swiper-button-prev text-orange-600"></div>
+      <div class="swiper-button-next text-orange-600"></div>
+
+      <!-- Pagination -->
+      <div class="swiper-pagination mt-4"></div>
+    </div>
+  </div>
+</section> --}}
+
+
+
+
+  {{-- <section id="review" class="py-20 bg-white">
   <div class="max-w-6xl mx-auto px-6 text-center">
     <h3 class="text-3xl font-bold text-orange-600 mb-10" data-aos="zoom-in">
       Apa Kata Mereka?
@@ -231,10 +275,10 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
     </div>
 
   </div>
-</section>
+</section> --}}
 
   
-  {{-- <section id="review" class="py-20 bg-white">
+  <section id="review" class="py-20 bg-white">
     <div class="max-w-6xl mx-auto px-6 text-center">
       <h3 class="text-3xl font-bold text-orange-600 mb-10" data-aos="zoom-in">Apa Kata Mereka?</h3>
 
@@ -250,7 +294,7 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
 
       </div>
     </div>
-  </section> --}}
+  </section>
 
   <!-- FAQ -->
   <!-- FAQ -->
@@ -333,51 +377,6 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
     </div>
 </section>
 
-
-{{-- <!-- CONTACT -->
-<section id="contact" class="py-20 bg-gradient-to-r from-red-600 to-orange-500 text-white">
-  <div class="max-w-6xl mx-auto px-6" data-aos="zoom-in">
-
-    <h3 class="text-3xl font-bold text-center mb-10">Hubungi Kami</h3>
-    <p class="text-orange-100 leading-relaxed">
-          Siap membantu perjalanan belajarmu!  
-          Konsultasikan kebutuhan belajar kamu dengan tim kami.
-        </p>
-
-    <div class="grid md:grid-cols-2 gap-10 items-center">
-
-      <!-- LEFT: CONTACT INFO -->
-      <div class="space-y-4">
-        <h4 class="text-2xl font-semibold">Sinar Education</h4>
-
-        <div class="space-y-2 mt-4">
-          <p>📍 <strong>Alamat:</strong> Desa Mangunjaya, Kp. Siluman Tambun Selatan Gang Sawo 1, Jln Pendidikan, Rt 03, Rw18 No.52, Mangunjaya, Kec. Tambun Sel., Kabupaten Bekasi, Jawa Barat 17510</p>
-          <p>📞 <strong>Telepon:</strong> 0812-3456-7890</p>
-        </div>
-
-        <a href="https://wa.me/6281234567890"
-            target="_blank"
-            class="inline-block mt-6 px-6 py-3 bg-white text-red-600 rounded-lg font-semibold hover:scale-105 transition">
-          WhatsApp Kami
-        </a>
-      </div>
-
-      <!-- RIGHT: GOOGLE MAPS -->
-      <div class="w-full h-80 md:h-full">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.167131666072!2d107.0585692!3d-6.241691899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698f87b6ff6ba5%3A0x23977bd618a298a0!2sBimbel%20Sinar%20Education!5e0!3m2!1sid!2sid!4v1763548903891!5m2!1sid!2sid"
-          class="w-full h-full rounded-lg shadow-lg"
-          style="border:0;" allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-      </div>
-
-    </div>
-  </div>
-</section>
- --}}
-
  <!-- CONTACT -->
 <section id="contact" class="py-20 bg-gradient-to-r from-red-600 to-orange-500 text-white">
   <div class="max-w-6xl mx-auto px-6" data-aos="zoom-in">
@@ -396,13 +395,15 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
         <h4 class="text-2xl font-bold mb-4">Sinar Education</h4>
 
         <p class="mb-3">
-          <span class="font-bold">📍 Alamat:</span>
+          <i class="fa-solid fa-location-dot fs-5 px-1"></i>
+          <span class="font-bold">Alamat:</span>
           Desa Mangunjaya, Kp. Siluman Tambun Selatan Gang Sawo 1, Jln Pendidikan,  
           Rt 03, Rw18 No.52, Mangunjaya, Kec. Tambun Sel., Kabupaten Bekasi, Jawa Barat 17510
         </p>
 
         <p class="mb-6">
-          <span class="font-bold">📞 Telepon:</span> 0857-3340-1530
+          <i class="fa-solid fa-phone fs-5 px-1"></i>
+          <span class="font-bold">Telepon:</span> 0857-3340-1530
         </p>
 
         <!-- WA Buttons -->
@@ -410,65 +411,19 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
           <a href="https://wa.me/6285714609869"
              target="_blank"
              class="text-white underline underline-offset-2 hover:text-orange-200 transition">
-            Admin 1 (WhatsApp)
+             <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
+             +6285714609869 (Admin 1) 
           </a>
 
           <a href="https://wa.me/628567734085"
              target="_blank"
              class="text-white underline underline-offset-2 hover:text-orange-200 transition">
-            Admin 2 (WhatsApp)
+             <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
+             +628567734085 (Admin 2)
           </a>
         </div>
 
-        <!-- Social Media -->
-        <div class="flex items-center gap-6 mt-8 text-white">
-
-          <!-- Instagram -->
-          <a href="https://www.instagram.com/sinareducation_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-             target="_blank"
-             class="hover:text-orange-200 transition">
-            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 
-              5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2c1.66 0 3 1.34 3 
-              3v10c0 1.66-1.34 3-3 3H7c-1.66 0-3-1.34-3-3V7c0-1.66 
-              1.34-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 
-              000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-2a1.5 
-              1.5 0 100 3 1.5 1.5 0 000-3z"/>
-            </svg>
-          </a>
-
-          <!-- TikTok -->
-          <a href="https://www.tiktok.com/@sinareducation01?is_from_webapp=1&sender_device=pc"
-             target="_blank"
-             class="hover:text-orange-200 transition">
-            <svg width="32" height="32" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12.766 2h3.09c.145 1.26.756 2.432 1.73 
-              3.295.92.82 2.146 1.29 3.414 1.33v3.18a7.136 
-              7.136 0 01-3.73-1.03v7.58c0 2.39-1.28 4.58-3.36 
-              5.74-2.02 1.11-4.52 1.08-6.51-.09a6.613 6.613 
-              0 01-3.28-5.71c-.03-2.26 1.11-4.36 3.03-5.54 
-              1.27-.78 2.77-1.1 4.24-.93v3.29c-.52-.17-1.09-.14-1.6.1-.86.42-1.4 
-              1.29-1.39 2.24 0 1.39 1.12 2.52 2.51 
-              2.52a2.52 2.52 0 002.5-2.52V2z"/>
-            </svg>
-          </a>
-
-          <!-- YouTube -->
-          <a href="https://youtube.com/@sinareducationofficial5005?si=cc9T44ITGwIGjJn_"
-             target="_blank"
-             class="hover:text-orange-200 transition">
-            <svg width="36" height="36" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M23.5 6.2s-.2-1.7-.8-2.5c-.8-.9-1.6-.9-2-1-2.8-.2-7-.2-7-.2h-.1s-4.2 
-              0-7 .2c-.4 0-1.2.1-2 1-.6.8-.8 2.5-.8 2.5S3 
-              8.1 3 10v1.9c0 1.9.2 3.8.2 3.8s.2 
-              1.7.8 2.5c.8.9 1.9.9 2.4 1 1.8.2 6.8.2 
-              6.8.2s4.2 0 7-.2c.4 0 1.2-.1 2-1 
-              .6-.8.8-2.5.8-2.5s.2-1.9.2-3.8V10c0-1.9-.2-3.8-.2-3.8zM9.75 
-              14.7V8.3l6.25 3.2-6.25 3.2z"/>
-            </svg>
-          </a>
-
-        </div>
+        
       </div>
 
       <!-- Kanan: MAP -->
@@ -491,10 +446,42 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
 
 
   <!-- FOOTER -->
-  <footer class="bg-red-800 text-white py-4 text-center">
-    <p>&copy; 2025 Sinar Education – Tambun. Semua Hak Dilindungi.</p>
-    <i class="fi fi-brands-instagram"></i>
-  </footer>
+<footer class="bg-red-900 text-white py-8">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+
+    <!-- Copyright -->
+    <p class="text-center md:text-left">
+      &copy; 2025 Sinar Education – Tambun. Semua Hak Dilindungi.
+    </p>
+
+    <!-- Social Media Icons -->
+    <div class="flex items-center gap-6">
+
+      <!-- Instagram -->
+      <i class="fa-brands fa-instagram fs-5 px-1"></i>
+      <a href="https://www.instagram.com/sinareducation_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+         target="_blank"
+         class="hover:scale-110 transition">
+      </a>
+
+      <!-- TikTok -->
+      <i class="fa-brands fa-tiktok fs-5 px-1"></i>
+      <a href="https://www.tiktok.com/@sinareducation01?is_from_webapp=1&sender_device=pc"
+         target="_blank"
+         class="hover:scale-110 transition">
+      </a>
+
+      <!-- YouTube -->
+      <i class="fa-brands fa-youtube fs-5 px-1"></i>
+      <a href="https://youtube.com/@sinareducationofficial5005?si=cc9T44ITGwIGjJn_"
+         target="_blank"
+         class="hover:scale-110 transition">
+      </a>
+
+    </div>
+
+  </div>
+</footer>
 
   <!-- AOS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -512,11 +499,11 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
       autoplay: {
         delay: 2500,
       },
-      breakpoints: {
-        640: { slidesPerView: 1 },
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 } // tampil 3 review sekaligus
-      },
+      // breakpoints: {
+      //   640: { slidesPerView: 1 },
+      //   768: { slidesPerView: 2 },
+      //   1024: { slidesPerView: 3 } // tampil 3 review sekaligus
+      // },
       pagination: {
         el: ".swiper-pagination",
         clickable: true,
@@ -526,6 +513,26 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
         prevEl: ".swiper-button-prev",
       },
     });
+    const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll(".nav-link");
+
+window.addEventListener("scroll", () => {
+  let current = "";
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 80; 
+    if (pageYOffset >= sectionTop) {
+      current = section.getAttribute("id");
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove("nav-link-active");
+    if (link.getAttribute("href") === "#" + current) {
+      link.classList.add("nav-link-active");
+    }
+  });
+});
   </script>
 </body>
 </html>
