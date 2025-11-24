@@ -38,10 +38,10 @@
     box-shadow: 0 12px 25px rgba(0,0,0,0.15);
   }
 
-  .nav-link-active {
-    color: #fb923c; /* orange-400 */
+  .active-link {
+    color: #f97316 !important;
     font-weight: 700;
-  }
+}
 
   /* Slow Fade on Scroll */
   .fade-soft {
@@ -54,6 +54,9 @@
       opacity: 1;
       transform: none;
     }
+  }
+  .faq-content {
+        transition: max-height 0.35s ease;
   }
 </style>
 </head>
@@ -302,7 +305,127 @@
   </section>
 
   <!-- FAQ -->
-<section id="faq" class="py-20 bg-white">
+  <section id="faq" class="py-20 bg-gradient-to-b from-orange-50 to-white">
+    <h3 class="text-3xl font-bold text-red-600 text-center mb-10" data-aos="zoom-in">FAQ</h3>
+    <h5 class="text-2xl font-bold text-red-600 text-center mb-10" data-aos="zoom-in">(Frequently Asked Questions) </h5>
+
+    <div class="max-w-4xl mx-auto px-6 space-y-6">
+
+        <!-- ITEM FAQ -->
+        <div class="faq-item p-5 bg-white shadow-md rounded-xl fade-soft cursor-pointer">
+            <div class="flex justify-between items-center faq-question">
+                <h4 class="font-semibold text-orange-600">Berapa biaya pendaftaran?</h4>
+                <span class="faq-icon text-orange-600 text-4xl font-extrabold">+</span>
+
+
+            </div>
+            <p class="faq-content max-h-0 overflow-hidden transition-all duration-300">
+                Biaya pendaftaran untuk Bimbel dan Privat adalah
+                <span class="font-semibold text-red-600">Rp 200.000</span>.
+            </p>
+        </div>
+
+        <div class="faq-item p-5 bg-white shadow-md rounded-xl fade-soft cursor-pointer">
+            <div class="flex justify-between items-center faq-header">
+                <h4 class="font-semibold text-orange-600">Berapa biaya bulanan?</h4>
+                <span class="faq-icon text-orange-600 text-4xl font-extrabold">+</span>
+
+
+            </div>
+            <p class="faq-content text-gray-600 mt-2 overflow-hidden max-h-0 transition-all duration-300 leading-relaxed">
+                • PAUD – SD : <span class="font-semibold text-red-600">Rp 200.000</span> <br>
+                • SMP : <span class="font-semibold text-red-600">Rp 250.000</span> <br>
+                • SMA X : <span class="font-semibold text-red-600">Rp 350.000</span> <br>
+                • SMA XI – UTBK : <span class="font-semibold text-red-600">Rp 400.000</span>
+            </p>
+        </div>
+
+        <div class="faq-item p-5 bg-white shadow-md rounded-xl fade-soft cursor-pointer">
+            <div class="flex justify-between items-center faq-header">
+                <h4 class="font-semibold text-orange-600">Dimana Lokasi Bimbel Sinar Education?</h4>
+                <span class="faq-icon text-orange-600 text-4xl font-extrabold">+</span>
+
+
+            </div>
+            <p class="faq-content text-gray-600 mt-2 overflow-hidden max-h-0 transition-all duration-300">
+                Beralamat di <span class="font-semibold text-red-600">Gang Sawo, Jl. Pendidikan, Kp. Siluman, Kab. Bekasi</span>
+                (Gang seberang Kantor Desa Mangunjaya).
+            </p>
+        </div>
+
+        <div class="faq-item p-5 bg-white shadow-md rounded-xl fade-soft cursor-pointer">
+            <div class="flex justify-between items-center faq-header">
+                <h4 class="font-semibold text-orange-600">Berapa durasi belajar setiap pertemuan?</h4>
+                <span class="faq-icon text-orange-600 text-4xl font-extrabold">+</span>
+
+
+            </div>
+            <p class="faq-content text-gray-600 mt-2 overflow-hidden max-h-0 transition-all duration-300">
+                Durasi belajar adalah <span class="font-semibold text-red-600">90 menit</span> per sesi.
+            </p>
+        </div>
+
+        <div class="faq-item p-5 bg-white shadow-md rounded-xl fade-soft cursor-pointer">
+            <div class="flex justify-between items-center faq-header">
+                <h4 class="font-semibold text-orange-600">Apa bedanya Bimbel dan Privat?</h4>
+                <span class="faq-icon text-orange-600 text-4xl font-extrabold">+</span>
+
+
+            </div>
+            <p class="faq-content text-gray-600 mt-2 overflow-hidden max-h-0 transition-all duration-300 leading-relaxed">
+                <span class="font-semibold text-red-600">Bimbel:</span> belajar di lokasi bimbel, 1 kelas maksimal 15 siswa. <br>
+                <span class="font-semibold text-red-600">Privat:</span> mentor datang ke rumah dengan 1–2 siswa sehingga lebih intensif.
+            </p>
+        </div>
+
+        <div class="faq-item p-5 bg-white shadow-md rounded-xl fade-soft cursor-pointer">
+            <div class="flex justify-between items-center faq-header">
+                <h4 class="font-semibold text-orange-600">Apa perbedaan kelas Reguler dan UTBK?</h4>
+                <span class="faq-icon text-orange-600 text-4xl font-extrabold">+</span>
+
+
+            </div>
+            <p class="faq-content text-gray-600 mt-2 overflow-hidden max-h-0 transition-all duration-300 leading-relaxed">
+                <span class="font-semibold text-red-600">Kelas Reguler:</span> belajar mengikuti pelajaran sekolah. <br>
+                <span class="font-semibold text-red-600">Kelas UTBK:</span> fokus persiapan masuk PTN, baik jalur SNBT maupun Mandiri.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach(item => {
+        item.addEventListener("click", () => {
+            const content = item.querySelector(".faq-content");
+            const icon = item.querySelector(".faq-icon");
+
+            faqItems.forEach(other => {
+                if (other !== item) {
+                    const otherContent = other.querySelector(".faq-content");
+                    const otherIcon = other.querySelector(".faq-icon");
+                    otherContent.style.maxHeight = null;
+                    otherIcon.textContent = "+";
+                }
+            });
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.textContent = "+";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.textContent = "-";
+            }
+        });
+    });
+</script>
+
+
+
+
+{{-- <section id="faq" class="py-20 bg-white">
     <h3 class="text-3xl font-bold text-red-600 text-center mb-10" data-aos="zoom-in">FAQ</h3>
 
     <div class="max-w-4xl mx-auto px-6 space-y-6">
@@ -379,7 +502,7 @@
         </p>
       </div>
     </div>
-</section>
+</section> --}}
 
  <!-- CONTACT -->
 <section id="contact" class="py-20 bg-gradient-to-r from-red-600 to-orange-500 text-white">
@@ -401,15 +524,11 @@
         <p class="mb-3">
           <i class="fa-solid fa-location-dot fs-5 px-1"></i>
           <span class="font-bold">Alamat:</span>
-          <i class="fa-solid fa-location-dot fs-5 px-1"></i>
-          <span class="font-bold">Alamat:</span>
           Desa Mangunjaya, Kp. Siluman Tambun Selatan Gang Sawo 1, Jln Pendidikan,  
           Rt 03, Rw18 No.52, Mangunjaya, Kec. Tambun Sel., Kabupaten Bekasi, Jawa Barat 17510
         </p>
 
         <p class="mb-6">
-          <i class="fa-solid fa-phone fs-5 px-1"></i>
-          <span class="font-bold">Telepon:</span> 0857-3340-1530
           <i class="fa-solid fa-phone fs-5 px-1"></i>
           <span class="font-bold">Telepon:</span> 0857-3340-1530
         </p>
@@ -420,16 +539,12 @@
              target="_blank"
              class="text-white underline underline-offset-2 hover:text-orange-200 transition">
              <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
-             +6285714609869 (Admin 1) 
-             <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
-             +6285714609869 (Admin 1) 
+             +6285714609869 (Admin 1)
           </a>
 
           <a href="https://wa.me/628567734085"
              target="_blank"
              class="text-white underline underline-offset-2 hover:text-orange-200 transition">
-             <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
-             +628567734085 (Admin 2)
              <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
              +628567734085 (Admin 2)
           </a>
@@ -495,42 +610,7 @@
 
   </div>
 </footer>
-<footer class="bg-red-900 text-white py-8">
-  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
 
-    <!-- Copyright -->
-    <p class="text-center md:text-left">
-      &copy; 2025 Sinar Education – Tambun. Semua Hak Dilindungi.
-    </p>
-
-    <!-- Social Media Icons -->
-    <div class="flex items-center gap-6">
-
-      <!-- Instagram -->
-      <i class="fa-brands fa-instagram fs-5 px-1"></i>
-      <a href="https://www.instagram.com/sinareducation_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-         target="_blank"
-         class="hover:scale-110 transition">
-      </a>
-
-      <!-- TikTok -->
-      <i class="fa-brands fa-tiktok fs-5 px-1"></i>
-      <a href="https://www.tiktok.com/@sinareducation01?is_from_webapp=1&sender_device=pc"
-         target="_blank"
-         class="hover:scale-110 transition">
-      </a>
-
-      <!-- YouTube -->
-      <i class="fa-brands fa-youtube fs-5 px-1"></i>
-      <a href="https://youtube.com/@sinareducationofficial5005?si=cc9T44ITGwIGjJn_"
-         target="_blank"
-         class="hover:scale-110 transition">
-      </a>
-
-    </div>
-
-  </div>
-</footer>
 
   <!-- AOS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -563,24 +643,24 @@
       },
     });
     const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll(".nav-link");
+const navLinks = document.querySelectorAll("nav a");
 
 window.addEventListener("scroll", () => {
   let current = "";
 
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - 80; 
-    if (pageYOffset >= sectionTop) {
-      current = section.getAttribute("id");
-    }
-  });
+  sections.forEach(sec => {
+        const top = window.scrollY;
+        if(top >= sec.offsetTop - 200){
+            current = sec.getAttribute("id");
+        }
+    });
 
-  navLinks.forEach(link => {
-    link.classList.remove("nav-link-active");
-    if (link.getAttribute("href") === "#" + current) {
-      link.classList.add("nav-link-active");
-    }
-  });
+  navLinks.forEach(a => {
+        a.classList.remove("active-link");
+        if(a.getAttribute("href") === `#${current}`){
+            a.classList.add("active-link");
+        }
+    });
 });
   </script>
 </body>
