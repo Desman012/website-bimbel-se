@@ -1,41 +1,71 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ubah Password</title>
+    <title>Ubah Password | Bimbel Sinar Education</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="flex justify-center items-center min-h-screen bg-gray-100">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-        <h1 class="text-2xl font-bold text-center text-crimson mb-4">Atur Ulang Password</h1>
-        <form method="POST" action="{{ route('password.update') }}">
+
+<body class="h-screen bg-gradient-to-r from-orange-50 to-red-50 flex items-center justify-center">
+
+    <div
+        class="bg-white rounded-[44px] shadow-lg w-full max-w-md p-8 sm:p-12 flex flex-col items-center">
+
+        <img src="{{ Vite::asset('resources/img/logo-panjang.png') }}" alt="Logo"
+            class="w-[200px] mb-6 brightness-0 invert-0" />
+
+        <h2 class="text-3xl font-bold text-red-500 mb-4 text-center">Atur Ulang Password</h2>
+        @if (session('status'))
+            <div class="mb-4 w-full p-3 text-green-700 bg-green-100 rounded-md text-center">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="mb-4 w-full p-3 text-red-700 bg-red-100 rounded-md text-center text-sm">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('password.update') }}" class="w-full">
             @csrf
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
-            
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input type="email" name="email" value="{{ old('email', $request->email) }}" required
-                    class="w-full p-2 border border-gray-300 rounded-lg focus:ring-crimson focus:border-crimson">
+            <input type="hidden" name="token" value="{{ $token }}">
+
+            <!-- Email -->
+            <div class="mb-4 w-full">
+                <label for="email" class="block mb-1 text-gray-700 font-medium text-sm">Email Anda</label>
+                <input type="email" name="email" id="email" value="{{ $email }}" required
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 text-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
             </div>
 
-            <div class="mt-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Password Baru</label>
-                <input type="password" name="password" required
-                    class="w-full p-2 border border-gray-300 rounded-lg focus:ring-crimson focus:border-crimson">
+            <!-- Password Baru -->
+            <div class="mb-4 w-full">
+                <label for="password" class="block mb-1 text-gray-700 font-medium text-sm">Password Baru</label>
+                <input type="password" name="password" id="password" placeholder="Password Baru" required
+                    class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 text-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
             </div>
 
-            <div class="mt-4">
-                <label class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
-                <input type="password" name="password_confirmation" required
-                    class="w-full p-2 border border-gray-300 rounded-lg focus:ring-crimson focus:border-crimson">
+            <!-- Konfirmasi Password -->
+            <div class="mb-4 w-full">
+                <label for="password_confirmation" class="block mb-1 text-gray-700 font-medium text-sm">Konfirmasi Password</label>
+                <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Konfirmasi Password"
+                    required class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 text-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
             </div>
 
             <button type="submit"
-                class="mt-5 w-full bg-crimson text-white font-semibold py-2 rounded-lg hover:bg-red-600 transition">
-                Simpan Password Baru
+                class="w-full py-2.5 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:-translate-y-1 transition-transform text-sm">
+                Reset Password
             </button>
         </form>
+
+        <a href="{{ route('login') }}"
+            class="mt-6 text-crimson hover:underline transition text-sm">Kembali ke halaman login</a>
     </div>
+
 </body>
+
 </html>

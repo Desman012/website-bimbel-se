@@ -2,28 +2,56 @@
 
 namespace App\Actions\Fortify;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
-use Laravel\Fortify\Contracts\ResetsUserPasswords;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
+use App\Models\Students;
+use App\Models\Admins;
 
-class ResetUserPassword implements ResetsUserPasswords
+class ResetUserPassword
 {
-    use PasswordValidationRules;
-
-    /**
-     * Validate and reset the user's forgotten password.
-     *
-     * @param  array<string, string>  $input
-     */
-    public function reset(User $user, array $input): void
+    public function reset($email, $password, $guard)
     {
-        Validator::make($input, [
-            'password' => $this->passwordRules(),
-        ])->validate();
+        Log::info("Reset password request diterima untuk $email, guard: $guard");
 
-        $user->forceFill([
-            'password' => Hash::make($input['password']),
-        ])->save();
+        if ($guard === 'admin') {
+            $user = Admins::where('email', $email)->first();
+        } else {
+            $user = Students::where('student_email', $email)->first();
+        }
+
+        if (!$user) {
+            Log::warning("User tidak ditemukan untuk email: $email");
+            return false;
+        }
+
+        // Update password
+        $user->password = Hash::make($password);
+        $user->save();
+
+        // Hapus token setelah digunakan
+        DB::table('password_resets')
+            ->where('email', $email)
+            ->where('guard', $guard)
+            ->delete();
+
+        Log::info("Password berhasil diupdate untuk $email");
+        return true;
+    }
+
+    public function createToken($email, $guard)
+    {
+        $token = Str::random(64);
+
+        DB::table('password_resets')->updateOrInsert(
+            ['email' => $email, 'guard' => $guard],
+            ['token' => $token, 'created_at' => Carbon::now()]
+        );
+
+        Log::info("Token password reset dibuat untuk $email, guard: $guard, token: $token");
+
+        return $token;
     }
 }

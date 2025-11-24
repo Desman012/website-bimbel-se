@@ -15,8 +15,9 @@ return [
     |
     */
 
-    'guard' => 'web',
-
+    'guard' => null,
+    'provider' => null,
+    'model' => null,
     /*
     |--------------------------------------------------------------------------
     | Fortify Password Broker
@@ -47,9 +48,9 @@ return [
 
     'username' => 'email',
 
-    'email' => 'email',
+    'email' => 'student_email',
 
-    /*
+    /* 
     |--------------------------------------------------------------------------
     | Lowercase Usernames
     |--------------------------------------------------------------------------
@@ -73,7 +74,7 @@ return [
     |
     */
 
-    'home' => '/home',
+    'home' => '/login',
 
     /*
     |--------------------------------------------------------------------------
@@ -145,8 +146,8 @@ return [
 
     'features' => [
         Features::registration(),
-        Features::resetPasswords(),
-        // Features::emailVerification(),
+        Features::resetPasswords(),   // wajib untuk lupa password
+        Features::emailVerification(),
         Features::updateProfileInformation(),
         Features::updatePasswords(),
         Features::twoFactorAuthentication([

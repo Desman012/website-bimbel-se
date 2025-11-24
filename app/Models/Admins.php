@@ -15,7 +15,13 @@ class Admins extends Authenticatable
     protected $table = 'admins';
 
     protected $fillable = [
-        'email', 'password',
+        'full_name',
+        'address',
+        'email',    
+        'password',
+        'status',
+        'role_id',
+
     ];
 
     protected $hidden = [
@@ -26,5 +32,6 @@ class Admins extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
 }
 

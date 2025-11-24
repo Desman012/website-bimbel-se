@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Students;
+use App\Models\Payment;
+use App\Models\Absents;
+use App\Models\Levels;
 
 class AdminStudentController extends Controller
 {
     public function index()
     {
-        return view('admin-students-index');
+        $students = Students::latest()->paginate(10);
+        return view('admins.student', compact('students'));
     }
 
     public function create()
@@ -21,19 +26,53 @@ class AdminStudentController extends Controller
         // simpan data siswa
     }
 
-    public function show($id)
+    public function show($student)
     {
-        return view('admin.students.show', compact('id'));
+        $students = Students::findOrFail($student);
+        $payments = Payment::where('student_id', $student)->get();
+        $attendances = Absents::where('student_id', $student)->get();
+        $jenjang = Levels::where('id', $students->levels_id)->first();
+
+        return view('admins.student-show', compact('students', 'payments', 'attendances', 'jenjang'));
     }
 
-    public function edit($id)
+    public function edit($student)
     {
-        return view('admin.students.edit', compact('id'));
+        $students = Students::findOrFail($student);
+        $jenjang = Levels::where('id', $students->levels_id)->first();
+
+
+        return view('admins.student-edit', compact('students', 'jenjang'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $student)
     {
-        // update data siswa
+    // 1. Validasi Data
+    $validatedData = $request->validate([
+        'full_name'    => 'required|string|max:255',
+        'phone_number' => 'required|string|max:20|unique:students,phone_number,' . $student, // Asumsi 'No. Siswa' adalah phone_number
+        'parent_phone' => 'nullable|string|max:20', // Asumsi 'No. Orang Tua' adalah parent_phone
+        'status'       => 'required|in:active,inactive',
+        'address'      => 'nullable|string',
+    ]);
+
+    // 2. Cari Data Siswa (Find the record)
+    $students = Students::findOrFail($student);
+
+    // 3. Update Data Siswa dan Simpan (Update and Save)
+    $updateData = [
+        'full_name'    => $validatedData['full_name'],
+        'phone_number' => $validatedData['phone_number'],
+        'parent_phone' => $validatedData['parent_phone'],
+        'status'       => $validatedData['status'],
+        'address'      => $validatedData['address'],
+    ];
+
+    // Lakukan update:
+    $students->update($updateData);
+
+    // 4. Redirect 
+    return redirect()->route('admin.students.index', $students->id);
     }
 
     public function destroy($id)

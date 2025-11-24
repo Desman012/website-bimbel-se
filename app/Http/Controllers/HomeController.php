@@ -14,4 +14,13 @@ class HomeController extends Controller
         $facilities = Facilities::all();
         return view('landing.index', compact(['reviews','facilities']));
     }
+    public function logout()
+    {
+        return view('auth.logout');
+    }
+
+    public function forgotpassword()
+    {
+        return view('auth.forgot-password');
+    }
 }

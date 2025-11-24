@@ -41,13 +41,15 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
         'admin' => [
             'driver' => 'session',
-            'provider' => 'admins'
+            'provider' => 'admins',
         ],
-        'students' => [
+
+        'student' => [
             'driver' => 'session',
-            'provider' => 'students'
+            'provider' => 'students',
         ],
     ],
 
@@ -74,19 +76,16 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admins::class
-        ],
-        'students' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Students::class
+            'model' => App\Models\Admins::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Students::class,
+        ],
     ],
 
 
@@ -111,11 +110,21 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'users',
-            'table' => 'password_reset_tokens',
-            'expire' => 60,
+            'provider' => 'students', // karena pakai model Students
+            'table' => 'password_resets',
+            'expire' => 60,           // link berlaku 60 menit
             'throttle' => 60,
         ],
+        'admins' => [
+        'provider' => 'admins',
+        'table' => 'password_resets',
+        'expire' => 60,
+    ],
+    'students' => [
+        'provider' => 'students',
+        'table' => 'password_resets',
+        'expire' => 60,
+    ],
     ],
 
     /*
