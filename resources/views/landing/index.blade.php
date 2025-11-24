@@ -302,7 +302,6 @@
   </section>
 
   <!-- FAQ -->
-  <!-- FAQ -->
 <section id="faq" class="py-20 bg-white">
     <h3 class="text-3xl font-bold text-red-600 text-center mb-10" data-aos="zoom-in">FAQ</h3>
 

@@ -124,18 +124,6 @@ Route::post('/logout', function () {
 Route::get('/forgot-password', [HomeController::class, 'forgotpassword'])->name('forgot-password');
 
 // PUBLIC ROUTES
-<<<<<<< HEAD
-Route::get('/', [HomeController::class, 'show'])->name('landing');
-
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-// Route::post('/login', [AuthController::class, 'login'])->name('login-post');
-
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-// Route::post('/register', [AuthController::class, 'register'])->name('register-post');
-
-
-
-=======
 Route::middleware(['role'])->group(function () {
     Route::get('/', [HomeController::class, 'show'])->name('landing');
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -144,7 +132,6 @@ Route::middleware(['role'])->group(function () {
         return view('auth.registered'); // Buat view ini sesuai HTML-mu
     })->name('registered.success');
 });
->>>>>>> ff95d6c819d02297bd91edfca5c28119ceb9f916
 
 // ADMIN ROUTES
 Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () {
