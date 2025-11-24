@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sinar Education | Dashboard</title>
+  <title>Sinar Education | Level</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -55,7 +55,7 @@
     <div class="flex justify-between items-center mb-5">
         <h2 class="text-2xl font-bold text-gray-800">Manajemen Level</h2>
 
-        <a href="/levels/create"
+        <a href="{{ route('admin.levels.create') }}"
             class="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-4 rounded-lg font-semibold">
             + Tambah Level
         </a>
@@ -78,13 +78,13 @@
         <td class="px-4 py-3 flex gap-2">
 
             {{-- LIHAT --}}
-            <a href="/levels/{{ $level->id }}" 
+            <a href="{{ route('admin.levels.show', $level->id) }}" 
                 class="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded">
                 <i class="fas fa-eye"></i> Lihat
             </a>
 
             {{-- EDIT --}}
-            <a href="/levels/edit/{{ $level->id }}" 
+            <a href="{{ route('admin.levels.edit', $level->id) }}" 
                 class="flex items-center gap-1 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1 rounded">
                 <i class="fas fa-edit"></i> Edit
             </a>
@@ -95,7 +95,6 @@
                 class="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded">
                 <i class="fas fa-trash"></i> Hapus
             </a>
-
         </td>
     </tr>
 

@@ -77,4 +77,14 @@ class LevelController extends Controller
 
         return redirect('/levels')->with('success', 'Level berhasil dihapus!');
     }
+
+    // ================================
+    // SHOW LEVEL DETAILS
+    // ================================
+    public function show($id)
+{
+    $level = Levels::findOrFail($id);
+    return view('levels.show', compact('level'));
+}
+
 }

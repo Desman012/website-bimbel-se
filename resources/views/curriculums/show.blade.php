@@ -36,12 +36,13 @@
                         <a href="{{ route('admin.curriculums.index') }}" class="text-gray-600 hover:text-yellow-700 mr-4 text-lg">
                             <i class="fas fa-arrow-left"></i>
                         </a>
-                        <h1 class="text-xl font-semibold">Edit Curriculum</h1>
+                        <h1 class="text-xl font-semibold">Detail Curriculum</h1>
                     </div>
+
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/curriculums">Curriculum</a></li>
-                            <li class="breadcrumb-item active">Edit Curriculum</li>
+                            <li class="breadcrumb-item active">Detail Curriculum</li>
                         </ol>
                     </div>
                 </div>
@@ -54,42 +55,39 @@
 
                 <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
 
-                    <form method="POST" action="/curriculums/update/{{ $curriculum->id }}">
-                        @csrf
+                    <h2 class="text-xl font-semibold mb-6 text-gray-800">Informasi Curriculum</h2>
 
-                        <h2 class="text-xl font-semibold mb-6 text-gray-800">Edit Curriculum</h2>
+                    {{-- Informasi Curriculum --}}
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-1">ID Curriculum</label>
+                        <p class="text-gray-900 text-lg">{{ $curriculum->id }}</p>
+                    </div>
 
-                        {{-- Nama Curriculum --}}
-                        <div class="mb-6">
-                            <label class="block text-gray-700 font-semibold mb-2">Nama Curriculum</label>
-                            <input 
-                                type="text"
-                                name="name_curriculum"
-                                value="{{ $curriculum->name_curriculum }}"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl
-                                       focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm"
-                                required
-                            >
-                        </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-1">Nama Curriculum</label>
+                        <p class="text-gray-900 text-lg">{{ $curriculum->name_curriculum }}</p>
+                    </div>
 
-                        <hr class="my-8 border-yellow-300">
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-1">Dibuat Pada</label>
+                        <p class="text-gray-900 text-lg">{{ $curriculum->created_at }}</p>
+                    </div>
 
-                        {{-- Tombol Aksi --}}
-                        <div class="flex justify-end mt-6">
-                            <a href="{{ route('admin.curriculums.index') }}"
-                                class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold 
-                                       rounded-lg shadow-md transition duration-150 mr-3">
-                                <i class="fas fa-arrow-left mr-2"></i> Kembali
-                            </a>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 font-semibold mb-1">Terakhir Diubah</label>
+                        <p class="text-gray-900 text-lg">{{ $curriculum->updated_at }}</p>
+                    </div>
 
-                            <button type="submit"
-                                class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold 
-                                       rounded-lg shadow-md transition duration-150">
-                                <i class="fas fa-save mr-2"></i> Simpan Perubahan
-                            </button>
-                        </div>
+                    <hr class="my-8 border-yellow-300">
 
-                    </form>
+                    {{-- Tombol Aksi --}}
+                    <div class="flex justify-end mt-6">
+                        <a href="{{ route('admin.curriculums.index') }}"
+                            class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white 
+                                   font-semibold rounded-lg shadow-md transition duration-150">
+                            <i class="fas fa-arrow-left mr-2"></i> Kembali
+                        </a>
+                    </div>
 
                 </div>
 
@@ -97,8 +95,6 @@
         </section>
 
     </div>
-    {{-- END CONTENT-WRAPPER --}}
-
 </div>
 
 {{-- SCRIPTS --}}
@@ -106,7 +102,6 @@
 <script src="{{ Vite::asset('resources/js/boostrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ Vite::asset('resources/css/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <script src="{{ Vite::asset('resources/js/js/adminlte.min.js') }}"></script>
-<script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script>
 
 </body>
 </html>

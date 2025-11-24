@@ -57,4 +57,10 @@ class CurriculumController extends Controller
         Curriculums::findOrFail($id)->delete();
         return redirect('/curriculums')->with('success', 'Kurikulum berhasil dihapus!');
     }
+
+        public function show($id)
+    {
+        $curriculum = Curriculums::findOrFail($id);
+        return view('curriculums.show', compact('curriculum'));
+    }
 }

@@ -55,7 +55,7 @@
     <div class="flex justify-between items-center mb-5">
         <h2 class="text-2xl font-bold text-gray-800">Manajemen Kurikulum</h2>
 
-        <a href="/curriculums/create"
+        <a href="{{ route('admin.curriculums.create') }}"
             class="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-4 rounded-lg font-semibold">
             + Tambah Kurikulum
         </a>
@@ -81,13 +81,13 @@
                 <td class="px-4 py-3 flex gap-2">
 
                     {{-- LIHAT --}}
-                    <a href="/curriculums/{{ $curriculum->id }}" 
+                    <a href="{{ route('admin.curriculums.show', $curriculum->id) }}" 
                         class="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded">
                         <i class="fas fa-eye"></i> Lihat
                     </a>
 
                     {{-- EDIT --}}
-                    <a href="/curriculums/edit/{{ $curriculum->id }}" 
+                    <a href="{{ route('admin.curriculums.edit', $curriculum->id) }}" 
                         class="flex items-center gap-1 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1 rounded">
                         <i class="fas fa-edit"></i> Edit
                     </a>
