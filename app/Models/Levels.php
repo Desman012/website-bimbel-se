@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Levels extends Model
 {
-    use HasFactory;
     protected $table = 'levels';
 
     protected $fillable = [
-        'name_levels',
+        'name_levels'
     ];
-
 }
+

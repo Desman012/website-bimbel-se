@@ -10,6 +10,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentAttendanceController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentPaymentController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\LevelController;
+use App\Http\Controllers\CurriculumController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -174,7 +177,32 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     // ROUTE PENDAFTARAN
     Route::get('/student-registration', [AdminStudentRegistrationController::class, 'index'])->name('admin.students.registration.index');
     Route::get('/student-registration/data', [AdminStudentRegistrationController::class, 'getData'])->name('admin.students.registration.data');
-Route::get('/student-registration/{id}', [AdminStudentRegistrationController::class, 'show'])->name('admin.students.registration.show');
+    Route::get('/student-registration/{id}', [AdminStudentRegistrationController::class, 'show'])->name('admin.students.registration.show');
+
+    // ROUTE JADWAL
+    // Route::prefix('admin')->middleware(['auth'])->group(function() {
+    Route::get('/schedules', [ScheduleController::class, 'index'])->name('admin.schedules.index');
+    Route::post('/schedules', [ScheduleController::class, 'store'])->name('admin.schedules.store');
+    
+    // LEVELS
+    Route::get('/levels', [LevelController::class, 'index']);
+    Route::get('/levels/create', [LevelController::class, 'create']);
+    Route::post('/levels/store', [LevelController::class, 'store']);
+    Route::get('/levels/edit/{id}', [LevelController::class, 'edit']);
+    Route::post('/levels/update/{id}', [LevelController::class, 'update']);
+    Route::get('/levels/delete/{id}', [LevelController::class, 'destroy']);
+
+    // CURRICULUMS
+    Route::get('/curriculums', [CurriculumController::class, 'index']);
+    Route::get('/curriculums/create', [CurriculumController::class, 'create']);
+    Route::post('/curriculums/store', [CurriculumController::class, 'store']);
+    Route::get('/curriculums/edit/{id}', [CurriculumController::class, 'edit']);
+    Route::post('/curriculums/update/{id}', [CurriculumController::class, 'update']);
+    Route::get('/curriculums/delete/{id}', [CurriculumController::class, 'destroy']);
+
+
+    // });
+
 
 });
 
