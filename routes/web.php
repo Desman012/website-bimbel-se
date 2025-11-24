@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminPaymentController;
 use App\Http\Controllers\AdminRegistrationController;
 use App\Http\Controllers\AdminStudentController;
+use App\Http\Controllers\AdminStudentRegistrationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentAttendanceController;
@@ -126,17 +127,17 @@ Route::get('/forgot-password', [HomeController::class, 'forgotpassword'])->name(
 Route::middleware(['role'])->group(function () {
     Route::get('/', [HomeController::class, 'show'])->name('landing');
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    // Route::post('/login', [AuthController::class, 'login'])->name('login-post');
-
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    // Route::post('/register', [AuthController::class, 'register'])->name('register-post');
+    Route::get('/registered-success', function () {
+        return view('auth.registered'); // Buat view ini sesuai HTML-mu
+    })->name('registered.success');
 });
 
 // ADMIN ROUTES
 Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () {
-    Route::get('/cek-admin', function () {
-        dd(Auth::guard('admin')->user());
-    });
+    // Route::get('/cek-admin', function () {
+    //     dd(Auth::guard('admin')->user());
+    // });
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     // Students
@@ -160,7 +161,7 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/registrations/{admin}/edit', [AdminRegistrationController::class, 'edit'])->name('admin.registrations.edit');
     Route::put('/registrations/{admin}', [AdminRegistrationController::class, 'update'])->name('admin.registrations.update');
     Route::delete('/registrations/{admin}', [AdminRegistrationController::class, 'destroy'])->name('admin.registrations.destroy');
-    
+
     // ADMIN STUDENT ROUTES
     Route::get('/students', [AdminStudentController::class, 'index'])->name('admin.students.index');
     Route::get('/students/create', [AdminStudentController::class, 'create'])->name('admin.students.create');
@@ -169,6 +170,12 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::post('/students', [AdminStudentController::class, 'store'])->name('admin.students.store');
     Route::put('/students/{student}', [AdminStudentController::class, 'update'])->name('admin.students.update');
     Route::delete('/students/{student}', [AdminStudentController::class, 'destroy'])->name('admin.students.destroy');
+
+    // ROUTE PENDAFTARAN
+    Route::get('/student-registration', [AdminStudentRegistrationController::class, 'index'])->name('admin.students.registration.index');
+    Route::get('/student-registration/data', [AdminStudentRegistrationController::class, 'getData'])->name('admin.students.registration.data');
+Route::get('/student-registration/{id}', [AdminStudentRegistrationController::class, 'show'])->name('admin.students.registration.show');
+
 });
 
 // STUDENT ROUTES

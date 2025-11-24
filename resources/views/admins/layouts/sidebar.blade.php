@@ -22,6 +22,15 @@
                           Dashboard
                       </p>
                   </a>
+              </li>
+              <li class="nav-item">
+                  <a href="{{ route('admin.students.registration.index') }}" class="nav-link">
+                      <i class="nav-icon far fa-calendar-alt"></i>
+                      <p>
+                          Pendaftaran
+                      </p>
+                  </a>
+              </li>
               <li class="nav-item">
                   <a href="{{ route('admin.registrations.index') }}" class="nav-link">
                       <i class="nav-icon far fa-calendar-alt"></i>

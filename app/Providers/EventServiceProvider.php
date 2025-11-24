@@ -21,12 +21,16 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-            'Illuminate\Auth\Events\Failed' => [
-        \App\Listeners\CountFailedLogin::class,
-    ],
-     \Illuminate\Auth\Events\PasswordReset::class => [
-        \App\Listeners\LogPasswordReset::class,
-    ],
+        'Illuminate\Auth\Events\Failed' => [
+            \App\Listeners\CountFailedLogin::class,
+        ],
+        \Illuminate\Auth\Events\PasswordReset::class => [
+            \App\Listeners\LogPasswordReset::class,
+        ],
+        // \Illuminate\Auth\Events\Registered::class => [
+        //     \App\Listeners\SendPendingNotification::class,
+        // ],
+
     ];
 
     /**
