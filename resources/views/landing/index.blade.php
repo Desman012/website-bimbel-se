@@ -11,6 +11,12 @@
   <!-- Tailwind -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+  <!-- Swiper CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  />
+
   <style>
   html { scroll-behavior: smooth; }
 
@@ -59,6 +65,14 @@
         <li><a href="#review" class="hover:text-orange-600">Testimoni</a></li>
         <li><a href="#faq" class="hover:text-orange-600">FAQ</a></li>
         <li><a href="#contact" class="hover:text-orange-600">Kontak</a></li>
+        <li>
+        <a href="/login"
+           class="px-4 py-2 rounded-lg font-semibold 
+                  bg-gradient-to-r from-orange-500 to-red-600 
+                  text-white shadow hover:scale-105 transition">
+          Masuk
+        </a>
+      </li>
       </ul>
     </div>
   </nav>
@@ -69,7 +83,7 @@
       <div class="flex-1" data-aos="fade-right">
         <h3 class="text-4xl md:text-5xl font-bold leading-tight">
           
-          <span class="text-yellow-300">Solusi Belajar untuk SD, SMP, SMA</span>
+          <span class="text-yellow-300">Solusi Belajar untuk SD, SMP, & SMA</span>
         </h3>
         <p class="mt-4 text-lg opacity-90">
           Bimbingan belajar menjadi salah satu kebutuhan penting bagi siswa yang ingin meningkatkan prestasi akademik. Dengan metode belajar yang tepat, siswa bisa lebih mudah memahami pelajaran serta siap menghadapi berbagai ujian sekolah maupun tes masuk perguruan tinggi. Bimbel Sinar Education, yang berlokasi di Tambun Selatan, Kabupaten Bekasi, hadir sebagai solusi terbaik dengan layanan bimbingan belajar berkualitas untuk siswa dari tingkat PAUD hingga SMA serta persiapan UTBK.
@@ -90,15 +104,47 @@
 
   <!-- ABOUT -->
   <section id="about" class="py-20 bg-white">
+    <div class="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-10">
+
+    <!-- LEFT: GALERI SLIDER -->
+    <div class="w-full">
+        <div class="swiper mySwiper rounded-xl shadow-lg">
+            <div class="swiper-wrapper">
+                
+                <!-- GANTI DENGAN FOTO GALERIMU -->
+                <div class="swiper-slide">
+                    <img src="{{ Vite::asset('resources/img/foto1(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Vite::asset('resources/img/foto2(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Vite::asset('resources/img/foto3(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                </div>
+                <div class="swiper-slide">
+                    <img src="{{ Vite::asset('resources/img/foto4(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                </div>
+
+            </div>
+
+            <!-- TOMBOL PREV & NEXT -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+
+    <!-- RIGHT: DESKRIPSI -->
     <div class="max-w-6xl mx-auto px-6 text-center" data-aos="fade-up">
       <h3 class="text-3xl font-bold text-orange-600 mb-4">Tentang Kami</h3>
       <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed">
-        Bimbel Sinar Education adalah lembaga bimbingan belajar yang telah berdiri lebih dari 5 tahun dan fokus memberikan pendampingan belajar bagi siswa SD, SMP, SMA, hingga persiapan UTBK (SNBT). Dengan motto Your Bright Future Starts Here, Sinar Education berkomitmen membantu siswa belajar secara lebih terarah, efektif, dan menyenangkan.
+        Bimbel Sinar Education adalah lembaga bimbingan belajar yang telah berdiri lebih dari 5 tahun dan fokus memberikan pendampingan belajar bagi siswa SD, SMP, SMA, hingga persiapan UTBK (SNBT). Dengan motto <strong>Your Bright Future Starts Here</strong>, Sinar Education berkomitmen membantu siswa belajar secara lebih terarah, efektif, dan menyenangkan.
 
 Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhasil mendampingi banyak siswa mencapai prestasi terbaik di sekolah bahkan hingga lolos ke perguruan tinggi favorit.
       </p>
     </div>
-  </section>
+
+</div>
+</section>
 
   <!-- PROGRAM -->
 <section id="program" class="py-20 bg-gradient-to-b from-orange-50 to-white">
@@ -155,6 +201,40 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
 
   <!-- REVIEW -->
   <section id="review" class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <h3 class="text-3xl font-bold text-orange-600 mb-10" data-aos="zoom-in">
+      Apa Kata Mereka?
+    </h3>
+
+    <!-- Swiper Container -->
+    <div class="swiper myReviewSwiper">
+      <div class="swiper-wrapper">
+
+        @foreach ($reviews as $review)
+        <div class="swiper-slide">
+          <div class="p-6 bg-orange-50 rounded-lg shadow hover:shadow-lg transition h-full" data-aos="fade-right">
+            <p class="italic text-gray-700">"{{ $review->review_text }}"</p>
+            <h5 class="mt-4 font-semibold text-red-500">– {{ $review->name_student }}</h5>
+            <h5 class="font-semibold text-yellow-500">{{ $review->school }}</h5>
+          </div>
+        </div>
+        @endforeach
+
+      </div>
+
+      <!-- Navigation -->
+      <div class="swiper-button-prev text-red-600"></div>
+      <div class="swiper-button-next text-red-600"></div>
+
+      <!-- Pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+
+  </div>
+</section>
+
+  
+  {{-- <section id="review" class="py-20 bg-white">
     <div class="max-w-6xl mx-auto px-6 text-center">
       <h3 class="text-3xl font-bold text-orange-600 mb-10" data-aos="zoom-in">Apa Kata Mereka?</h3>
 
@@ -170,7 +250,7 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
 
       </div>
     </div>
-  </section>
+  </section> --}}
 
   <!-- FAQ -->
   <!-- FAQ -->
@@ -329,14 +409,14 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
         <div class="flex flex-col gap-2">
           <a href="https://wa.me/6285714609869"
              target="_blank"
-             class="inline-block w-fit px-6 py-3 bg-white text-red-600 rounded-lg font-semibold hover:scale-105 transition">
-            Admin 1 (WA)
+             class="text-white underline underline-offset-2 hover:text-orange-200 transition">
+            Admin 1 (WhatsApp)
           </a>
 
           <a href="https://wa.me/628567734085"
              target="_blank"
-             class="inline-block w-fit px-6 py-3 bg-white text-red-600 rounded-lg font-semibold hover:scale-105 transition">
-            Admin 2 (WA)
+             class="text-white underline underline-offset-2 hover:text-orange-200 transition">
+            Admin 2 (WhatsApp)
           </a>
         </div>
 
@@ -422,5 +502,30 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
     AOS.init({ duration: 900, once: true });
   </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    const swiper = new Swiper(".mySwiper", {
+      loop: true,
+      slidesPerView: 1,
+      spaceBetween: 20,
+      grabCursor: true,
+      autoplay: {
+        delay: 2500,
+      },
+      breakpoints: {
+        640: { slidesPerView: 1 },
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 } // tampil 3 review sekaligus
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  </script>
 </body>
 </html>
