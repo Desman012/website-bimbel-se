@@ -72,27 +72,27 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">      
-                        @foreach ($review as $reviews)
+                        @foreach ($reviews as $review)
                         <tr class="hover:bg-yellow-50/50 transition duration-100">
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $reviews->name_student }} 
+                                {{ $review->name_student }} 
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $reviews->school }}
+                                {{ $review->school }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ $reviews->review_text }}
+                                {{ $review->review_text }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-center">
                                 
                                 
                                 
-                                <a href="{{ route('admin.landing_edit', $reviews->id) }}" 
+                                <a href="{{ route('admin.landing_edit', $review->id) }}" 
                                 class="inline-flex items-center px-3 py-1 text-sm text-white bg-yellow-500 hover:bg-yellow-600 rounded-lg shadow-md mr-1">
                                     <i class="fas fa-edit"></i> <span class="ml-1">Edit</span>
                                 </a>
                                 
-                                <form action="{{ route('admin.landing_destroy', $reviews->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
+                                <form action="{{ route('admin.landing_destroy', $review->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" 
@@ -114,9 +114,9 @@
                     </tbody>
                 </table>
             </div>   
-            {{-- <div class="mt-4">
+            <div class="mt-4">
                 {{ $reviews->links() }}
-            </div> --}}
+            </div>
             
         </div>
 </div>
