@@ -29,7 +29,15 @@
                 <h2 class="text-3xl lg:text-4xl font-bold mb-6 text-start">
                     PENDAFTARAN AKUN SISWA
                 </h2>
-
+@if ($errors->any())
+    <div class="mb-4 p-3 border border-red-300 rounded bg-red-50 text-red-700">
+        <ul class="list-disc list-inside">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
                 <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" id="registerForm">
                     @csrf
 
@@ -55,7 +63,7 @@
 
                         <div class="flex justify-end">
                             <button type="button" id="next1"
-                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold opacity-60 cursor-not-allowed transition-transform">Selanjutnya</button>
+                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold opacity-60 cursor-not-allowed hover:-translate-y-1 transition-transform">Lanjut</button>
                         </div>
                     </div>
 
@@ -84,7 +92,7 @@
                             <button type="button" onclick="prevStep(1)"
                                 class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:-translate-y-1 transition-transform">Kembali</button>
                             <button type="button" id="next2"
-                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold opacity-60 cursor-not-allowed transition-transform">Selanjutnya</button>
+                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold opacity-60 cursor-not-allowed hover:-translate-y-1 transition-transform">Lanjut</button>
                         </div>
                     </div>
 
@@ -114,7 +122,7 @@
                             <button type="button" onclick="prevStep(2)"
                                 class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:-translate-y-1 transition-transform">Kembali</button>
                             <button type="button" id="next3"
-                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold opacity-60 cursor-not-allowed transition-transform">Selanjutnya</button>
+                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold opacity-60 cursor-not-allowed hover:-translate-y-1 transition-transform">Lanjut</button>
                         </div>
                     </div>
 
@@ -164,20 +172,42 @@
                             <button type="button" onclick="prevStep(3)"
                                 class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:-translate-y-1 transition-transform">Kembali</button>
                             <button type="button" onclick="nextStep(5)"
-                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold hover:-translate-y-1 transition-transform">Selanjutnya</button>
+                                class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold hover:-translate-y-1 transition-transform">Lanjut</button>
                         </div>
                     </div>
 
-                    {{-- STEP 5: PEMBAYARAN --}}
+                    {{-- STEP 5: JADWAL PERTEMUAN --}}
                     <div class="step hidden" id="step-5">
-                        <h3 class="text-xl font-semibold mb-2 text-crimson">5. Bukti Pembayaran</h3>
+                        <h3 class="text-xl font-semibold mb-4 text-crimson">5. Jadwal Pertemuan</h3>
+                        <p class="text-sm text-gray-500 mb-4">Pilih hari dan waktu pertemuan sesuai kelas yang dipilih.
+                        </p>
+
+                        <div id="meetingContainer">
+                            <!-- JS akan mengisi hari & waktu dari API day_time -->
+                        </div>
+
+                        <div class="flex justify-between mt-6">
+                            <button type="button" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300"
+                                onclick="prevStep(4)">
+                                Kembali
+                            </button>
+                            <button type="button" id="next5"
+                                class="px-4 py-2 rounded bg-crimson text-white opacity-60 cursor-not-allowed hover:-translate-y-1 transition-transform">
+                                Lanjut
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- STEP 6: PEMBAYARAN --}}
+                    <div class="step hidden" id="step-6">
+                        <h3 class="text-xl font-semibold mb-2 text-crimson">6. Bukti Pembayaran</h3>
                         <p class="text-sm text-gray-500 mb-4">Unggah bukti pembayaran untuk melanjutkan pendaftaran.
                         </p>
 
                         <div class="mb-4">
                             <p class="text-gray-700 font-semibold">Nominal Pembayaran:</p>
                             <p id="nominalDisplay" class="text-lg font-bold text-crimson">Rp -</p>
-                            <input type="hidden" name="amount-paid" id="amount-paid">
+                            <input type="hidden" name="amount-paid" id="amountPaid">
                         </div>
 
                         <div class="mb-4">
@@ -191,7 +221,7 @@
                             required />
 
                         <div class="flex justify-between">
-                            <button type="button" onclick="prevStep(4)"
+                            <button type="button" onclick="prevStep(5)"
                                 class="px-6 py-2 bg-gray-300 text-gray-700 rounded-lg font-semibold hover:-translate-y-1 transition-transform">Kembali</button>
                             <button type="submit"
                                 class="px-6 py-2 bg-crimson text-white rounded-lg font-semibold hover:-translate-y-1 transition-transform">Daftar
@@ -199,6 +229,7 @@
                         </div>
                     </div>
                 </form>
+
             </div>
         </div>
 
@@ -245,107 +276,259 @@
             showStep(step);
         }
 
-        // Show / Hide Password
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordField = document.getElementById('password');
-        togglePassword.addEventListener('click', () => {
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                togglePassword.innerHTML = '<i class="fa-regular fa-eye-slash"></i>';
-            } else {
-                passwordField.type = 'password';
-                togglePassword.innerHTML = '<i class="fa-regular fa-eye"></i>';
-            }
+        // ==========================================================
+        // SHOW / HIDE PASSWORD
+        // ==========================================================
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordField = document.getElementById("password");
+
+        togglePassword.addEventListener("click", () => {
+            const isHidden = passwordField.type === "password";
+            passwordField.type = isHidden ? "text" : "password";
+            togglePassword.innerHTML = isHidden ?
+                '<i class="fa-regular fa-eye-slash"></i>' :
+                '<i class="fa-regular fa-eye"></i>';
         });
 
+        // ==========================================================
+        // STEP 1 VALIDATION
+        // ==========================================================
+        const email = document.getElementById("email");
+        const password = document.getElementById("password");
+        const next1 = document.getElementById("next1");
 
-        // Validasi Step 1
-        const email = document.getElementById('email');
-        const password = document.getElementById('password');
-        const next1 = document.getElementById('next1');
+        function validatePasswordComplexity(pass) {
+            const minLength = pass.length >= 8;
+            const hasUpper = /[A-Z]/.test(pass);
+            const hasNumber = /[0-9]/.test(pass);
+            const hasSymbol = /[^A-Za-z0-9]/.test(pass);
+            return minLength && hasUpper && hasNumber && hasSymbol;
+        }
 
         function validateStep1() {
-            if (email.validity.valid && password.value.trim() !== '') {
-                next1.classList.remove('opacity-60', 'cursor-not-allowed');
-                next1.onclick = () => nextStep(2);
-            } else {
-                next1.classList.add('opacity-60', 'cursor-not-allowed');
-                next1.onclick = null;
-            }
+            const valid = email.validity.valid && validatePasswordComplexity(password.value);
+            next1.classList.toggle("opacity-60", !valid);
+            next1.classList.toggle("cursor-not-allowed", !valid);
+            next1.onclick = valid ? () => nextStep(2) : null;
         }
-        email.addEventListener('input', validateStep1);
-        password.addEventListener('input', validateStep1);
 
-        // Validasi Step 2
-        const full_name = document.getElementById('full-name');
-        const phone = document.getElementById('phone');
-        const address = document.getElementById('address');
-        const next2 = document.getElementById('next2');
+        email.addEventListener("input", validateStep1);
+        password.addEventListener("input", validateStep1);
+
+        // ==========================================================
+        // STEP 2 VALIDATION
+        // ==========================================================
+        const fullName = document.getElementById("full-name");
+        const phone = document.getElementById("phone");
+        const address = document.getElementById("address");
+        const next2 = document.getElementById("next2");
 
         function validateStep2() {
-            if (full_name.value.trim() && phone.value.trim() && address.value.trim()) {
-                next2.classList.remove('opacity-60', 'cursor-not-allowed');
-                next2.onclick = () => nextStep(3);
-            } else {
-                next2.classList.add('opacity-60', 'cursor-not-allowed');
-                next2.onclick = null;
-            }
+            const valid = fullName.value.trim() !== "" &&
+                phone.value.trim() !== "" &&
+                address.value.trim() !== "";
+            next2.classList.toggle("opacity-60", !valid);
+            next2.classList.toggle("cursor-not-allowed", !valid);
+            next2.onclick = valid ? () => nextStep(3) : null;
         }
-        [full_name, phone, address].forEach(el => el.addEventListener('input', validateStep2));
 
-        // Validasi Step 3
-        const parent_name = document.getElementById('parent-name');
-        const parent_email = document.getElementById('parent-email');
-        const parent_phone = document.getElementById('parent-phone');
-        const next3 = document.getElementById('next3');
+        [fullName, phone, address].forEach(el => el.addEventListener("input", validateStep2));
+
+        // ==========================================================
+        // STEP 3 VALIDATION
+        // ==========================================================
+        const parentName = document.getElementById("parent-name");
+        const parentEmail = document.getElementById("parent-email");
+        const parentPhone = document.getElementById("parent-phone");
+        const next3 = document.getElementById("next3");
 
         function validateStep3() {
-            if (parent_name.value.trim() && parent_email.validity.valid && parent_phone.value.trim()) {
-                next3.classList.remove('opacity-60', 'cursor-not-allowed');
-                next3.onclick = () => nextStep(4);
-            } else {
-                next3.classList.add('opacity-60', 'cursor-not-allowed');
-                next3.onclick = null;
-            }
+            const valid = parentName.value.trim() !== "" &&
+                parentEmail.validity.valid &&
+                parentPhone.value.trim() !== "";
+            next3.classList.toggle("opacity-60", !valid);
+            next3.classList.toggle("cursor-not-allowed", !valid);
+            next3.onclick = valid ? () => nextStep(4) : null;
         }
-        [parent_name, parent_email, parent_phone].forEach(el => el.addEventListener('input', validateStep3));
 
-        // validasi step 4
+        [parentName, parentEmail, parentPhone].forEach(el => el.addEventListener("input", validateStep3));
 
-        // --- Ambil kelas berdasarkan jenjang ---
-        const jenjangSelect = document.getElementById('jenjangSelect');
-        const kelasSelect = document.getElementById('kelasSelect');
-        const nominalDisplay = document.getElementById('nominalDisplay');
-        const amountPaid = document.getElementById('amount-paid');
+        // ==========================================================
+        // STEP 4 VALIDATION & LOAD KELAS
+        // ==========================================================
+        const program = document.getElementById("programSelect");
+        const curriculum = document.getElementById("curriculumSelect");
+        const jenjang = document.getElementById("jenjangSelect");
+        const kelas = document.getElementById("kelasSelect");
+        const next4 = document.querySelector('#step-4 button[onclick="nextStep(5)"]');
+        const nominalDisplay = document.getElementById("nominalDisplay");
+        const amountPaid = document.getElementById("amountPaid");
 
+        function validateStep4() {
+            const valid = program.value !== "" &&
+                curriculum.value !== "" &&
+                jenjang.value !== "" &&
+                kelas.value !== "";
+            next4.classList.toggle("opacity-60", !valid);
+            next4.classList.toggle("cursor-not-allowed", !valid);
+            next4.onclick = valid ? () => nextStep(5) : null;
+        }
 
-        jenjangSelect.addEventListener('change', async () => {
-            const jenjangId = jenjangSelect.value;
-            kelasSelect.innerHTML = `<option disabled selected>Memuat kelas...</option>`;
+        [program, curriculum, jenjang, kelas].forEach(el => el.addEventListener("change", validateStep4));
+        validateStep4();
+
+        // Load kelas
+        jenjang.addEventListener('change', async () => {
+            const jenjangId = jenjang.value;
+            kelas.innerHTML = `<option disabled selected>Memuat kelas...</option>`;
             try {
                 const res = await fetch(`/api/Classes/${jenjangId}`);
                 const data = await res.json();
-                kelasSelect.innerHTML = `<option disabled selected>Pilih Kelas</option>`;
+                kelas.innerHTML = `<option disabled selected>Pilih Kelas</option>`;
                 data.forEach(k => {
-                    kelasSelect.innerHTML += `<option value="${k.id}">${k.name_class}</option>`;
+                    kelas.innerHTML += `<option value="${k.id}">${k.name_class}</option>`;
                 });
             } catch (err) {
-                kelasSelect.innerHTML = `<option disabled selected>Gagal memuat kelas</option>`;
+                kelas.innerHTML = `<option disabled selected>Gagal memuat kelas</option>`;
+            }
+            validateStep4();
+        });
+
+        // ==========================================================
+        // STEP 5: NOMINAL & JADWAL DINAMIS
+        // ==========================================================
+        const meetingContainer = document.getElementById("meetingContainer");
+        const next5 = document.getElementById("next5");
+
+        kelas.addEventListener("change", async () => {
+            const jenjangId = jenjang.value;
+            const kelasId = kelas.value;
+            if (!kelasId) return;
+
+            // 1. Load nominal
+            try {
+                const resPrice = await fetch(`/api/prices/${jenjangId}/${kelasId}`);
+                const dataPrice = await resPrice.json();
+
+                if (dataPrice && dataPrice.price != null) {
+                    // Buang desimal, ambil angka bulat
+                    let cleanPrice = Math.floor(Number(dataPrice.price));
+                    // Format ribuan
+                    let formattedPrice = cleanPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+                    nominalDisplay.textContent = `Rp ${formattedPrice}`;
+                    amountPaid.value = cleanPrice;
+                } else {
+                    nominalDisplay.textContent = 'Rp -';
+                    amountPaid.value = '';
+                }
+            } catch (err) {
+                console.error(err);
+                nominalDisplay.textContent = 'Rp -';
+                amountPaid.value = '';
+            }
+
+
+            // 2. Load jadwal
+            try {
+                const resDayTime = await fetch(`/api/day_time/${kelasId}`);
+                const dataDayTime = await resDayTime.json();
+                const dayMap = {};
+                dataDayTime.forEach(dt => {
+                    if (!dayMap[dt.day_id]) dayMap[dt.day_id] = {
+                        name: dt.day_name,
+                        times: []
+                    };
+                    dayMap[dt.day_id].times.push({
+                        time_id: dt.time_id,
+                        name_time: dt.name_time,
+                        time_in: dt.time_in,
+                        time_out: dt.time_out
+                    });
+                });
+
+                meetingContainer.innerHTML = "";
+                Object.keys(dayMap).forEach((dayId, i) => {
+                    const div = document.createElement("div");
+                    div.classList.add("mb-4", "p-3", "border", "rounded-lg", "bg-gray-50");
+
+                    // Hari
+                    const labelDay = document.createElement("label");
+                    labelDay.classList.add("font-semibold");
+                    labelDay.textContent = `Hari Pertemuan ${i+1}`;
+                    div.appendChild(labelDay);
+
+                    const selectDay = document.createElement("select");
+                    selectDay.classList.add("meeting-day", "w-full", "border", "p-2", "mb-2");
+                    const defaultDay = document.createElement("option");
+                    defaultDay.value = "";
+                    defaultDay.disabled = true;
+                    defaultDay.selected = true;
+                    defaultDay.textContent = "Pilih Hari";
+                    selectDay.appendChild(defaultDay);
+
+                    Object.values(dayMap).forEach(d => {
+                        const opt = document.createElement("option");
+                        opt.value = d.name;
+                        opt.textContent = d.name;
+                        selectDay.appendChild(opt);
+                    });
+                    div.appendChild(selectDay);
+
+                    // Waktu
+                    const labelTime = document.createElement("label");
+                    labelTime.classList.add("font-semibold");
+                    labelTime.textContent = `Waktu Pertemuan ${i+1}`;
+                    div.appendChild(labelTime);
+
+                    const selectTime = document.createElement("select");
+                    selectTime.classList.add("meeting-time", "w-full", "border", "p-2");
+                    const defaultTime = document.createElement("option");
+                    defaultTime.value = "";
+                    defaultTime.disabled = true;
+                    defaultTime.selected = true;
+                    defaultTime.textContent = "Pilih Waktu";
+                    selectTime.appendChild(defaultTime);
+
+                    dataDayTime.forEach(dt => {
+                        const opt = document.createElement("option");
+                        opt.value =
+                            `${dt.day_name}|${dt.name_time}|${dt.time_in}-${dt.time_out}`;
+                        opt.textContent = `${dt.name_time} (${dt.time_in} - ${dt.time_out})`;
+                        selectTime.appendChild(opt);
+                    });
+                    div.appendChild(selectTime);
+
+                    meetingContainer.appendChild(div);
+                });
+
+                validateStep5();
+            } catch (err) {
+                console.error(err);
+                meetingContainer.innerHTML = '<p class="text-red-500">Gagal memuat jadwal</p>';
             }
         });
 
-        // --- Ambil nominal harga berdasarkan kelas dan jenjang ---
-        kelasSelect.addEventListener('change', async () => {
-            const jenjangId = jenjangSelect.value;
-            const kelasId = kelasSelect.value;
-            try {
-                const res = await fetch(`/api/prices/${jenjangId}/${kelasId}`);
-                const data = await res.json();
-                nominalDisplay.textContent = `Rp ${data.price.toLocaleString('id-ID').replace(/\./g, ',')}`;
-            } catch {
-                nominalDisplay.textContent = 'Rp -';
-            }
-            amountPaid.value = data.price;
+        // Validasi Step 5
+        function validateStep5() {
+            const days = document.querySelectorAll(".meeting-day");
+            const times = document.querySelectorAll(".meeting-time");
+            let valid = true;
+            days.forEach(d => {
+                if (d.value === "") valid = false;
+            });
+            times.forEach(t => {
+                if (t.value === "") valid = false;
+            });
+            next5.classList.toggle("opacity-60", !valid);
+            next5.classList.toggle("cursor-not-allowed", !valid);
+            next5.onclick = valid ? () => nextStep(6) : null;
+        }
+
+        // Re-validate ketika ada perubahan
+        document.addEventListener("change", e => {
+            if (e.target.classList.contains("meeting-day") || e.target.classList.contains("meeting-time"))
+                validateStep5();
         });
     </script>
 </body>

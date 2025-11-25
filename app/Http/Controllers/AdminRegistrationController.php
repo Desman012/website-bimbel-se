@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Admins;
+use App\Models\Facilities;
+use App\Models\Reviews;
 use Illuminate\Support\Facades\Hash;
 
 class AdminRegistrationController extends Controller
@@ -79,5 +81,72 @@ class AdminRegistrationController extends Controller
 
          return redirect()->route('admin.registrations.index')
                          ->with('success', 'Admin berhasil dihapus.');
+    }
+
+    public function landing()
+    {
+        
+        $review=Reviews::all();
+        $facilities=Facilities::all();
+        $reviews = Reviews::paginate(5);
+        return view('admins.landing', compact('review', 'reviews', 'facilities'));
+
+    }
+
+    public function landing_edit($id)
+    {
+        $data=Reviews::findOrFail($id);
+        return view('admins.landing-edit', compact('data'));
+    }
+
+    public function landing_destroy($id)
+    {
+        $review = Reviews::findOrFail($id);
+        $review->delete();
+
+        return redirect()->route('admin.landing')
+                        ->with('success', 'Review berhasil dihapus.');
+    }
+
+    public function landing_store(Request $request)
+    {
+        $request->validate([
+            'name_student' => 'required|string|max:50',
+            'school'       => 'required|string|max:35',
+            'review_text'  => 'required|string',
+        ]);
+
+        Reviews::create([
+            'name_student' => $request->name_student,
+            'school'       => $request->school,
+            'review_text'  => $request->review_text,
+        ]);
+
+        return redirect()->route('admin.landing')
+                        ->with('success', 'Review berhasil ditambahkan.');
+    }
+
+    public function landing_create()
+    {
+        return view('admins.landing-create');
+    }
+
+    public function landing_update(Request $request, $data)
+    {
+        // return $request;
+        // $request->validate([
+        //     'name_student' => 'required|string|max:50',
+        //     'school'       => 'required|string|max:35',
+        //     'review_text'  => 'required|string',
+        // ]);
+        $review=Reviews::findOrFail($data);
+        $review->update([
+            'name_student' => $request->name_student,
+            'school' => $request->school,
+            'review_text' => $request->review_text,
+        ]);
+
+        return redirect()->route('admin.landing')
+                         ->with('success', 'Informasi admin telah di update.');
     }
 }

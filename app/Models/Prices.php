@@ -12,9 +12,20 @@ class Prices extends Model
     protected $table = 'prices';
 
     protected $fillable = [
-        'level_id',
         'class_id',
+        'level_id',
         'price',
     ];
 
+    // relasi ke classes
+    public function class()
+    {
+        return $this->belongsTo(Classes::class, 'class_id');
+    }
+
+    // relasi ke level
+    public function level()
+    {
+        return $this->belongsTo(Levels::class, 'level_id');
+    }
 }

@@ -21,6 +21,11 @@
 <link rel="stylesheet" 
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+  
+  <!-- CDN Flaticon UIcons -->
+<link rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
   html { scroll-behavior: smooth; }
 
@@ -33,6 +38,11 @@
     box-shadow: 0 12px 25px rgba(0,0,0,0.15);
   }
 
+  .active-link {
+    color: #f97316 !important;
+    font-weight: 700;
+}
+
   /* Slow Fade on Scroll */
   .fade-soft {
     opacity: 0;
@@ -44,6 +54,9 @@
       opacity: 1;
       transform: none;
     }
+  }
+  .faq-content {
+        transition: max-height 0.35s ease;
   }
 </style>
 </head>
@@ -106,52 +119,7 @@
   </section>
 
   <!-- ABOUT -->
- 
-{{-- <section id="about" class="py-20 bg-gradient-to-br from-orange-100 via-yellow-100 to-orange-300">
-  <div class="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-10">
-
-    <!-- LEFT: GALERI SLIDER -->
-    <div class="w-full">
-        <div class="swiper mySwiper rounded-xl shadow-lg">
-            <div class="swiper-wrapper">
-
-                <div class="swiper-slide">
-                    <img src="{{ Vite::asset('resources/img/foto1(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ Vite::asset('resources/img/foto2(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ Vite::asset('resources/img/foto3(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
-                </div>
-                <div class="swiper-slide">
-                    <img src="{{ Vite::asset('resources/img/foto4(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
-                </div>
-
-            </div>
-
-            <!-- TOMBOL PREV & NEXT -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
-    </div>
-
-    <!-- RIGHT: DESKRIPSI -->
-    <div class="max-w-6xl mx-auto px-6 text-center" data-aos="fade-up">
-      <h3 class="text-3xl font-bold text-orange-600 mb-4">Tentang Kami</h3>
-      <p class="text-gray-700 max-w-3xl mx-auto leading-relaxed">
-        Bimbel Sinar Education adalah lembaga bimbingan belajar yang telah berdiri lebih dari 5 tahun dan fokus memberikan pendampingan belajar bagi siswa SD, SMP, SMA, hingga persiapan UTBK (SNBT). Dengan motto <strong>Your Bright Future Starts Here</strong>, Sinar Education berkomitmen membantu siswa belajar secara lebih terarah, efektif, dan menyenangkan.
-        <br><br>
-        Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhasil mendampingi banyak siswa mencapai prestasi terbaik di sekolah bahkan hingga lolos ke perguruan tinggi favorit.
-      </p>
-    </div>
-
-  </div>
-</section> --}}
-
-
-
-  <section id="about" class="py-20 bg-gradient-to-br from-orange-100 via-yellow-100 to-orange-300">
+  <section id="about" class="py-20 bg-gradient-to-br from-orange-50 via-yellow-100 to-orange-100">
     <div class="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-10">
 
     <!-- LEFT: GALERI SLIDER -->
@@ -185,9 +153,10 @@
     <div class="max-w-6xl mx-auto px-6 text-center" data-aos="fade-up">
       <h3 class="text-3xl font-bold text-orange-600 mb-4">Tentang Kami</h3>
       <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed">
-        Bimbel Sinar Education adalah lembaga bimbingan belajar yang telah berdiri lebih dari 5 tahun dan fokus memberikan pendampingan belajar bagi siswa SD, SMP, SMA, hingga persiapan UTBK (SNBT). Dengan motto <strong>Your Bright Future Starts Here</strong>, Sinar Education berkomitmen membantu siswa belajar secara lebih terarah, efektif, dan menyenangkan.
+        Bimbel Sinar Education adalah lembaga bimbingan belajar yang telah berdiri lebih dari 5 tahun dan fokus memberikan pendampingan belajar bagi siswa SD, SMP, SMA, hingga persiapan UTBK (SNBT). Dengan motto <strong class="bg-gradient-to-r from-orange-500 to-yellow-500 bg-clip-text text-transparent">
+  Your Bright Future Starts Here</strong>, Sinar Education berkomitmen membantu siswa belajar secara lebih terarah, efektif, dan menyenangkan.</p>
 
-Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhasil mendampingi banyak siswa mencapai prestasi terbaik di sekolah bahkan hingga lolos ke perguruan tinggi favorit.
+      <p class="text-gray-600 max-w-3xl mx-auto leading-relaxed"> Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhasil mendampingi banyak siswa mencapai prestasi terbaik di sekolah bahkan hingga lolos ke perguruan tinggi favorit.
       </p>
     </div>
 
@@ -232,7 +201,7 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
 
 
   <!-- FASILITAS (dari template 1 digabung) -->
-  <section id="fasilitas" class="py-20 bg-white">
+  <section id="fasilitas" class="py-20 bg-gradient-to-br from-orange-50 via-yellow-100 to-orange-100">
     <h3 class="text-3xl font-bold text-orange-600 text-center mb-10" data-aos="zoom-in">
       Fasilitas Pembelajaran
     </h3>
@@ -248,7 +217,42 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
   </section>
 
   <!-- REVIEW -->
-  <section id="review" class="py-20 bg-white">
+  {{-- <section id="review" class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-6 text-center"> 
+    <h3 class="text-3xl font-bold text-orange-600 mb-10" data-aos="zoom-in">
+      Apa Kata Mereka?
+    </h3>
+
+    <!-- Swiper Container -->
+    <div class="swiper myReviewSwiper">
+      <div class="swiper-wrapper">
+
+        @foreach ($reviews as $review)
+        <div class="swiper-slide">
+          <div class="p-6 bg-orange-50 rounded-lg shadow hover:shadow-lg transition h-full">
+            <p class="italic text-gray-700">"{{ $review->review_text }}"</p>
+            <h5 class="mt-4 font-semibold text-red-500">– {{ $review->name_student }}</h5>
+            <h5 class="font-semibold text-yellow-500">{{ $review->school }}</h5>
+          </div>
+        </div>
+        @endforeach
+
+      </div>
+
+      <!-- Navigation -->
+      <div class="swiper-button-prev text-orange-600"></div>
+      <div class="swiper-button-next text-orange-600"></div>
+
+      <!-- Pagination -->
+      <div class="swiper-pagination mt-4"></div>
+    </div>
+  </div>
+</section> --}}
+
+
+
+
+  {{-- <section id="review" class="py-20 bg-white">
   <div class="max-w-6xl mx-auto px-6 text-center">
     <h3 class="text-3xl font-bold text-orange-600 mb-10" data-aos="zoom-in">
       Apa Kata Mereka?
@@ -279,10 +283,10 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
     </div>
 
   </div>
-</section>
+</section> --}}
 
   
-  {{-- <section id="review" class="py-20 bg-white">
+  <section id="review" class="py-20 bg-white">
     <div class="max-w-6xl mx-auto px-6 text-center">
       <h3 class="text-3xl font-bold text-orange-600 mb-10" data-aos="zoom-in">Apa Kata Mereka?</h3>
 
@@ -298,11 +302,130 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
 
       </div>
     </div>
-  </section> --}}
+  </section>
 
   <!-- FAQ -->
-  <!-- FAQ -->
-<section id="faq" class="py-20 bg-white">
+  <section id="faq" class="py-20 bg-gradient-to-b from-orange-50 to-white">
+    <h3 class="text-3xl font-bold text-red-600 text-center mb-10" data-aos="zoom-in">FAQ</h3>
+    <h5 class="text-2xl font-bold text-red-600 text-center mb-10" data-aos="zoom-in">(Frequently Asked Questions) </h5>
+
+    <div class="max-w-4xl mx-auto px-6 space-y-6">
+
+        <!-- ITEM FAQ -->
+        <div class="faq-item p-5 bg-white shadow-md rounded-xl fade-soft cursor-pointer">
+            <div class="flex justify-between items-center faq-question">
+                <h4 class="font-semibold text-orange-600">Berapa biaya pendaftaran?</h4>
+                <span class="faq-icon text-orange-600 text-4xl font-extrabold">+</span>
+
+
+            </div>
+            <p class="faq-content max-h-0 overflow-hidden transition-all duration-300">
+                Biaya pendaftaran untuk Bimbel dan Privat adalah
+                <span class="font-semibold text-red-600">Rp 200.000</span>.
+            </p>
+        </div>
+
+        <div class="faq-item p-5 bg-white shadow-md rounded-xl fade-soft cursor-pointer">
+            <div class="flex justify-between items-center faq-header">
+                <h4 class="font-semibold text-orange-600">Berapa biaya bulanan?</h4>
+                <span class="faq-icon text-orange-600 text-4xl font-extrabold">+</span>
+
+
+            </div>
+            <p class="faq-content text-gray-600 mt-2 overflow-hidden max-h-0 transition-all duration-300 leading-relaxed">
+                • PAUD – SD : <span class="font-semibold text-red-600">Rp 200.000</span> <br>
+                • SMP : <span class="font-semibold text-red-600">Rp 250.000</span> <br>
+                • SMA X : <span class="font-semibold text-red-600">Rp 350.000</span> <br>
+                • SMA XI – UTBK : <span class="font-semibold text-red-600">Rp 400.000</span>
+            </p>
+        </div>
+
+        <div class="faq-item p-5 bg-white shadow-md rounded-xl fade-soft cursor-pointer">
+            <div class="flex justify-between items-center faq-header">
+                <h4 class="font-semibold text-orange-600">Dimana Lokasi Bimbel Sinar Education?</h4>
+                <span class="faq-icon text-orange-600 text-4xl font-extrabold">+</span>
+
+
+            </div>
+            <p class="faq-content text-gray-600 mt-2 overflow-hidden max-h-0 transition-all duration-300">
+                Beralamat di <span class="font-semibold text-red-600">Gang Sawo, Jl. Pendidikan, Kp. Siluman, Kab. Bekasi</span>
+                (Gang seberang Kantor Desa Mangunjaya).
+            </p>
+        </div>
+
+        <div class="faq-item p-5 bg-white shadow-md rounded-xl fade-soft cursor-pointer">
+            <div class="flex justify-between items-center faq-header">
+                <h4 class="font-semibold text-orange-600">Berapa durasi belajar setiap pertemuan?</h4>
+                <span class="faq-icon text-orange-600 text-4xl font-extrabold">+</span>
+
+
+            </div>
+            <p class="faq-content text-gray-600 mt-2 overflow-hidden max-h-0 transition-all duration-300">
+                Durasi belajar adalah <span class="font-semibold text-red-600">90 menit</span> per sesi.
+            </p>
+        </div>
+
+        <div class="faq-item p-5 bg-white shadow-md rounded-xl fade-soft cursor-pointer">
+            <div class="flex justify-between items-center faq-header">
+                <h4 class="font-semibold text-orange-600">Apa bedanya Bimbel dan Privat?</h4>
+                <span class="faq-icon text-orange-600 text-4xl font-extrabold">+</span>
+
+
+            </div>
+            <p class="faq-content text-gray-600 mt-2 overflow-hidden max-h-0 transition-all duration-300 leading-relaxed">
+                <span class="font-semibold text-red-600">Bimbel:</span> belajar di lokasi bimbel, 1 kelas maksimal 15 siswa. <br>
+                <span class="font-semibold text-red-600">Privat:</span> mentor datang ke rumah dengan 1–2 siswa sehingga lebih intensif.
+            </p>
+        </div>
+
+        <div class="faq-item p-5 bg-white shadow-md rounded-xl fade-soft cursor-pointer">
+            <div class="flex justify-between items-center faq-header">
+                <h4 class="font-semibold text-orange-600">Apa perbedaan kelas Reguler dan UTBK?</h4>
+                <span class="faq-icon text-orange-600 text-4xl font-extrabold">+</span>
+
+
+            </div>
+            <p class="faq-content text-gray-600 mt-2 overflow-hidden max-h-0 transition-all duration-300 leading-relaxed">
+                <span class="font-semibold text-red-600">Kelas Reguler:</span> belajar mengikuti pelajaran sekolah. <br>
+                <span class="font-semibold text-red-600">Kelas UTBK:</span> fokus persiapan masuk PTN, baik jalur SNBT maupun Mandiri.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    const faqItems = document.querySelectorAll(".faq-item");
+
+    faqItems.forEach(item => {
+        item.addEventListener("click", () => {
+            const content = item.querySelector(".faq-content");
+            const icon = item.querySelector(".faq-icon");
+
+            faqItems.forEach(other => {
+                if (other !== item) {
+                    const otherContent = other.querySelector(".faq-content");
+                    const otherIcon = other.querySelector(".faq-icon");
+                    otherContent.style.maxHeight = null;
+                    otherIcon.textContent = "+";
+                }
+            });
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.textContent = "+";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.textContent = "-";
+            }
+        });
+    });
+</script>
+
+
+
+
+{{-- <section id="faq" class="py-20 bg-white">
     <h3 class="text-3xl font-bold text-red-600 text-center mb-10" data-aos="zoom-in">FAQ</h3>
 
     <div class="max-w-4xl mx-auto px-6 space-y-6">
@@ -379,52 +502,7 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
         </p>
       </div>
     </div>
-</section>
-
-
-{{-- <!-- CONTACT -->
-<section id="contact" class="py-20 bg-gradient-to-r from-red-600 to-orange-500 text-white">
-  <div class="max-w-6xl mx-auto px-6" data-aos="zoom-in">
-
-    <h3 class="text-3xl font-bold text-center mb-10">Hubungi Kami</h3>
-    <p class="text-orange-100 leading-relaxed">
-          Siap membantu perjalanan belajarmu!  
-          Konsultasikan kebutuhan belajar kamu dengan tim kami.
-        </p>
-
-    <div class="grid md:grid-cols-2 gap-10 items-center">
-
-      <!-- LEFT: CONTACT INFO -->
-      <div class="space-y-4">
-        <h4 class="text-2xl font-semibold">Sinar Education</h4>
-
-        <div class="space-y-2 mt-4">
-          <p>📍 <strong>Alamat:</strong> Desa Mangunjaya, Kp. Siluman Tambun Selatan Gang Sawo 1, Jln Pendidikan, Rt 03, Rw18 No.52, Mangunjaya, Kec. Tambun Sel., Kabupaten Bekasi, Jawa Barat 17510</p>
-          <p>📞 <strong>Telepon:</strong> 0812-3456-7890</p>
-        </div>
-
-        <a href="https://wa.me/6281234567890"
-            target="_blank"
-            class="inline-block mt-6 px-6 py-3 bg-white text-red-600 rounded-lg font-semibold hover:scale-105 transition">
-          WhatsApp Kami
-        </a>
-      </div>
-
-      <!-- RIGHT: GOOGLE MAPS -->
-      <div class="w-full h-80 md:h-full">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.167131666072!2d107.0585692!3d-6.241691899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698f87b6ff6ba5%3A0x23977bd618a298a0!2sBimbel%20Sinar%20Education!5e0!3m2!1sid!2sid!4v1763548903891!5m2!1sid!2sid"
-          class="w-full h-full rounded-lg shadow-lg"
-          style="border:0;" allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-      </div>
-
-    </div>
-  </div>
-</section>
- --}}
+</section> --}}
 
  <!-- CONTACT -->
 <section id="contact" class="py-20 bg-gradient-to-r from-red-600 to-orange-500 text-white">
@@ -461,7 +539,7 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
              target="_blank"
              class="text-white underline underline-offset-2 hover:text-orange-200 transition">
              <i class="fa-brands fa-whatsapp fs-3 px-1"></i>
-             +6285714609869 (Admin 1) 
+             +6285714609869 (Admin 1)
           </a>
 
           <a href="https://wa.me/628567734085"
@@ -472,6 +550,7 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
           </a>
         </div>
 
+        
         
       </div>
 
@@ -532,6 +611,7 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
   </div>
 </footer>
 
+
   <!-- AOS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
@@ -548,11 +628,11 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
       autoplay: {
         delay: 2500,
       },
-      breakpoints: {
-        640: { slidesPerView: 1 },
-        768: { slidesPerView: 2 },
-        1024: { slidesPerView: 3 } // tampil 3 review sekaligus
-      },
+      // breakpoints: {
+      //   640: { slidesPerView: 1 },
+      //   768: { slidesPerView: 2 },
+      //   1024: { slidesPerView: 3 } // tampil 3 review sekaligus
+      // },
       pagination: {
         el: ".swiper-pagination",
         clickable: true,
@@ -562,6 +642,26 @@ Didukung oleh 15 mentor berpengalaman di bidangnya, Sinar Education telah berhas
         prevEl: ".swiper-button-prev",
       },
     });
+    const sections = document.querySelectorAll("section");
+const navLinks = document.querySelectorAll("nav a");
+
+window.addEventListener("scroll", () => {
+  let current = "";
+
+  sections.forEach(sec => {
+        const top = window.scrollY;
+        if(top >= sec.offsetTop - 200){
+            current = sec.getAttribute("id");
+        }
+    });
+
+  navLinks.forEach(a => {
+        a.classList.remove("active-link");
+        if(a.getAttribute("href") === `#${current}`){
+            a.classList.add("active-link");
+        }
+    });
+});
   </script>
 </body>
 </html>

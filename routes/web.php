@@ -4,11 +4,16 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminPaymentController;
 use App\Http\Controllers\AdminRegistrationController;
 use App\Http\Controllers\AdminStudentController;
+use App\Http\Controllers\AdminStudentRegistrationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentAttendanceController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentPaymentController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\LevelController;
+use App\Http\Controllers\CurriculumController;
+use App\Http\Controllers\ClassController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -126,18 +131,27 @@ Route::get('/forgot-password', [HomeController::class, 'forgotpassword'])->name(
 Route::middleware(['role'])->group(function () {
     Route::get('/', [HomeController::class, 'show'])->name('landing');
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    // Route::post('/login', [AuthController::class, 'login'])->name('login-post');
-
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    // Route::post('/register', [AuthController::class, 'register'])->name('register-post');
+    Route::get('/registered-success', function () {
+        return view('auth.registered'); // Buat view ini sesuai HTML-mu
+    })->name('registered.success');
 });
 
 // ADMIN ROUTES
 Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () {
-    Route::get('/cek-admin', function () {
-        dd(Auth::guard('admin')->user());
-    });
+    // Route::get('/cek-admin', function () {
+    //     dd(Auth::guard('admin')->user());
+    // });
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/landing', [AdminRegistrationController::class, 'landing'])->name('admin.landing');
+    Route::get('/landing/{id}/edit', [AdminRegistrationController::class, 'landing_edit'])->name('admin.landing_edit');
+    Route::post('/landing', [AdminRegistrationController::class, 'landing_store'])->name('admin.landing_store');
+    Route::delete('/landing/{id}', [AdminRegistrationController::class, 'landing_destroy'])->name('admin.landing_destroy');
+    Route::get('/landing/create', [AdminRegistrationController::class, 'landing_create'])->name('admin.landing_create');
+    Route::put('/landing/{data}', [AdminRegistrationController::class, 'landing_update'])->name('admin.landing_update');
+
+    // Dashboard
+    // Route::get('/dashboard/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     // Students
     Route::get('/students', [AdminStudentController::class, 'index'])->name('admin.students.index');
@@ -160,7 +174,7 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/registrations/{admin}/edit', [AdminRegistrationController::class, 'edit'])->name('admin.registrations.edit');
     Route::put('/registrations/{admin}', [AdminRegistrationController::class, 'update'])->name('admin.registrations.update');
     Route::delete('/registrations/{admin}', [AdminRegistrationController::class, 'destroy'])->name('admin.registrations.destroy');
-    
+
     // ADMIN STUDENT ROUTES
     Route::get('/students', [AdminStudentController::class, 'index'])->name('admin.students.index');
     Route::get('/students/create', [AdminStudentController::class, 'create'])->name('admin.students.create');
@@ -169,6 +183,49 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::post('/students', [AdminStudentController::class, 'store'])->name('admin.students.store');
     Route::put('/students/{student}', [AdminStudentController::class, 'update'])->name('admin.students.update');
     Route::delete('/students/{student}', [AdminStudentController::class, 'destroy'])->name('admin.students.destroy');
+
+    // ROUTE PENDAFTARAN
+    Route::get('/student-registration', [AdminStudentRegistrationController::class, 'index'])->name('admin.students.registration.index');
+    Route::get('/student-registration/data', [AdminStudentRegistrationController::class, 'getData'])->name('admin.students.registration.data');
+    Route::get('/student-registration/{id}', [AdminStudentRegistrationController::class, 'show'])->name('admin.students.registration.show');
+    Route::post('/students-registration/reject', [AdminStudentRegistrationController::class, 'reject'])->name('admin.students.registration.reject');
+    Route::post('/students-registration/verify', [AdminStudentRegistrationController::class, 'verify'])->name('admin.students.registration.verify');
+
+    // ROUTE JADWAL
+    // Route::prefix('admin')->middleware(['auth'])->group(function() {
+    Route::get('/schedules', [ScheduleController::class, 'index'])->name('admin.schedules.index');
+    Route::post('/schedules', [ScheduleController::class, 'store'])->name('admin.schedules.store');
+
+    // LEVELS
+    Route::get('/levels', [LevelController::class, 'index'])->name('admin.levels.index');
+    Route::get('/levels/create', [LevelController::class, 'create'])->name('admin.levels.create');
+    Route::post('/levels/store', [LevelController::class, 'store'])->name('admin.levels.store');
+    Route::get('/levels/{id}', [LevelController::class, 'show'])->name('admin.levels.show');
+    Route::get('/levels/edit/{id}', [LevelController::class, 'edit'])->name('admin.levels.edit');
+    Route::post('/levels/update/{id}', [LevelController::class, 'update'])->name('admin.levels.update');
+    Route::get('/levels/delete/{id}', [LevelController::class, 'destroy'])->name('admin.levels.destroy');
+
+
+    // CURRICULUMS
+    Route::get('/curriculums', [CurriculumController::class, 'index'])->name('admin.curriculums.index');
+    Route::get('/curriculums/create', [CurriculumController::class, 'create'])->name('admin.curriculums.create');
+    Route::post('/curriculums/store', [CurriculumController::class, 'store'])->name('admin.curriculums.store');
+    Route::get('/curriculums/{id}', [CurriculumController::class, 'show'])->name('admin.curriculums.show');
+    Route::get('/curriculums/edit/{id}', [CurriculumController::class, 'edit'])->name('admin.curriculums.edit');
+    Route::post('/curriculums/update/{id}', [CurriculumController::class, 'update'])->name('admin.curriculums.update');
+    Route::get('/curriculums/delete/{id}', [CurriculumController::class, 'destroy'])->name('admin.curriculums.destroy');
+
+    // CLASSES
+    Route::get('/classes', [ClassController::class, 'index'])->name('admin.classes.index');
+    Route::get('/classes/create', [ClassController::class, 'create'])->name('admin.classes.create');
+    Route::post('/classes/store', [ClassController::class, 'store'])->name('admin.classes.store');
+    Route::get('/classes/{id}', [ClassController::class, 'show'])->name('admin.classes.show');
+    Route::get('/classes/edit/{id}', [ClassController::class, 'edit'])->name('admin.classes.edit');
+    Route::post('/classes/update/{id}', [ClassController::class, 'update'])->name('admin.classes.update');
+    Route::get('/classes/delete/{id}', [ClassController::class, 'destroy'])->name('admin.classes.destroy');
+
+    // });
+
 });
 
 // STUDENT ROUTES

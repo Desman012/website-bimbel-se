@@ -19,7 +19,7 @@ class RoleMiddleware
                 if ($role_id == 1) {
                     return redirect('/admin/dashboard');
                 } elseif ($role_id == 2) {
-                    return redirect('/student/dashboard');
+                    return redirect('/students/dashboard');
                 }
             }
 

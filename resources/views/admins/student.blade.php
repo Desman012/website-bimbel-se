@@ -11,7 +11,7 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="{{ Vite::asset('resources/css/overlayScrollbars/css/overlayScrollbars.min.css') }}">
+  <link rel="stylesheet" href="{{ V ite::asset('resources/css/overlayScrollbars/css/overlayScrollbars.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ Vite::asset('resources/css/css/adminlte.min.css') }}">
   <!-- Google Font: Source Sans Pro -->

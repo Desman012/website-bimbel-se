@@ -14,9 +14,6 @@
         <a class="nav-link" data-toggle="dropdown">
             <div class="user-panel d-flex align-items-center">
               <span class="d-none d-lg-inline text-muted">{{ Auth::guard('admin')->user()->full_name ?? 'Admin' }}</span>
-                <div class="image mr-2">
-                  <img src="https://i.pravatar.cc/50" class="rounded-full mr-3 shadow">
-                </div>
             </div>
         </a>
         <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">

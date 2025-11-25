@@ -22,9 +22,26 @@
                           Dashboard
                       </p>
                   </a>
+              </li>
+              <li class="nav-item has-treeview">
+                  <a href="{{ route('admin.landing') }}" class="nav-link">
+                      <i class="nav-icon fas fa-tachometer-alt"></i>
+                      <p>
+                          Manajemen Landing Page
+                      </p>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="{{ route('admin.students.registration.index') }}" class="nav-link">
+                      <i class="nav-icon fas fa-user-plus"></i>
+                      <p>
+                          Pendaftaran
+                      </p>
+                  </a>
+              </li>
               <li class="nav-item">
                   <a href="{{ route('admin.registrations.index') }}" class="nav-link">
-                      <i class="nav-icon far fa-calendar-alt"></i>
+                      <i class="nav-icon fas fa-user-shield"></i>
                       <p>
                           Admin
                       </p>
@@ -32,7 +49,7 @@
               </li>
               <li class="nav-item">
                   <a href="{{ route('admin.students.index') }}" class="nav-link">
-                      <i class="nav-icon far fa-image"></i>
+                      <i class="nav-icon fas fa-user-graduate"></i>
                       <p>
                           Siswa
                       </p>
@@ -41,7 +58,8 @@
               <li class="nav-item">
                   <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                       class="nav-link">
-                      Logout
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        Logout
                   </a>
 
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

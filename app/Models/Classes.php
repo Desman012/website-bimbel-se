@@ -16,4 +16,15 @@ class Classes extends Model
         'name_class',
     ];
 
+    // Relasi ke LEVELS
+    public function level()
+    {
+        return $this->belongsTo(Levels::class);
+    }
+
+    // Relasi ke PRICES (satu kelas bisa punya banyak harga)
+    public function prices()
+    {
+        return $this->hasMany(Prices::class, 'class_id');
+    }
 }
