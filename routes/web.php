@@ -145,6 +145,13 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     //     dd(Auth::guard('admin')->user());
     // });
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/landing', [AdminRegistrationController::class, 'landing'])->name('admin.landing');
+    Route::get('/landing/{id}/edit', [AdminRegistrationController::class, 'landing_edit'])->name('admin.landing_edit');
+    Route::post('/landing', [AdminRegistrationController::class, 'landing_store'])->name('admin.landing_store');
+    Route::delete('/landing/{id}', [AdminRegistrationController::class, 'landing_destroy'])->name('admin.landing_destroy');
+    Route::get('/landing/create', [AdminRegistrationController::class, 'landing_create'])->name('admin.landing_create');
+    Route::put('/landing/{data}', [AdminRegistrationController::class, 'landing_update'])->name('admin.landing_update');
+
 
     // Students
     Route::get('/students', [AdminStudentController::class, 'index'])->name('admin.students.index');
