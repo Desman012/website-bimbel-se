@@ -43,4 +43,6 @@ class StudentController extends Controller
             'payment'
         ));
     }
+
+    
 }
