@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Payment;
+use App\Models\Levels;
 
 class Students extends Authenticatable
 {
@@ -37,4 +39,14 @@ class Students extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class,  'student_id');
+    }
+
+    public function jenjang()
+    {
+        return $this->hasOne(Levels::class, 'id', 'levels_id');
+    }
 }

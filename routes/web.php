@@ -139,8 +139,6 @@ Route::middleware(['role'])->group(function () {
 
 // ADMIN ROUTES
 Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () {
-
-
     // Route::get('/cek-admin', function () {
     //     dd(Auth::guard('admin')->user());
     // });
@@ -152,6 +150,8 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/landing/create', [AdminRegistrationController::class, 'landing_create'])->name('admin.landing_create');
     Route::put('/landing/{data}', [AdminRegistrationController::class, 'landing_update'])->name('admin.landing_update');
 
+    // Dashboard
+    // Route::get('/dashboard/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     // Students
     Route::get('/students', [AdminStudentController::class, 'index'])->name('admin.students.index');
