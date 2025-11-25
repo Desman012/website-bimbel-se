@@ -174,8 +174,9 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     // ROUTE PENDAFTARAN
     Route::get('/student-registration', [AdminStudentRegistrationController::class, 'index'])->name('admin.students.registration.index');
     Route::get('/student-registration/data', [AdminStudentRegistrationController::class, 'getData'])->name('admin.students.registration.data');
-Route::get('/student-registration/{id}', [AdminStudentRegistrationController::class, 'show'])->name('admin.students.registration.show');
-
+    Route::get('/student-registration/{id}', [AdminStudentRegistrationController::class, 'show'])->name('admin.students.registration.show');
+    Route::post('/students-registration/reject', [AdminStudentRegistrationController::class, 'reject'])->name('admin.students.registration.reject');
+    Route::post('/students-registration/verify', [AdminStudentRegistrationController::class, 'verify'])->name('admin.students.registration.verify');
 });
 
 // STUDENT ROUTES
