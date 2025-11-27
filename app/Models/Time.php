@@ -10,7 +10,6 @@ class Time extends Model
     use HasFactory;
 
     protected $table = 'times';
-    public $timestamps = false;
 
     protected $fillable = [
         'name_time',

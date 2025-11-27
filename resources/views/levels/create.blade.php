@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sinar Education | Admin</title>
+  <title>Sinar Education | Add Level</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -66,45 +66,32 @@
 
                 <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
 
-                    <form method="POST" action="/levels/store">
-                        @csrf
+                    <form method="POST" action="{{ route('admin.levels.store') }}">
+    @csrf
 
-                        {{-- Error Message --}}
-                        @if ($errors->any())
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-                                <strong class="font-bold">Oops!</strong>
-                                <span class="block sm:inline"> Ada kesalahan pada input kamu.</span>
-                            </div>
-                        @endif
+    <div class="mb-6">
+        <label for="name_level" class="block text-gray-700 font-semibold mb-2">
+            Nama Level
+        </label>
 
-                        {{-- Input Nama Level --}}
-                        <div class="mb-6">
-                            <label for="name_level" class="block text-gray-700 font-semibold mb-2">
-                                Nama Level
-                            </label>
+<input type="text"
+       id="name_level"
+       name="name_level"
+       placeholder="Masukkan nama level"
+       class="w-full px-4 py-3 border border-gray-300 rounded-xl
+              focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm"
+       value="{{ old('name_level') }}">
 
-                            <input type="text"
-                                   id="name_level"
-                                   name="name_level"
-                                   placeholder="Masukkan nama level (contoh: SD, SMP, SMA)"
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl 
-                                          focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm
-                                          @error('name_level') border-red-500 @enderror"
-                                   value="{{ old('name_level') }}">
+    </div>
 
-                            @error('name_level')
-                                <p class="text-red-600 mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
+    <div class="flex justify-end mt-8">
+        <button type="submit"
+            class="px-6 py-2 bg-orange-400 hover:bg-orange-500 text-white font-semibold rounded-lg shadow-md transition">
+            Simpan Level
+        </button>
+    </div>
+</form>
 
-                        <div class="flex justify-end mt-8">
-                            <button type="submit"
-                                class="px-6 py-2 bg-orange-400 hover:bg-orange-500 text-white font-semibold rounded-lg shadow-md transition duration-150">
-                                Simpan Level
-                            </button>
-                        </div>
-
-                    </form>
 
                 </div>
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sinar Education | Curriculum</title>
+  <title>Sinar Education | Program Edit</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -33,15 +33,15 @@
             <div class="container-fluid">
                 <div class="row mb-2 mt-1">
                     <div class="col-sm-6 pl-4 flex items-center">
-                        <a href="{{ route('admin.curriculums.index') }}" class="text-gray-600 hover:text-yellow-700 mr-4 text-lg">
+                        <a href="{{ route('admin.programs.index') }}" class="text-gray-600 hover:text-yellow-700 mr-4 text-lg">
                             <i class="fas fa-arrow-left"></i>
                         </a>
-                        <h1 class="text-xl font-semibold">Edit Curriculum</h1>
+                        <h1 class="text-xl font-semibold">Edit Program</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="/curriculums">Curriculum</a></li>
-                            <li class="breadcrumb-item active">Edit Curriculum</li>
+                            <li class="breadcrumb-item"><a href="/programs">Program</a></li>
+                            <li class="breadcrumb-item active">Edit Program</li>
                         </ol>
                     </div>
                 </div>
@@ -54,42 +54,41 @@
 
                 <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
 
-                    <form method="POST" action="{{ route('admin.curriculums.update', $curriculum->id) }}">
-    @csrf
-    @method('PUT')
+                    <form method="POST" action="{{ route('admin.programs.update', $program->id) }}">
+                        @csrf
+                        @method('PUT')
 
-    <h2 class="text-xl font-semibold mb-6 text-gray-800">Edit Curriculum</h2>
+                        <h2 class="text-xl font-semibold mb-6 text-gray-800">Edit Program</h2>
+                        {{-- Nama Program --}}
+                        <div class="mb-6">
+                            <label class="block text-gray-700 font-semibold mb-2">Nama Program</label>
+                            <input 
+                                type="text"
+                                name="name_program"
+                                value="{{ $program->name_program }}"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl
+                                    focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm"
+                                required
+                            >
+                        </div>
 
-    {{-- Nama Curriculum --}}
-    <div class="mb-6">
-        <label class="block text-gray-700 font-semibold mb-2">Nama Curriculum</label>
-        <input 
-            type="text"
-            name="name_curriculum"
-            value="{{ $curriculum->name_curriculum }}"
-            class="w-full px-4 py-3 border border-gray-300 rounded-xl
-                   focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm"
-            required
-        >
-    </div>
+                        <hr class="my-8 border-yellow-300">
 
-    <hr class="my-8 border-yellow-300">
+                        {{-- Tombol Aksi --}}
+                        <div class="flex justify-end mt-6">
+                            <a href="{{ route('admin.programs.index') }}"
+                                class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold 
+                                    rounded-lg shadow-md transition duration-150 mr-3">
+                                <i class="fas fa-arrow-left mr-2"></i> Kembali
+                            </a>
 
-    {{-- Tombol Aksi --}}
-    <div class="flex justify-end mt-6">
-        <a href="{{ route('admin.curriculums.index') }}"
-            class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold 
-                   rounded-lg shadow-md transition duration-150 mr-3">
-            <i class="fas fa-arrow-left mr-2"></i> Kembali
-        </a>
-
-        <button type="submit"
-            class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold 
-                   rounded-lg shadow-md transition duration-150">
-            <i class="fas fa-save mr-2"></i> Simpan Perubahan
-        </button>
-    </div>
-</form>
+                            <button type="submit"
+                                class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold 
+                                    rounded-lg shadow-md transition duration-150">
+                                <i class="fas fa-save mr-2"></i> Simpan Perubahan
+                            </button>
+                        </div>
+                    </form>
 
 
                 </div>

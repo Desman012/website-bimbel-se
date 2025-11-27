@@ -66,45 +66,31 @@
 
                 <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
 
-                    <form method="POST" action="/curriculums/store">
-                        @csrf
+                    <form method="POST" action="{{ route('admin.curriculums.store') }}">
+    @csrf
 
-                        {{-- Error Message --}}
-                        @if ($errors->any())
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-                                <strong class="font-bold">Oops!</strong>
-                                <span class="block sm:inline"> Ada kesalahan pada input kamu.</span>
-                            </div>
-                        @endif
+    <div class="mb-6">
+        <label for="name_curriculum" class="block text-gray-700 font-semibold mb-2">
+            Nama Kurikulum
+        </label>
 
-                        {{-- Input Nama Level --}}
-                        <div class="mb-6">
-                            <label for="name_curriculum" class="block text-gray-700 font-semibold mb-2">
-                                Nama Kurikulum
-                            </label>
+        <input type="text"
+               id="name_curriculum"
+               name="name_curriculum"
+               placeholder="Masukkan nama kurikulum"
+               class="w-full px-4 py-3 border border-gray-300 rounded-xl 
+                      focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm"
+               value="{{ old('name_curriculum') }}">
+    </div>
 
-                            <input type="text"
-                                   id="name_curriculum"
-                                   name="name_curriculum"
-                                   placeholder="Masukkan nama kurikulum (contoh: SD, SMP, SMA)"
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl 
-                                          focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm
-                                          @error('name_curriculum') border-red-500 @enderror"
-                                   value="{{ old('name_curriculum') }}">
+    <div class="flex justify-end mt-8">
+        <button type="submit"
+            class="px-6 py-2 bg-orange-400 hover:bg-orange-500 text-white font-semibold rounded-lg shadow-md transition">
+            Simpan Kurikulum
+        </button>
+    </div>
+</form>
 
-                            @error('name_curriculum')
-                                <p class="text-red-600 mt-1">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="flex justify-end mt-8">
-                            <button type="submit"
-                                class="px-6 py-2 bg-orange-400 hover:bg-orange-500 text-white font-semibold rounded-lg shadow-md transition duration-150">
-                                Simpan Kurikulum
-                            </button>
-                        </div>
-
-                    </form>
 
                 </div>
 

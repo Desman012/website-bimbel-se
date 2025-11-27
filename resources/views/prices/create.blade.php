@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sinar Education | Add Class</title>
+  <title>Sinar Education | Add Price</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -42,17 +42,17 @@
 
                 <div class="row mb-2 mt-1">
                     <div class="col-sm-6 pl-4 flex items-center">
-                        <a href="{{ route('admin.classes.index') }}"
+                        <a href="{{ route('admin.prices.index') }}"
                            class="text-gray-600 hover:text-yellow-700 mr-4 text-lg">
                             <i class="fas fa-arrow-left"></i>
                         </a>
-                        <h1 class="text-xl font-semibold">Tambah Kelas Baru</h1>
+                        <h1 class="text-xl font-semibold">Tambah Harga Baru</h1>
                     </div>
 
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.classes.index') }}">Kelas</a></li>
-                            <li class="breadcrumb-item active">Tambah Kelas</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.prices.index') }}">Harga</a></li>
+                            <li class="breadcrumb-item active">Tambah Harga</li>
                         </ol>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
 
                 <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
 
-                    <form method="POST" action="{{ route('admin.classes.store') }}">
+                    <form method="POST" action="{{ route('admin.prices.store') }}">
                         @csrf
 
                         {{-- Error Message --}}
@@ -103,22 +103,49 @@
                             @enderror
                         </div>
 
-                        {{-- INPUT NAMA KELAS --}}
+                        {{-- PILIH CLASS (OPSIONAL) --}}
                         <div class="mb-6">
-                            <label for="name_class" class="block text-gray-700 font-semibold mb-2">
-                                Nama Kelas
+                            <label class="block text-gray-700 font-semibold mb-2">
+                                Pilih Kelas (Opsional)
                             </label>
 
-                            <input type="text"
-                                   id="name_class"
-                                   name="name_class"
-                                   placeholder="Contoh: Kelas 1 SD"
+                            <select name="class_id"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl 
+                                           focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm
+                                           @error('class_id') border-red-500 @enderror">
+
+                                <option value="">-- Tanpa Kelas --</option>
+
+                                @foreach ($classes as $class)
+                                    <option value="{{ $class->id }}"
+                                        {{ old('class_id') == $class->id ? 'selected' : '' }}>
+                                        {{ $class->name_class }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            @error('class_id')
+                                <p class="text-red-600 mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- INPUT HARGA --}}
+                        <div class="mb-6">
+                            <label for="price" class="block text-gray-700 font-semibold mb-2">
+                                Harga
+                            </label>
+
+                            <input type="number"
+                                   id="price"
+                                   name="price"
+                                   placeholder="Contoh: 150000"
+                                   step="0.01"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl 
                                           focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm
-                                          @error('name_class') border-red-500 @enderror"
-                                   value="{{ old('name_class') }}">
+                                          @error('price') border-red-500 @enderror"
+                                   value="{{ old('price') }}">
 
-                            @error('name_class')
+                            @error('price')
                                 <p class="text-red-600 mt-1">{{ $message }}</p>
                             @enderror
                         </div>
@@ -127,7 +154,7 @@
                         <div class="flex justify-end mt-8">
                             <button type="submit"
                                 class="px-6 py-2 bg-orange-400 hover:bg-orange-500 text-white font-semibold rounded-lg shadow-md transition duration-150">
-                                Simpan Kelas
+                                Simpan Harga
                             </button>
                         </div>
 

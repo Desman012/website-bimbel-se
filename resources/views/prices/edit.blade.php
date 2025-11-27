@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sinar Education | Edit Class</title>
+  <title>Sinar Education | Edit Harga</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,7 +32,6 @@
     {{-- Sidebar --}}
     @include('admins.layouts.sidebar')
 
-
     <!-- Content Wrapper -->
     <div class="content-wrapper">
 
@@ -42,17 +41,17 @@
 
                 <div class="row mb-2 mt-1">
                     <div class="col-sm-6 pl-4 flex items-center">
-                        <a href="{{ route('admin.classes.index') }}"
+                        <a href="{{ route('admin.prices.index') }}"
                            class="text-gray-600 hover:text-yellow-700 mr-4 text-lg">
                             <i class="fas fa-arrow-left"></i>
                         </a>
-                        <h1 class="text-xl font-semibold">Edit Kelas</h1>
+                        <h1 class="text-xl font-semibold">Edit Harga</h1>
                     </div>
 
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.classes.index') }}">Kelas</a></li>
-                            <li class="breadcrumb-item active">Edit Kelas</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.prices.index') }}">Harga</a></li>
+                            <li class="breadcrumb-item active">Edit Harga</li>
                         </ol>
                     </div>
                 </div>
@@ -66,7 +65,7 @@
 
                 <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
 
-                    <form method="POST" action="{{ route('admin.classes.update', $class->id) }}">
+                    <form method="POST" action="{{ route('admin.prices.update', $price->id) }}">
                         @csrf
                         @method('PUT')
 
@@ -90,7 +89,7 @@
 
                                 @foreach($levels as $level)
                                     <option value="{{ $level->id }}"
-                                        {{ $class->level_id == $level->id ? 'selected' : '' }}>
+                                        {{ $price->level_id == $level->id ? 'selected' : '' }}>
                                         {{ $level->name_level }}
                                     </option>
                                 @endforeach
@@ -98,16 +97,39 @@
                             </select>
                         </div>
 
-                        {{-- NAMA KELAS --}}
+                        {{-- CLASS (boleh kosong) --}}
                         <div class="mb-6">
-                            <label for="name_class" class="block text-gray-700 font-semibold mb-2">
-                                Nama Kelas
+                            <label for="class_id" class="block text-gray-700 font-semibold mb-2">
+                                Pilih Kelas (Opsional)
                             </label>
 
-                            <input type="text"
-                                   id="name_class"
-                                   name="name_class"
-                                   value="{{ $class->name_class }}"
+                            <select id="class_id" name="class_id"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl 
+                                       focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm">
+
+                                <option value="">— Tanpa Kelas —</option>
+
+                                @foreach($classes as $class)
+                                    <option value="{{ $class->id }}"
+                                        {{ $price->class_id == $class->id ? 'selected' : '' }}>
+                                        {{ $class->name_class }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+                        </div>
+
+                        {{-- PRICE --}}
+                        <div class="mb-6">
+                            <label for="price" class="block text-gray-700 font-semibold mb-2">
+                                Harga
+                            </label>
+
+                            <input type="number"
+                                   id="price"
+                                   name="price"
+                                   value="{{ $price->price }}"
+                                   step="0.01"
                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl 
                                           focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm"
                                    required>
@@ -118,7 +140,7 @@
                         <!-- BUTTON -->
                         <div class="flex justify-end mt-4">
 
-                            <a href="{{ route('admin.classes.index') }}"
+                            <a href="{{ route('admin.prices.index') }}"
                                class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white 
                                       font-semibold rounded-lg shadow-md transition duration-150 mr-3">
                                 <i class="fas fa-arrow-left mr-2"></i> Kembali

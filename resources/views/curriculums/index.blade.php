@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sinar Education | Dashboard</title>
+  <title>Sinar Education | Curriculum</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -74,8 +74,6 @@
         @forelse ($curriculums as $curriculum)
             <tr class="border-b hover:bg-yellow-50">
                 <td class="px-4 py-3">{{ $curriculum->id }}</td>
-
-                {{-- FIX: kolom DB adalah name_curriculum --}}
                 <td class="px-4 py-3">{{ $curriculum->name_curriculum }}</td>
 
                 <td class="px-4 py-3 flex gap-2">
@@ -93,11 +91,15 @@
                     </a>
 
                     {{-- HAPUS --}}
-                    <a href="/curriculums/delete/{{ $curriculum->id }}" 
-                        onclick="return confirm('Hapus kurikulum ini?')"
-                        class="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded">
-                        <i class="fas fa-trash"></i> Hapus
-                    </a>
+                    <form action="{{ route('admin.curriculums.destroy', $curriculum->id) }}" 
+                        method="POST"
+                        onsubmit="return confirm('Hapus kurikulum ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button class="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded">
+                            <i class="fas fa-trash"></i> Hapus
+                        </button>
+                    </form>
 
                 </td>
             </tr>

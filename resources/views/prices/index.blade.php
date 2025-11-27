@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sinar Education | Classes</title>
+  <title>Sinar Education | Harga</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -68,11 +68,11 @@
 
                     <!-- HEADER -->
                     <div class="flex justify-between items-center mb-5">
-                        <h2 class="text-2xl font-bold text-gray-800">Manajemen Kelas</h2>
+                        <h2 class="text-2xl font-bold text-gray-800">Manajemen Harga</h2>
 
-                        <a href="{{ route('admin.classes.create') }}"
+                        <a href="{{ route('admin.prices.create') }}"
                             class="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-4 rounded-lg font-semibold">
-                            + Tambah Kelas
+                            + Tambah Harga
                         </a>
                     </div>
 
@@ -82,52 +82,61 @@
                             <tr>
                                 <th class="px-4 py-3 text-left">ID</th>
                                 <th class="px-4 py-3 text-left">Level</th>
-                                <th class="px-4 py-3 text-left">Nama Kelas</th>
+                                <th class="px-4 py-3 text-left">Class</th>
+                                <th class="px-4 py-3 text-left">Harga</th>
                                 <th class="px-4 py-3 text-left">Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                        @forelse ($classes as $class)
+                        @forelse ($prices as $price)
                             <tr class="border-b hover:bg-yellow-50">
-                                <td class="px-4 py-3">{{ $class->id }}</td>
+                                <td class="px-4 py-3">{{ $price->id }}</td>
 
                                 <td class="px-4 py-3">
-                                    {{ $class->level->name_level ?? '-' }}
+                                    {{ $price->level->name_level ?? '-' }}
                                 </td>
 
                                 <td class="px-4 py-3">
-                                    {{ $class->name_class }}
+                                    {{ $price->class->name_class ?? '-' }}
+                                </td>
+
+                                <td class="px-4 py-3 font-semibold text-green-700">
+                                    Rp {{ number_format($price->price, 0, ',', '.') }}
                                 </td>
 
                                 <td class="px-4 py-3 flex gap-2">
 
                                     {{-- LIHAT --}}
-                                    <a href="{{ route('admin.classes.show', $class->id) }}"
+                                    <a href="{{ route('admin.prices.show', $price->id) }}"
                                         class="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded">
                                         <i class="fas fa-eye"></i> Lihat
                                     </a>
 
                                     {{-- EDIT --}}
-                                    <a href="{{ route('admin.classes.edit', $class->id) }}"
+                                    <a href="{{ route('admin.prices.edit', $price->id) }}"
                                         class="flex items-center gap-1 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1 rounded">
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
 
                                     {{-- HAPUS --}}
-                                    <a href="{{ route('admin.classes.destroy', $class->id) }}"
-                                        onclick="return confirm('Hapus kelas ini?')"
-                                        class="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded">
-                                        <i class="fas fa-trash"></i> Hapus
-                                    </a>
+                                    <form action="{{ route('admin.prices.destroy', $price->id) }}" method="POST"
+                                          onsubmit="return confirm('Hapus harga ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button
+                                            class="flex items-center gap-1 bg-red-600 hover:bg-red-700 text-white px-4 py-1 rounded">
+                                            <i class="fas fa-trash"></i> Hapus
+                                        </button>
+                                    </form>
 
                                 </td>
                             </tr>
 
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center py-4 text-gray-500">
-                                    Belum ada data kelas.
+                                <td colspan="5" class="text-center py-4 text-gray-500">
+                                    Belum ada data harga.
                                 </td>
                             </tr>
                         @endforelse
