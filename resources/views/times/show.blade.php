@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sinar Education | Detail Class</title>
+  <title>Sinar Education | Detail Time</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -41,17 +41,17 @@
 
                 <div class="row mb-2 mt-1">
                     <div class="col-sm-6 pl-4 flex items-center">
-                        <a href="{{ route('admin.classes.index') }}"
+                        <a href="{{ route('admin.times.index') }}"
                            class="text-gray-600 hover:text-yellow-700 mr-4 text-lg">
                             <i class="fas fa-arrow-left"></i>
                         </a>
-                        <h1 class="text-xl font-semibold">Detail Kelas</h1>
+                        <h1 class="text-xl font-semibold">Detail Time</h1>
                     </div>
 
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.classes.index') }}">Kelas</a></li>
-                            <li class="breadcrumb-item active">Detail Kelas</li>
+                            <li class="breadcrumb-item"><a href="{{ route('admin.times.index') }}">Time</a></li>
+                            <li class="breadcrumb-item active">Detail Time</li>
                         </ol>
                     </div>
                 </div>
@@ -67,35 +67,42 @@
 
                     <!-- DETAIL DATA -->
                     <div class="mb-6">
-                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Informasi Kelas</h2>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Informasi Time</h2>
 
                         <div class="space-y-3">
 
                             <div>
                                 <p class="text-gray-600 font-semibold">ID</p>
-                                <p class="text-lg">{{ $class->id }}</p>
+                                <p class="text-lg">{{ $time->id }}</p>
                             </div>
 
                             <div>
-                                <p class="text-gray-600 font-semibold">Level</p>
+                                <p class="text-gray-600 font-semibold">Nama Time</p>
+                                <p class="text-lg">{{ $time->name_time }}</p>
+                            </div>
+
+                            <div>
+                                <p class="text-gray-600 font-semibold">Jam Masuk</p>
                                 <p class="text-lg">
-                                    {{ $class->level->name_level ?? 'Tidak ada level' }}
+                                    {{ $time->times_in ? $time->times_in : '-' }}
                                 </p>
                             </div>
 
                             <div>
-                                <p class="text-gray-600 font-semibold">Nama Kelas</p>
-                                <p class="text-lg">{{ $class->name_class }}</p>
+                                <p class="text-gray-600 font-semibold">Jam Keluar</p>
+                                <p class="text-lg">
+                                    {{ $time->times_out ? $time->times_out : '-' }}
+                                </p>
                             </div>
 
                             <div>
                                 <p class="text-gray-600 font-semibold">Dibuat Pada</p>
-                                <p class="text-lg">{{ $class->created_at }}</p>
+                                <p class="text-lg">{{ $time->created_at }}</p>
                             </div>
 
                             <div>
                                 <p class="text-gray-600 font-semibold">Terakhir Diupdate</p>
-                                <p class="text-lg">{{ $class->updated_at }}</p>
+                                <p class="text-lg">{{ $time->updated_at }}</p>
                             </div>
 
                         </div>
@@ -105,13 +112,13 @@
                     <!-- BUTTON -->
                     <div class="flex justify-end mt-6">
 
-                        <a href="{{ route('admin.classes.index') }}"
+                        <a href="{{ route('admin.times.index') }}"
                            class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white 
                                   font-semibold rounded-lg shadow-md transition duration-150 mr-3">
                             <i class="fas fa-arrow-left mr-2"></i> Kembali
                         </a>
 
-                        <a href="{{ route('admin.classes.edit', $class->id) }}"
+                        <a href="{{ route('admin.times.edit', $time->id) }}"
                            class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white 
                                   font-semibold rounded-lg shadow-md transition duration-150">
                             <i class="fas fa-edit mr-2"></i> Edit

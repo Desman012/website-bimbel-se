@@ -8,27 +8,19 @@ use Illuminate\Http\Request;
 
 class ClassController extends Controller
 {
-    // ============================
-    // LIST
-    // ============================
+
     public function index()
     {
         $classes = Classes::with('level')->get();
         return view('classes.index', compact('classes'));
     }
 
-    // ============================
-    // FORM CREATE
-    // ============================
     public function create()
     {
         $levels = Levels::all(); // untuk dropdown
         return view('classes.create', compact('levels'));
     }
 
-    // ============================
-    // STORE
-    // ============================
     public function store(Request $request)
     {
         $request->validate([
@@ -41,12 +33,9 @@ class ClassController extends Controller
             'name_class' => $request->name_class,
         ]);
 
-        return redirect('/classes')->with('success', 'Kelas berhasil ditambahkan!');
+        return redirect()->route('admin.classes.index')->with('success', 'Kelas berhasil ditambahkan!');
     }
 
-    // ============================
-    // FORM EDIT
-    // ============================
     public function edit($id)
     {
         $class = Classes::findOrFail($id);
@@ -54,9 +43,6 @@ class ClassController extends Controller
         return view('classes.edit', compact('class', 'levels'));
     }
 
-    // ============================
-    // UPDATE
-    // ============================
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -71,17 +57,13 @@ class ClassController extends Controller
             'name_class' => $request->name_class,
         ]);
 
-        return redirect('/classes')->with('success', 'Kelas berhasil diperbarui!');
+        return redirect()->route('admin.classes.index')->with('success', 'Kelas berhasil diperbarui!');
     }
 
-    // ============================
-    // DELETE
-    // ============================
     public function destroy($id)
     {
         Classes::findOrFail($id)->delete();
-
-        return redirect('/classes')->with('success', 'Kelas berhasil dihapus!');
+        return redirect()->route('admin.classes.index')->with('success', 'Kelas berhasil dihapus!');
     }
 
         public function show($id)

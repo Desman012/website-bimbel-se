@@ -1,30 +1,32 @@
 <?php
 
+use App\Actions\Fortify\ResetUserPassword;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminPaymentController;
 use App\Http\Controllers\AdminRegistrationController;
 use App\Http\Controllers\AdminStudentController;
 use App\Http\Controllers\AdminStudentRegistrationController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClassController;
+use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LevelController;
+use App\Http\Controllers\PriceController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\TimeController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\StudentAttendanceController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\StudentPaymentController;
-use App\Http\Controllers\ScheduleController;
-use App\Http\Controllers\LevelController;
-use App\Http\Controllers\CurriculumController;
-use App\Http\Controllers\ClassController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use App\Actions\Fortify\ResetUserPassword;
-use Illuminate\Support\Facades\DB;
-use App\Models\Students;
-use App\Models\Admins;
 use App\Mail\ResetPasswordMail;
+use App\Models\Admins;
+use App\Models\Students;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Route;
 
 Route::post('/forgot-password', function (Request $request) {
     $email = $request->email;
@@ -37,8 +39,9 @@ Route::post('/forgot-password', function (Request $request) {
         $guard = 'student';
     }
 
-    if (!$guard) {
+    if (! $guard) {
         Log::warning("Email tidak terdaftar: $email");
+
         return back()->withErrors(['email' => 'Email tidak terdaftar']);
     }
 
@@ -69,8 +72,9 @@ Route::post('/reset-password-submit', function (Request $request) {
         ->where('guard', $request->guard)
         ->first();
 
-    if (!$record || $record->token !== $request->token) {
-        Log::warning("Token reset password invalid untuk: " . $request->email);
+    if (! $record || $record->token !== $request->token) {
+        Log::warning('Token reset password invalid untuk: '.$request->email);
+
         return back()->withErrors(['email' => 'Token reset password tidak valid']);
     }
 
@@ -91,7 +95,7 @@ Route::get('/reset-password', function (Request $request) {
         ->where('guard', $guard)
         ->first();
 
-    if (!$record || $record->token !== $token) {
+    if (! $record || $record->token !== $token) {
         return redirect('/forgot-password')->withErrors(['email' => 'Token reset password tidak valid atau sudah digunakan']);
     }
 
@@ -120,6 +124,7 @@ Route::post('/logout', function () {
     Auth::guard('student')->logout();
     // Hapus semua session
     session()->flush();
+
     // Redirect ke halaman login
     return redirect('/login');
 })->name('logout');
@@ -199,30 +204,56 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     // LEVELS
     Route::get('/levels', [LevelController::class, 'index'])->name('admin.levels.index');
     Route::get('/levels/create', [LevelController::class, 'create'])->name('admin.levels.create');
-    Route::post('/levels/store', [LevelController::class, 'store'])->name('admin.levels.store');
-    Route::get('/levels/{id}', [LevelController::class, 'show'])->name('admin.levels.show');
-    Route::get('/levels/edit/{id}', [LevelController::class, 'edit'])->name('admin.levels.edit');
-    Route::post('/levels/update/{id}', [LevelController::class, 'update'])->name('admin.levels.update');
-    Route::get('/levels/delete/{id}', [LevelController::class, 'destroy'])->name('admin.levels.destroy');
-
+    Route::post('/levels', [LevelController::class, 'store'])->name('admin.levels.store');
+    Route::get('/levels/{level}', [LevelController::class, 'show'])->name('admin.levels.show');
+    Route::get('/levels/{level}/edit', [LevelController::class, 'edit'])->name('admin.levels.edit');
+    Route::put('/levels/{level}', [LevelController::class, 'update'])->name('admin.levels.update');
+    Route::delete('/levels/{level}', [LevelController::class, 'destroy'])->name('admin.levels.destroy');
 
     // CURRICULUMS
     Route::get('/curriculums', [CurriculumController::class, 'index'])->name('admin.curriculums.index');
     Route::get('/curriculums/create', [CurriculumController::class, 'create'])->name('admin.curriculums.create');
-    Route::post('/curriculums/store', [CurriculumController::class, 'store'])->name('admin.curriculums.store');
-    Route::get('/curriculums/{id}', [CurriculumController::class, 'show'])->name('admin.curriculums.show');
-    Route::get('/curriculums/edit/{id}', [CurriculumController::class, 'edit'])->name('admin.curriculums.edit');
-    Route::post('/curriculums/update/{id}', [CurriculumController::class, 'update'])->name('admin.curriculums.update');
-    Route::get('/curriculums/delete/{id}', [CurriculumController::class, 'destroy'])->name('admin.curriculums.destroy');
+    Route::post('/curriculums', [CurriculumController::class, 'store'])->name('admin.curriculums.store');
+    Route::get('/curriculums/{curriculum}', [CurriculumController::class, 'show'])->name('admin.curriculums.show');
+    Route::get('/curriculums/{curriculum}/edit', [CurriculumController::class, 'edit'])->name('admin.curriculums.edit');
+    Route::put('/curriculums/{curriculum}', [CurriculumController::class, 'update'])->name('admin.curriculums.update');
+    Route::delete('/curriculums/{curriculum}', [CurriculumController::class, 'destroy'])->name('admin.curriculums.destroy');
 
     // CLASSES
     Route::get('/classes', [ClassController::class, 'index'])->name('admin.classes.index');
     Route::get('/classes/create', [ClassController::class, 'create'])->name('admin.classes.create');
-    Route::post('/classes/store', [ClassController::class, 'store'])->name('admin.classes.store');
-    Route::get('/classes/{id}', [ClassController::class, 'show'])->name('admin.classes.show');
-    Route::get('/classes/edit/{id}', [ClassController::class, 'edit'])->name('admin.classes.edit');
-    Route::post('/classes/update/{id}', [ClassController::class, 'update'])->name('admin.classes.update');
-    Route::get('/classes/delete/{id}', [ClassController::class, 'destroy'])->name('admin.classes.destroy');
+    Route::post('/classes', [ClassController::class, 'store'])->name('admin.classes.store');
+    Route::get('/classes/{class}', [ClassController::class, 'show'])->name('admin.classes.show');
+    Route::get('/classes/{class}/edit', [ClassController::class, 'edit'])->name('admin.classes.edit');
+    Route::put('/classes/{class}', [ClassController::class, 'update'])->name('admin.classes.update');
+    Route::delete('/classes/{class}', [ClassController::class, 'destroy'])->name('admin.classes.destroy');
+
+    // PRICES
+    Route::get('/prices', [PriceController::class, 'index'])->name('admin.prices.index');
+    Route::get('/prices/create', [PriceController::class, 'create'])->name('admin.prices.create');
+    Route::post('/prices', [PriceController::class, 'store'])->name('admin.prices.store');
+    Route::get('/prices/{price}', [PriceController::class, 'show'])->name('admin.prices.show');
+    Route::get('/prices/{price}/edit', [PriceController::class, 'edit'])->name('admin.prices.edit');
+    Route::put('/prices/{price}', [PriceController::class, 'update'])->name('admin.prices.update');
+    Route::delete('/prices/{price}', [PriceController::class, 'destroy'])->name('admin.prices.destroy');
+
+    // PROGRAMS
+    Route::get('/programs', [ProgramController::class, 'index'])->name('admin.programs.index');
+    Route::get('/programs/create', [ProgramController::class, 'create'])->name('admin.programs.create');
+    Route::post('/programs', [ProgramController::class, 'store'])->name('admin.programs.store');
+    Route::get('/programs/{program}', [ProgramController::class, 'show'])->name('admin.programs.show');
+    Route::get('/programs/{program}/edit', [ProgramController::class, 'edit'])->name('admin.programs.edit');
+    Route::put('/programs/{program}', [ProgramController::class, 'update'])->name('admin.programs.update');
+    Route::delete('/programs/{program}', [ProgramController::class, 'destroy'])->name('admin.programs.destroy');
+
+    // TIMES
+    Route::get('/times', [TimeController::class, 'index'])->name('admin.times.index');
+    Route::get('/times/create', [TimeController::class, 'create'])->name('admin.times.create');
+    Route::post('/times', [TimeController::class, 'store'])->name('admin.times.store');
+    Route::get('/times/{time}', [TimeController::class, 'show'])->name('admin.times.show');
+    Route::get('/times/{time}/edit', [TimeController::class, 'edit'])->name('admin.times.edit');
+    Route::put('/times/{time}', [TimeController::class, 'update'])->name('admin.times.update');
+    Route::delete('/times/{time}', [TimeController::class, 'destroy'])->name('admin.times.destroy');
 
     // });
 

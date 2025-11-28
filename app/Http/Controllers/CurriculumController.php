@@ -28,8 +28,10 @@ class CurriculumController extends Controller
             'name_curriculum' => $request->name_curriculum,
         ]);
 
-        return redirect('/curriculums')->with('success', 'Kurikulum berhasil ditambahkan!');
+        return redirect()->route('admin.curriculums.index')
+                        ->with('success', 'Kurikulum berhasil ditambahkan!');
     }
+
 
     public function edit($id)
     {
@@ -49,13 +51,13 @@ class CurriculumController extends Controller
             'name_curriculum' => $request->name_curriculum,
         ]);
 
-        return redirect('/curriculums')->with('success', 'Kurikulum berhasil diperbarui!');
+        return redirect()->route('admin.curriculums.index')->with('success', 'Kurikulum berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
         Curriculums::findOrFail($id)->delete();
-        return redirect('/curriculums')->with('success', 'Kurikulum berhasil dihapus!');
+        return redirect()->route('admin.curriculums.index')->with('success', 'Kurikulum berhasil dihapus!');
     }
 
         public function show($id)
