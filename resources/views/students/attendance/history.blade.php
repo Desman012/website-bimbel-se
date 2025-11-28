@@ -75,6 +75,13 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="flex justify-content-end">
+                    <a href="{{ route('students.attendance.export', ['month' => $selectedMonth]) }}"
+                    class="bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold py-2 px-6 rounded-xl shadow mt-10">
+                    Download Excel
+                    </a>
+                </div>
             </div>
         </div>
     </div>

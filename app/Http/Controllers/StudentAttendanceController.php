@@ -8,19 +8,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Exports\AttendanceExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentAttendanceController extends Controller
 {
     public function index(Request $request)
     {
-        // ambil semua sesi dari DB
-        $sessions = Time::orderBy('id')->get();
+        
 
         // ambil siswa
         $studentId = Auth::guard('student')->id();
         if (!$studentId) {
             return redirect()->route('login');
         }
+
 
         // cek apakah siswa sudah absen hari ini
         $hasAttended = Absents::where('student_id', $studentId)
@@ -88,6 +90,18 @@ class StudentAttendanceController extends Controller
             array_unshift($months, $selectedMonth);
         }
 
+        // ambil semua sesi dari DB
+        $sessions = StudentSchedule::where('student_id', $studentId)
+        ->where('day_id', $dayId)
+        ->with('time')
+        ->get()
+        ->map(function ($sch) {
+            return $sch->time;
+        })
+        ->filter()      // buang null relation
+        ->unique('id')  // hilangkan duplikat time
+        ->values();
+
         return view('students.attendance.index', compact(
             'sessions',
             'hasAttended',
@@ -102,24 +116,15 @@ class StudentAttendanceController extends Controller
 
     public function store(Request $request)
     {
-        // ...existing code...
         $studentId = Auth::guard('student')->user()->id;
+        if (!$studentId) return redirect()->route('login');
 
-        if (!$studentId) {
-            return redirect()->route('login');
-        }
-
-        // Cegah duplikat per hari
         $todayDate = now()->toDateString();
-        $exists = Absents::where('student_id', $studentId)
-                         ->whereDate('date', $todayDate)
-                         ->first();
-
-        if ($exists) {
+        if (Absents::where('student_id', $studentId)->whereDate('date', $todayDate)->exists()) {
             return back()->with('success', 'Attendance already recorded for today.');
         }
 
-        // --- server-side check: pastikan siswa memang punya jadwal hari ini DAN saat ini berada di dalam time window ---
+        // find today's schedules for this student and determine if now is late
         $now = Carbon::now();
         $dayId = $now->dayOfWeekIso;
         $schedules = StudentSchedule::where('student_id', $studentId)
@@ -127,24 +132,37 @@ class StudentAttendanceController extends Controller
             ->with('time')
             ->get();
 
-        // $allowed = false;
-        // foreach ($schedules as $sch) {
-        //     $start = Carbon::createFromFormat('H:i:s', $sch->time->times_in)->setDate($now->year, $now->month, $now->day);
-        //     $end = Carbon::createFromFormat('H:i:s', $sch->time->times_out)->setDate($now->year, $now->month, $now->day);
-        //     if ($now->between($start, $end->subSecond(false))) {
-        //         $allowed = true;
-        //         break;
-        //     }
-        // }
+        // default
+        $status = 'present';
+        $grace = config('attendance.late_grace_minutes', 15);
 
-        // if (! $allowed) {
-        //     return back()->with('success', 'Anda tidak memiliki jadwal aktif sekarang atau di luar jam sesi. Absensi diblokir.');
-        // }
+        foreach ($schedules as $sch) {
+            if (! $sch->time) continue;
+            try {
+                $start = Carbon::createFromFormat('H:i:s', $sch->time->times_in)
+                            ->setDate($now->year, $now->month, $now->day);
+                $end = Carbon::createFromFormat('H:i:s', $sch->time->times_out)
+                            ->setDate($now->year, $now->month, $now->day);
+            } catch (\Exception $e) {
+                continue;
+            }
+
+            // if inside session window
+            if ($now->between($start, $end)) {
+                // if after start + grace => mark absent
+                if ($now->greaterThan($start->copy()->addMinutes($grace))) {
+                    $status = 'absent';
+                } else {
+                    $status = 'present';
+                }
+                break;
+            }
+        }
 
         Absents::create([
             'student_id' => $studentId,
             'date' => $todayDate,
-            'attendance_status' => 'present',
+            'attendance_status' => $status,
         ]);
 
         return back()->with('success', 'Attendance recorded.');
@@ -187,5 +205,21 @@ class StudentAttendanceController extends Controller
         }
 
         return view('students.attendance.history', compact('records', 'months', 'selectedMonth'));
+    }
+
+    public function export(Request $request)
+    {
+        $studentId = Auth::guard('student')->id();
+        if (! $studentId) return redirect()->route('login');
+
+        $month = $request->query('month', now()->format('Y-m'));
+        try {
+            \Carbon\Carbon::createFromFormat('Y-m', $month);
+        } catch (\Exception $e) {
+            $month = now()->format('Y-m');
+        }
+
+        $fileName = "absensi-{$month}.xlsx";
+        return Excel::download(new AttendanceExport($studentId, $month), $fileName);
     }
 }
