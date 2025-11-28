@@ -239,7 +239,7 @@ Route::middleware(['auth:student', 'role:2'])->prefix('students')->group(functio
     Route::get('/attendance', [StudentAttendanceController::class, 'index'])->name('students.attendance.index');
     Route::post('/attendance', [StudentAttendanceController::class, 'store'])->name('students.attendance.store');
     Route::get('/attendance/history', [StudentAttendanceController::class, 'history'])->name('students.attendance.history');
-
+    Route::get('/students/attendance/export', [StudentAttendanceController::class, 'export'])->name('students.attendance.export');
     // Payment
     Route::get('/payment', [StudentPaymentController::class, 'index'])->name('students.payment.index');
     Route::post('/payment', [StudentPaymentController::class, 'store'])->name('students.payment.store');

@@ -20,6 +20,7 @@
           <div class="mt-5 max-w-2xl mx-auto shadow-lg rounded-2xl p-8 border border-gray-200 mb-5">
             <div class="flex items-center justify-between">
                 <div class="text-sm text-gray-400">{{ now()->format('d M, Y') }}</div>
+                <a href="{{route('students.attendance.history')}}" class="text-sm text-blue">Attendance History</a>
             </div>
 
             @if (session('success'))
@@ -96,30 +97,37 @@
                         @if(!empty($sessions) && $sessions->count())
                             {{ $sessions->first()->times_in }} – {{ $sessions->last()->times_out }} WIB
                         @else
-                            10:00 – 18:00 WIB
+                            08:00 – 18:00 WIB
                         @endif
                     </p>
                 </div>
 
                 <div class="space-y-3">
-                    @foreach($sessions as $s)
-                        @php
-                            $start = \Carbon\Carbon::createFromFormat('H:i:s', $s->times_in);
-                            $end = \Carbon\Carbon::createFromFormat('H:i:s', $s->times_out);
-                            $minutes = $end->diffInMinutes($start);
-                        @endphp
-                        <div class="bg-gray-50 rounded-xl p-3 flex justify-between items-center">
-                            <span class="text-sm text-gray-600">{{ $s->name_time }}</span>
-                            <span class="text-sm font-semibold text-gray-900">{{ $minutes }} minutes</span>
-                        </div>
-                    @endforeach
+                    @if(!empty($sessions) && $sessions->count())       
+                        @foreach($sessions as $s)
+                            @php
+                                $start = \Carbon\Carbon::createFromFormat('H:i:s', $s->times_in);
+                                $end = \Carbon\Carbon::createFromFormat('H:i:s', $s->times_out);
+                                $minutes = $end->diffInMinutes($start);
+                            @endphp
+                            <div class="bg-gray-50 rounded-xl p-3 flex justify-between items-center">
+                                <span class="text-sm text-gray-600">{{ $s->name_time }}</span>
+                                <span class="text-sm font-semibold text-gray-900">{{ $minutes }} minutes</span>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="bg-gray-50 rounded-xl p-3 flex justify-center items-center">
+                                {{-- <span class="text-sm text-gray-600">Tidak ada jadwal</span> --}}
+                                <span class="text-sm font-semibold text-gray-900">Tidak ada jadwal</span>
+                            </div>
+                    @endif
                 </div>
             </div>
           </div>
         </div>
     </div>
     <script>
-const officeLocation = { lat: -6.3341644, lon: 107.3021184 }; // contoh: Jakarta
+const officeLocation = { lat: -6.2062592, lon: 106.8302336 }; // contoh: Jakarta
 const maxDistance = 5; // jarak maksimum dalam kilometer (misal 500 meter)
 
 function getDistance(lat1, lon1, lat2, lon2) {
@@ -266,7 +274,8 @@ navigator.geolocation.getCurrentPosition(pos => {
             checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
             if (nextSession) {
                 const time = msToHourMin(soonestDiff);
-                if(now.getHours() > nextSession["times_out"].split(":")[0] && now.getMinutes() > nextSession["times_out"].split(":")[1]){
+                console.log(now.getHours(), nextSession["times_out"].split(":")[0])
+                if(now.getHours() >= nextSession["times_out"].split(":")[0] && now.getMinutes() >= nextSession["times_out"].split(":")[1]){
                     scheduleMsg.textContent = `Anda terlambat absensi`;
                 }else{
                     scheduleMsg.textContent = `Akan tersedia dalam ${time.h} jam ${time.m} menit pada ${nextSession.name_time} mulai ${nextSession.times_in}`;
