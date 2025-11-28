@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Pendaftaran Ditolak</title>
-</head>
-<body>
+@component('mail:message')
     <p>Halo {{ $registration->full_name }},</p>
 
     <p>Mohon maaf, pendaftaran kamu telah ditolak dengan alasan berikut:</p>
@@ -16,5 +10,4 @@
     <p>Jika masih membutuhkan bantuan, silakan hubungi admin kembali.</p>
 
     <p>Terima kasih.</p>
-</body>
-</html>
+@endcomponent

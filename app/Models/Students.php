@@ -16,6 +16,7 @@ class Students extends Authenticatable
 
     protected $table = 'students';
     protected $fillable = [
+        'role_id',
         'full_name',
         'address',
         'phone_number',
@@ -24,10 +25,11 @@ class Students extends Authenticatable
         'parent_name',
         'parent_email',
         'parent_phone',
-        'programs_id',
+        'levels_id',
         'class_id',
+        'programs_id',
+        'curriculum_id',
         'status',
-        'role_id',
     ];
 
     protected $hidden = [

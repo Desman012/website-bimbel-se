@@ -7,6 +7,8 @@
     <title>Sinar Education | Data Pendaftar</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- CSS DataTable --}}
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.5/css/dataTables.dataTables.css" />
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/fontawesome-free/css/all.min.css') }}">
     <!-- Ionicons -->
@@ -149,7 +151,10 @@
                         <div class="font-weight-bold">Bukti Pembayaran</div>
                         <div class="" id="modalPaymentProof"></div>
                     </div>
+                    <input type="hidden" id="verifiedStudentId">
+                    <input type="hidden" id="verifiedStudentEmail">
                 </div>
+                <!-- Hidden input untuk proses Verified / Reject -->
                 <div class="modal-footer d-flex justify-content-between">
                     <div>
                         <button type="button" class="btn btn-danger" id="btn-reject">Reject</button>
@@ -205,8 +210,8 @@
         <!-- AdminLTE for demo purposes -->
         <script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script>
 
-        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+        <script src="https://cdn.datatables.net/2.3.5/js/dataTables.js"></script>
+        {{-- <script src="https://cdn.datatables.net/2.3.5/js/dataTables.bootstrap5.min.js"></script> --}}
 
         <script>
             $(document).ready(function() {
@@ -216,7 +221,7 @@
                     serverSide: true,
                     ajax: "{{ route('admin.students.registration.data') }}",
                     order: [
-                        [5, 'asc']
+                        [6, 'asc']
                     ], // sort by status_order (pending dulu)
                     columns: [{
                             data: 'no',
@@ -243,8 +248,8 @@
                                 var s = data.toString().toLowerCase();
                                 if (s === 'pending')
                                     return '<span class="badge bg-warning">Pending</span>';
-                                if (s === 'verified')
-                                    return '<span class="badge bg-success">Verified</span>';
+                                if (s === 'active')
+                                    return '<span class="badge bg-success">Active</span>';
                                 if (s === 'ditolak')
                                     return '<span class="badge bg-danger">Ditolak</span>';
                                 return '<span class="badge bg-secondary">' + data + '</span>';
@@ -257,7 +262,25 @@
                             render: function(data, type, row) {
                                 return `<button class="btn btn-sm btn-primary btn-detail" data-id="${row.id}">Detail</button>`;
                             }
+                        },
+                        { // status_order (HARUS DI PALING BELAKANG)
+                            data: 'status_order',
+                            visible: false,
+                            searchable: false
                         }
+                    ],
+                    columnDefs: [{
+                            targets: '_all',
+                            orderable: true
+                        },
+                        {
+                            targets: 0,
+                            orderable: false
+                        }, // nomor urut
+                        {
+                            targets: 6,
+                            orderable: false
+                        } // action
                     ],
                     responsive: true,
                     lengthMenu: [10, 25, 50, 100],
@@ -288,11 +311,15 @@
                     $('#modalParentPhone').text(rowData.parent_phone || '-');
                     $('#modalMonth').text(rowData.month || '-');
 
+                    $('#verifiedStudentId').val(rowData.id || '');
+                    $('#verifiedStudentEmail').val(rowData.student_email || '');
+
                     // amount formatting (jika angka), else tampilkan '-'
                     if (rowData.amount_paid) {
                         // pastikan amount_paid numeric string (mis: '200000') -> format 200.000
-                        var amt = rowData.amount_paid.toString().replace(/\D/g, '');
-                        var fmt = amt.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        var amt = Number(rowData.amount_paid); // pastikan jadi number
+                        amt = Math.floor(amt); // buang angka di belakang koma
+                        var fmt = amt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); // format ribuan
                         $('#modalAmountPaid').text('Rp ' + fmt);
                     } else {
                         $('#modalAmountPaid').text('-');
@@ -302,10 +329,18 @@
                     var st = (rowData.status || '').toString().toLowerCase();
                     var badgeHtml = '<span class="badge bg-secondary">-</span>';
                     if (st === 'pending') badgeHtml = '<span class="badge bg-warning">Pending</span>';
-                    if (st === 'verified') badgeHtml = '<span class="badge bg-success">Verified</span>';
+                    if (st === 'active') badgeHtml = '<span class="badge bg-success">Active</span>';
                     if (st === 'ditolak') badgeHtml = '<span class="badge bg-danger">Ditolak</span>';
                     $('#modalStatus').html(badgeHtml);
 
+                    // kontrol tombol Verified & Reject
+                    if (st === 'active') {
+                        $('#btnVerified').hide();
+                        $('#btn-reject').hide();
+                    } else {
+                        $('#btnVerified').show();
+                        $('#btn-reject').show();
+                    }
                     // payment proof image (if stored as path like "/storage/payment_proofs/xxx.jpg" OR full URL)
                     if (rowData.payment_proof) {
                         var imgSrc = rowData.payment_proof;
@@ -404,36 +439,42 @@
                         });
                 });
 
-                // Optional: Verified button (contoh sederhana)
                 $('#btnVerified').on('click', function() {
-                    var id = $('#rejectStudentId').val();
-                    if (!id) {
-                        alert('ID tidak tersedia');
-                        return;
-                    }
-                    if (!confirm('Konfirmasi: tandai pendaftar sebagai VERIFIED?')) return;
-                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                    fetch("{{ url('/students-registration/verify') }}", {
+
+                    var id = $('#verifiedStudentId').val();
+                    var email = $('#verifiedStudentEmail').val();
+
+                    if (!confirm('Yakin ingin menandai sebagai VERIFIED?')) return;
+
+                    fetch("{{ route('admin.students.registration.verify') }}", {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': csrfToken,
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                                 'Accept': 'application/json'
                             },
                             body: JSON.stringify({
-                                id: id
+                                id: id,
+                                email: email
                             })
                         })
-                        .then(res => res.json())
+                        .then(r => r.json())
                         .then(json => {
-                            if (json.success) {
-                                $('#detailModal').modal('hide');
-                                table.ajax.reload(null, false);
-                            } else alert(json.message || 'Gagal verifikasi');
-                        }).catch(e => {
-                            console.error(e);
-                            alert('Terjadi kesalahan server saat verifikasi');
+
+                            // Tutup SEMUA modal
+                            $('.modal').modal('hide');
+
+                            // Reload datatable
+                            table.ajax.reload(null, false);
+
+                            // OPTIONAL redirect halaman
+                            // window.location.reload();
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            alert("Server error");
                         });
+
                 });
 
             }); // end document.ready

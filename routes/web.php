@@ -137,9 +137,7 @@ Route::middleware(['role'])->group(function () {
     Route::get('/', [HomeController::class, 'show'])->name('landing');
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::get('/registered-success', function () {
-        return view('auth.registered'); // Buat view ini sesuai HTML-mu
-    })->name('registered.success');
+    Route::get('/registered-success', [AuthController::class, 'registeredSuccess'])->name('registered.success');
 });
 
 // ADMIN ROUTES
@@ -154,9 +152,6 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::delete('/landing/{id}', [AdminRegistrationController::class, 'landing_destroy'])->name('admin.landing_destroy');
     Route::get('/landing/create', [AdminRegistrationController::class, 'landing_create'])->name('admin.landing_create');
     Route::put('/landing/{data}', [AdminRegistrationController::class, 'landing_update'])->name('admin.landing_update');
-
-    // Dashboard
-    // Route::get('/dashboard/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     // Students
     Route::get('/students', [AdminStudentController::class, 'index'])->name('admin.students.index');
@@ -197,7 +192,6 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::post('/students-registration/verify', [AdminStudentRegistrationController::class, 'verify'])->name('admin.students.registration.verify');
 
     // ROUTE JADWAL
-    // Route::prefix('admin')->middleware(['auth'])->group(function() {
     Route::get('/schedules', [ScheduleController::class, 'index'])->name('admin.schedules.index');
     Route::post('/schedules', [ScheduleController::class, 'store'])->name('admin.schedules.store');
 
@@ -254,9 +248,6 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/times/{time}/edit', [TimeController::class, 'edit'])->name('admin.times.edit');
     Route::put('/times/{time}', [TimeController::class, 'update'])->name('admin.times.update');
     Route::delete('/times/{time}', [TimeController::class, 'destroy'])->name('admin.times.destroy');
-
-    // });
-
 });
 
 // STUDENT ROUTES

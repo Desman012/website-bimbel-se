@@ -27,6 +27,11 @@ class AuthController extends Controller
         return view('auth.register', compact(['levels','programs','curriculums']));
     }
 
+    public function registeredSuccess()
+    {
+        return view('auth.registered');
+    }
+
     public function register(Request $request)
     {
         // proses register

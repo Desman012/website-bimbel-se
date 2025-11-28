@@ -2,11 +2,22 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Dashboard Siswa | Sinar Education</title>
-
-    <!-- AdminLTE + Tailwind -->
+<!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/fontawesome-free/css/all.min.css') }}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/overlayScrollbars/css/overlayScrollbars.min.css') }}">
+    <!-- Theme style -->
     <link rel="stylesheet" href="{{ Vite::asset('resources/css/css/adminlte.min.css') }}">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- AdminLTE + Tailwind -->
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed bg-gray-100">
@@ -103,6 +114,15 @@
         </section>
     </div>
 </div>
-
+<!-- jQuery -->
+    <script src="{{ Vite::asset('resources/js/jquery/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ Vite::asset('resources/js/boostrap/js/bootstrap.min.js') }}"></script>
+    <!-- overlayScrollbars -->
+    <script src="{{ Vite::asset('resources/css/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ Vite::asset('resources/js/js/adminlte.min.js') }}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script>
 </body>
 </html>

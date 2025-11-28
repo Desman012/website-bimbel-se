@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Illuminate\Validation\ValidationException;
 use App\Notifications\AccountPending;
+use App\Models\ScheduleStudentRegistrations;
 
 class CreateNewStudents implements CreatesNewUsers
 {
@@ -20,6 +21,8 @@ class CreateNewStudents implements CreatesNewUsers
     public function create(array $input)
     {
         // Validasi input
+        // dd($input);
+
         $validator = Validator::make($input, [
             'full-name' => ['required', 'string', 'max:50'],
             'address' => ['required', 'string', 'max:255'],
@@ -81,10 +84,21 @@ class CreateNewStudents implements CreatesNewUsers
             'amount_paid' => $input['amount-paid'] ?? 0,
             'payment_proof' => $path,
         ]);
+        // Simpan jadwal pertemuan
+        $dayIds = $input['day_id'];
+        $timeIds = $input['time_id'];
+
+        foreach ($dayIds as $index => $dayId) {
+            $timeId = $timeIds[$index]; // ambil waktu sesuai index
+            ScheduleStudentRegistrations::create([
+                'registration_id' => $student->id,
+                'day_id'     => $dayId,
+                'time_id'    => $timeId,
+            ]);
+        }
 
         // Kirim notifikasi
         $student->notify(new AccountPending());
-
         return $student;
     }
 }

@@ -10,7 +10,11 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use App\Mail\StudentRejectedMail;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\Students;
+use App\Mail\StudentVerifiedMail;
+use App\Models\Payment;
+use App\Models\ScheduleStudentRegistrations;
+use App\Models\StudentSchedule;
 
 class AdminStudentRegistrationController extends Controller
 {
@@ -36,7 +40,6 @@ class AdminStudentRegistrationController extends Controller
             'class_id',
             'status',
             'status_order', // tambahkan
-            'created_at'
         ];
 
         $totalData = Registrations::count();
@@ -49,12 +52,12 @@ class AdminStudentRegistrationController extends Controller
         $orderDir = $request->input('order.0.dir', 'desc');
         $search = $request->input('search.value');
 
-        $query = Registrations::with(['level', 'class'])
+        $query = Registrations::with(['level'])
             ->select('registrations.*')
             ->selectRaw("
             CASE 
                 WHEN status = 'pending' THEN 1
-                WHEN status = 'verified' THEN 2
+                WHEN status = 'active' THEN 2
                 WHEN status = 'ditolak' THEN 3
                 ELSE 4
             END AS status_order
@@ -97,6 +100,7 @@ class AdminStudentRegistrationController extends Controller
                     ? asset('storage/' . $student->payment_proof)
                     : null,
                 'status' => $student->status,
+                'status_order' => $student->status_order,
             ];
         }
 
@@ -138,11 +142,12 @@ class AdminStudentRegistrationController extends Controller
         $email = $reg->student_email;
 
         // Update status
+        $reg->reason = $request->reason;
         $reg->status = 'ditolak';
         $reg->save();
 
         // Kirim email penolakan
-        Mail::to($email)->send(new \App\Mail\StudentRejectedMail($request->reason, $reg));
+        Mail::to($email)->send(new StudentRejectedMail($request->reason, $reg));
 
         return response()->json([
             'success' => true,
@@ -150,6 +155,80 @@ class AdminStudentRegistrationController extends Controller
         ]);
     }
 
+
+    public function verify(Request $request)
+    {
+        try {
+            // $request->validate([
+            //     'id' => 'required|integer',
+            //     'email' => 'required|email'
+            // ]);
+
+            $reg = Registrations::find($request->id);
+
+            //     if (!$reg) {
+            //         return response()->json(['success' => false, 'message' => 'Pendaftar tidak ditemukan']);
+            //     }
+
+            $adminId = auth()->id();
+            // Pindahkan data ke tabel siswa
+            $student = Students::create([
+                'role_id' => 2,
+                'full_name' => $reg->full_name,
+                'address' => $reg->address,
+                'phone_number' => $reg->phone_number,
+                'student_email' => $reg->student_email,
+                'password' => $reg->password, // password dipindah apa adanya
+                'parent_name' => $reg->parent_name,
+                'parent_email' => $reg->parent_email,
+                'parent_phone' => $reg->parent_phone,
+                'levels_id' => (int)$reg->levels_id,
+                'class_id' => $reg->class_id,
+                'programs_id' => (int)$reg->programs_id,
+                'curriculum_id' => (int)$reg->curriculum_id,
+                'status' => 'active'
+            ]);
+
+
+            $schedule = ScheduleStudentRegistrations::where('registration_id', $reg->id)->get();
+
+            // return response()->json([
+            //     'success' => true,
+            //     'schedule' => $schedule
+            // ]);
+            foreach ($schedule as $item) {
+                StudentSchedule::create([
+                    'student_id' => $student->id, // id siswa baru
+                    'day_id' => $item->day_id,
+                    'time_id' => $item->time_id,
+                ]);
+            }
+            $payment = Payment::create([
+                'student_id' => $student->id,
+                'admin_id' => $adminId, // atau admin yang memverifikasi
+                'month' => $reg->month,
+                'amount_paid' => $reg->amount_paid,
+                'payment_proof' => $reg->payment_proof,
+                'status' => 'verified',
+            ]);
+
+
+            // Update status registrasi
+            $reg->update([
+                'status' => 'active'
+            ]);
+
+            try {
+                Mail::to($reg->student_email)->send(new StudentVerifiedMail($student));
+            } catch (\Exception $e) {
+                // jangan sampai error mail menggagalkan seluruh proses
+            }
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
 
 
 
