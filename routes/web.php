@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Actions\Fortify\ResetUserPassword;
+use App\Http\Controllers\FacilitiesController;
 use Illuminate\Support\Facades\DB;
 use App\Models\Students;
 use App\Models\Admins;
@@ -145,6 +146,13 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::delete('/landing/{id}', [AdminRegistrationController::class, 'landing_destroy'])->name('admin.landing_destroy');
     Route::get('/landing/create', [AdminRegistrationController::class, 'landing_create'])->name('admin.landing_create');
     Route::put('/landing/{data}', [AdminRegistrationController::class, 'landing_update'])->name('admin.landing_update');
+    
+    // manajemen landing facilities
+    Route::get('/landing/create/facilities', [FacilitiesController::class, 'landing_facilities_create'])->name('admin.landing_facilities_create');
+    Route::get('/landing/{id}/facilities/edit', [FacilitiesController::class, 'landing_facilities_edit'])->name('admin.landing_facilities_edit');
+    Route::post('/landing/facilities', [FacilitiesController::class, 'landing_facilities_store'])->name('admin.landing_facilities_store');
+    Route::delete('/landing/{id}/facilities', [FacilitiesController::class, 'landing_facilities_destroy'])->name('admin.landing_facilities_destroy');
+    Route::put('/landing/{data}', [FacilitiesController::class, 'landing_facilities_update'])->name('admin.landing_facilities_update');
 
 
     // Students
