@@ -42,14 +42,14 @@
                 <div class="row mb-2 pl-2.5">
 
                     <div class="col-sm-6">
-                        <h1>Dashboard</h1>
+                        <h1>Harga</h1>
                     </div>
 
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
                             <li class="breadcrumb-item active">
-                                <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+                                <a href="{{ route('admin.dashboard') }}">Harga</a>
                             </li>
                         </ol>
                     </div>
@@ -153,10 +153,16 @@
 
 </div>
 
-<script src="{{ Vite::asset('resources/js/jquery/jquery.min.js') }}"></script>
-<script src="{{ Vite::asset('resources/js/boostrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ Vite::asset('resources/css/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-<script src="{{ Vite::asset('resources/js/js/adminlte.min.js') }}"></script>
+    <!-- jQuery -->
+    <script src="{{ Vite::asset('resources/js/jquery/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ Vite::asset('resources/js/boostrap/js/bootstrap.min.js') }}"></script>
+    <!-- overlayScrollbars -->
+    <script src="{{ Vite::asset('resources/css/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ Vite::asset('resources/js/js/adminlte.min.js') }}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script>
 
 </body>
 </html>

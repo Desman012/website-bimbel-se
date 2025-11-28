@@ -54,7 +54,60 @@
                           Siswa
                       </p>
                   </a>
-              </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-cogs"></i>
+                        <p>
+                            Manajemen
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.levels.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Level</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.curriculums.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kurikulum</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.classes.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kelas</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.prices.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Harga</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.programs.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Program</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.times.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Waktu</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
               <li class="nav-item">
                   <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                       class="nav-link">
