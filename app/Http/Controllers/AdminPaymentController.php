@@ -3,16 +3,45 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Payment;
 
 class AdminPaymentController extends Controller
 {
+    /**
+     * Menampilkan semua data pembayaran
+     */
     public function index()
     {
-        return view('admin.payments.index');
+        // Ambil semua pembayaran + siswa terkait
+        $payments = Payment::with('student')->orderBy('created_at', 'desc')->get();
+
+        return view('admins.payments.index', compact('payments'));
     }
 
+    /**
+     * Menampilkan detail pembayaran berdasarkan ID
+     */
     public function show($id)
     {
-        return view('admin.payments.show', compact('id'));
+        $payment = Payment::with('student')->findOrFail($id);
+
+        return view('admins.payments.show', compact('payment'));
+    }
+
+    /**
+     * Update status pembayaran
+     */
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,verified,rejected'
+        ]);
+
+        $payment = Payment::findOrFail($id);
+        $payment->status = $request->status;
+        $payment->admin_id = auth()->id(); // admin yang memverifikasi
+        $payment->save();
+
+        return redirect()->back()->with('success', 'Status pembayaran berhasil diperbarui.');
     }
 }

@@ -170,6 +170,7 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     // Payments
     Route::get('/payments', [AdminPaymentController::class, 'index'])->name('admin.payments.index');
     Route::get('/payments/{id}', [AdminPaymentController::class, 'show'])->name('admin.payments.show');
+    Route::put('/admin/payments/{id}', [AdminPaymentController::class, 'updateStatus'])->name('admin.payments.update');
 
     // ADMIN ROUTES
     Route::get('/registrations', [AdminRegistrationController::class, 'index'])->name('admin.registrations.index');
@@ -254,6 +255,8 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/times/{time}/edit', [TimeController::class, 'edit'])->name('admin.times.edit');
     Route::put('/times/{time}', [TimeController::class, 'update'])->name('admin.times.update');
     Route::delete('/times/{time}', [TimeController::class, 'destroy'])->name('admin.times.destroy');
+
+
 
     // });
 

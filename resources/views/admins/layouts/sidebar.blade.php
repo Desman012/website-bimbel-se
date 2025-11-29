@@ -54,6 +54,23 @@
                           Siswa
                       </p>
                   </a>
+              </li>
+              <li class="nav-item">
+                  <a href="{{ route('admin.payments.index') }}" class="nav-link">
+                      <i class="nav-icon fas fa-user-graduate"></i>
+                      <p>
+                          Pembayaran Siswa
+                      </p>
+                  </a>
+              </li>
+              <li class="nav-item">
+                  <a href="{{ route('admin.payments.index') }}" class="nav-link">
+                      <i class="nav-icon fas fa-credit-card"></i>
+                      <p>
+                          Pembayaran
+                      </p>
+                  </a>
+              </li>
                 <li class="nav-item has-treeview">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-cogs"></i>
