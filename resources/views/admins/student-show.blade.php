@@ -1,103 +1,52 @@
-<!DOCTYPE html>
-<html>
+@extends('admins.layouts.app')
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sinar Education | Admin</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ Vite::asset('resources/css/fontawesome-free/css/all.min.css') }}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{ Vite::asset('resources/css/overlayScrollbars/css/overlayScrollbars.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ Vite::asset('resources/css/css/adminlte.min.css') }}">
-    <!-- Google Font: Source Sans Pro -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+@section('title', 'Sinar Education | Program')
+@section('title-content', 'Tambah Program')
 
-<body class="hold-transition sidebar-mini layout-fixed ">
-    <!-- Site wrapper -->
-    <div class="wrapper">
-        <!-- Navbar -->
-        @include('admins.layouts.navbar')
-        <!-- /.navbar -->
-        <!-- Main Sidebar Container -->
-        @include('admins.layouts.sidebar')
-
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <section class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2 mt-1">
-                        <div class="col-sm-6 pl-4">
-                            <div class="flex items-center">
-                                <a href="{{ route('admin.students.index') }}"
-                                    class="text-gray-600 hover:text-yellow-700 mr-4 text-l">
-                                    <i class="fas fa-arrow-left"></i>
-                                </a>
-                                <h1>Lihat Data Siswa</h1>
+@section('content')
+    <!-- Main content -->
+    <section class="content">
+        <div class="container mx-auto p-4">
+            <div class="container mx-auto p-4">
+                <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
+                 <h2 class="text-lg font-bold mb-4 text-gray-800">Data Pribadi & Akademik</h2>
+                    <!-- Grid Layout untuk Detail Utama -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+                        <!-- Kolom Kiri -->
+                        <div>
+                        <!-- Nama Lengkap -->
+                            <div class="mb-6">
+                                <label class="block text-gray-700 font-semibold mb-2">Nama Lengkap</label>
+                                <input type="text"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white shadow-sm cursor-default"
+                                    value="{{ $students->full_name }}" readonly>
+                            </div>
+                            <!-- Jenjang -->
+                            <div class="mb-6">
+                                <label class="block text-gray-700 font-semibold mb-2">Jenjang</label>
+                                <input type="text"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white shadow-sm cursor-default"
+                                    value="{{ $jenjang->name_level}}" readonly>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{{ route('admin.students.index') }}">Siswa</a></li>
-                                <li class="breadcrumb-item">Lihat Siswa</>
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div><!-- /.container-fluid -->
-            </section>
-
-            <!-- Main content -->
-            <section class="content">
-                <div class="container mx-auto p-4">
-                    <div class="container mx-auto p-4">
-                        <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
-                            <h2 class="text-lg font-bold mb-4 text-gray-800">Data Pribadi & Akademik</h2>
-                            <!-- Grid Layout untuk Detail Utama -->
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8">
-                                <!-- Kolom Kiri -->
-                                <div>
-                                    <!-- Nama Lengkap -->
-                                    <div class="mb-6">
-                                        <label class="block text-gray-700 font-semibold mb-2">Nama Lengkap</label>
-                                        <input type="text"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white shadow-sm cursor-default"
-                                            value="{{ $students->full_name }}" readonly>
-                                    </div>
-                                    <!-- Jenjang -->
-                                    <div class="mb-6">
-                                        <label class="block text-gray-700 font-semibold mb-2">Jenjang</label>
-                                        <input type="text"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white shadow-sm cursor-default"
-                                            value="{{ $jenjang->name_level}}" readonly>
-                                    </div>
+                            <!-- Kolom Kanan -->
+                            <div>
+                                <!-- Nomor Siswa -->
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 font-semibold mb-2">No. Siswa</label>
+                                    <input type="text"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white shadow-sm cursor-default"
+                                        value="{{ $students->phone_number }}" readonly>
                                 </div>
-                                <!-- Kolom Kanan -->
-                                <div>
-                                    <!-- Nomor Siswa -->
-                                    <div class="mb-6">
-                                        <label class="block text-gray-700 font-semibold mb-2">No. Siswa</label>
-                                        <input type="text"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white shadow-sm cursor-default"
-                                            value="{{ $students->phone_number }}" readonly>
-                                    </div>
-                                    <!-- Nomor Kontak Orang Tua -->
-                                    <div class="mb-6">
-                                        <label class="block text-gray-700 font-semibold mb-2">No. Orang Tua</label>
-                                        <input type="text"
-                                            class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white shadow-sm cursor-default"
-                                            value="{{ $students->parent_phone }}" readonly>
-                                    </div>
+                                <!-- Nomor Kontak Orang Tua -->
+                                <div class="mb-6">
+                                    <label class="block text-gray-700 font-semibold mb-2">No. Orang Tua</label>
+                                    <input type="text"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-xl bg-white shadow-sm cursor-default"
+                                        value="{{ $students->parent_phone }}" readonly>
                                 </div>
                             </div>
+                        </div>
                             <!-- Alamat -->
                             <div class="mb-6">
                                 <label class="block text-gray-700 font-semibold mb-2">Alamat</label>
@@ -218,14 +167,7 @@
             </section>
             <!-- /.content -->
         </div>
-        <!-- /.content-wrapper -->
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
-        <!-- /.control-sidebar -->
-    </div>
-    <!-- ./wrapper -->
+        @endsection
 
     <!-- jQuery -->
     <script src="{{ Vite::asset('resources/js/jquery/jquery.min.js') }}"></script>

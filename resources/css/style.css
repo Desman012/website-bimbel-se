@@ -13414,7 +13414,6 @@ td .checkboxs .checkmarks::after {
 
 .check {
   display: block;
->>>>>>> 1708f347530efa02a1546a0b016a40095a82ee89
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -13721,7 +13720,7 @@ td .checkboxs .checkmarks::after {
 .home-section {
   position: relative;
   background: #ffffff;
-  height: 100vh;
+  /* height: 100vh; */
   left: 260px;
   width: calc(100% - 260px);
   transition: all 0.5s ease;
@@ -13810,6 +13809,7 @@ td .checkboxs .checkmarks::after {
 .content-wrapper {
     margin-top: 30px;
     padding: 0 25px 40px 25px;
+     min-height: unset !important;
 }
 
 /* ===== PAGE HEADER BAR ===== */

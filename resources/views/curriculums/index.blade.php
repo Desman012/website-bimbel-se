@@ -10,6 +10,8 @@
         <section class="content mx-auto p-4">
             <div class="container-fluid">
                 <div class="bg-white p-8 rounded-xl shadow">
+
+                    <div class="flex justify-between items-center mb-5">
                         <h2 class="text-2xl font-bold text-gray-800">Manajemen Kurikulum</h2>
 
                         <a href="{{ route('admin.curriculums.create') }}"
