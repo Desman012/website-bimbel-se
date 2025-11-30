@@ -25,6 +25,7 @@ use App\Http\Controllers\FacilitiesController;
 use Illuminate\Support\Facades\DB;
 use App\Models\Students;
 use App\Models\Admins;
+use App\Http\Controllers\GuestController;
 use App\Mail\ResetPasswordMail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -123,6 +124,7 @@ Route::post('/logout', function () {
     // Logout dari semua guard yang mungkin aktif
     Auth::guard('admin')->logout();
     Auth::guard('student')->logout();
+    Auth::guard('guest')->logout();
     // Hapus semua session
     session()->flush();
 
@@ -141,11 +143,12 @@ Route::middleware(['role'])->group(function () {
     Route::get('/registered-success', [AuthController::class, 'registeredSuccess'])->name('registered.success');
 });
 
+Route::middleware(['auth:guest', 'role:0'])->prefix('guest')->group(function () {
+    Route::get('/dashboard', [GuestController::class, 'index'])->name('guest.dashboard');
+});
+
 // ADMIN ROUTES
 Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () {
-    // Route::get('/cek-admin', function () {
-    //     dd(Auth::guard('admin')->user());
-    // });
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/landing', [AdminRegistrationController::class, 'landing'])->name('admin.landing');
     Route::get('/landing/{id}/edit', [AdminRegistrationController::class, 'landing_edit'])->name('admin.landing_edit');
@@ -260,9 +263,9 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
 
 // STUDENT ROUTES
 Route::middleware(['auth:student', 'role:2'])->prefix('students')->group(function () {
-    Route::get('/cek-siswa', function () {
-        dd(Auth::guard('student')->user()->levels_id);
-    });
+    // Route::get('/cek-siswa', function () {
+    //     dd(Auth::guard('student')->user()->levels_id);
+    // });
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('students.dashboard');
 
     // Attendance

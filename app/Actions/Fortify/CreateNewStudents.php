@@ -28,6 +28,7 @@ class CreateNewStudents implements CreatesNewUsers
             'address' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'digits_between:10,15'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:students,student_email'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:registrations,student_email'],
             'password' => ['required', 'string', 'min:8'],
             'parent-name' => ['required', 'string', 'max:255'],
             'parent-email' => ['required', 'string', 'email', 'max:255'],

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    @include('admins.layouts.header')
+</head>
+
+<body>
+    {{-- Sidebar --}}
+    @include('admins.layouts.sidebar')
+
+    {{-- Main Content --}}
+    <section class="home-section">
+        <header>
+            {{-- navbar --}}
+            @include('admins.layouts.navbar')
+        </header>
+        <div class="table-card">
+            <h4>@yield('title-content')</h4>
+        </div>
+        <main class="content-wrapper">
+            @yield('content')
+        </main>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="{{ Vite::asset('resources/js/script.js') }}"></script>
+    @stack('scripts')
+</body>
+
+</html>

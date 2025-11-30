@@ -51,6 +51,10 @@ return [
             'driver' => 'session',
             'provider' => 'students',
         ],
+        'guest' => [
+            'driver' => 'session',
+            'provider' => 'guests',
+        ],
     ],
 
 
@@ -86,6 +90,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Students::class,
         ],
+        'guests' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Registrations::class,
+        ],
     ],
 
 
@@ -116,15 +124,20 @@ return [
             'throttle' => 60,
         ],
         'admins' => [
-        'provider' => 'admins',
-        'table' => 'password_resets',
-        'expire' => 60,
-    ],
-    'students' => [
-        'provider' => 'students',
-        'table' => 'password_resets',
-        'expire' => 60,
-    ],
+            'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'students' => [
+            'provider' => 'students',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
+        'guest'=> [
+            'provider' => 'guests',
+            'table' => 'password_resets',
+            'expire' => 60,
+        ],
     ],
 
     /*
