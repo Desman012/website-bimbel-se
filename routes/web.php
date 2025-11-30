@@ -21,7 +21,6 @@ use App\Http\Controllers\StudentPaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use App\Http\Controllers\FacilitiesController;
 use Illuminate\Support\Facades\DB;
 use App\Models\Students;
 use App\Models\Admins;

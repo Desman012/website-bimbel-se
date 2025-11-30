@@ -3147,12 +3147,6 @@ button:focus {
   color: #ffffff;
 }
 
-<<<<<<< Updated upstream
-.dropdown .dropdown-menu {
-  font-family: "Nunito", sans-serif;
-=======
-
-
 /* Konten */
 .home-section {
   position: relative;
@@ -3160,7 +3154,6 @@ button:focus {
   width: calc(100% - 260px);
   left: 260px;
   transition: all 0.5s ease;
->>>>>>> Stashed changes
 }
 
 .dropdown-menu {
@@ -3563,9 +3556,8 @@ button:focus {
   align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  justify-content: center;
-<<<<<<< Updated upstream
-  -webkit-justify-content: center;
+  /* justify-content: center; */
+  /* -webkit-justify-content: center; */
   -ms-flex-pack: center;
   font-size: 18px;
   border-radius: 50px;
@@ -3580,8 +3572,7 @@ button:focus {
 .progress {
   background-color: #e8ebed;
   height: 0.75rem;
-  border-radius: 0.25rem;
-=======
+  /* border-radius: 0.25rem; */
   min-height: unset !important;
 }
 
@@ -3593,7 +3584,6 @@ button:focus {
   border-radius: 12px;
   padding: 25px 30px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
->>>>>>> Stashed changes
 }
 
 .progress-stacked {
