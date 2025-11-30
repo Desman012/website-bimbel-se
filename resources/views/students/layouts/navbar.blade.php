@@ -1,26 +1,60 @@
-<!-- Navbar -->
-  <nav class="main-header navbar navbar-expand
-    bg-[#F9EAB4]">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
-      </li>
-    </ul>
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown">
-            <div class="user-panel d-flex align-items-center">
-              <span class="d-none d-lg-inline text-muted">{{ Auth::guard('student')->user()->full_name ?? 'student' }}</span>
-            </div>
-        </a>
-        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">{{ Auth::guard('student')->user()->full_name ?? 'student' }}</span>
-            <span class="dropdown-item text-muted text-sm text-center border-bottom mb-2">{{ Auth::user()->email ?? 'admin@example.com' }}</span>
-        </div>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
+    <!-- ===== HEADER BAR (ADD) ===== -->
+    <div class="topbar">
+      <div class="left">
+        <i class="bx bx-menu"></i>
+      </div>
+
+      <div class="right">
+        <i class='bx bx-bell'></i>
+      </div>
+    </div>
+    <!-- BREADCRUMB DI SINI -->
+    {{-- <div class="breadcrumb-wrapper">
+      <nav class="breadcrumb">
+        <span><a href="#">Dashboard</a> / <span>Home</span></span>
+      </nav>
+    </div> --}}
+
+    <!-- ===== END HEADER ===== -->
+
+    <!-- ===== CONTENT WRAPPER (ADD) ===== -->
+    <div class="content-wrapper">
+
+      <!-- <div class="content-card">
+        <h3>Judul Konten</h3>
+        <p>
+          Ini adalah contoh isi halaman. Kamu bisa mengganti dengan konten dinamis
+          atau komponen apa pun.
+        </p>
+      </div> -->
+
+      {{-- <div class="table-card">
+        <h4>Daftar Siswa</h4>
+
+        <table id="example" class="display" style="width:100%">
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Kelas</th>
+              <th>No HP</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Adit</td>
+              <td>XI IPA 1</td>
+              <td>0812345678</td>
+              <td>Aktif</td>
+            </tr>
+            <tr>
+              <td>Dina</td>
+              <td>X IPS 2</td>
+              <td>0823456789</td>
+              <td>Nonaktif</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div> --}}

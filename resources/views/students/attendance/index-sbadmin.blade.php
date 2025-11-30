@@ -1,49 +1,68 @@
-@extends('students.layouts.app')
-@section('title', 'Sinar Education | Absensi Siswa')
-@section('title-content', 'Absensi Siswa')
-@section('content')
-    <section class="content px-4 pb-4">
-        <!-- WELCOME CARD -->
-        <div class="mb-5 bg-white p-8 rounded-xl shadow border">
-            <div class="flex items-center justify-between">
-                <div class="text-sm text-gray-400">{{ now()->format('d M, Y') }}</div>
-                <a href="{{ route('students.attendance.history') }}" class="text-sm text-blue">Attendance
-                    History</a>
-            </div>
-            @if (session('success'))
-                <div class="mt-4 p-3 rounded-lg bg-green-50 text-green-700 text-sm">
-                    {{ session('success') }}
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Absensi Siswa | Sinar Education</title>
+
+    <!-- AdminLTE + Tailwind -->
+    <link rel="stylesheet" href="{{ Vite::asset('resources/css/css/adminlte.min.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed bg-gray-100">
+
+    <div class="wrapper">
+        @include('students.layouts.navbar')
+        @include('students.layouts.sidebar')
+
+        <div class="content-wrapper ">
+            <div class="mt-5 max-w-2xl mx-auto shadow-lg rounded-2xl p-8 border border-gray-200 mb-5">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-400">{{ now()->format('d M, Y') }}</div>
+                    <a href="{{ route('students.attendance.history') }}" class="text-sm text-blue">Attendance
+                        History</a>
                 </div>
-            @endif
-            <div class="mt-6 bg-amber-50 rounded-2xl p-5 text-center">
-                <h3 class="text-sm font-semibold text-gray-600 mb-3">Attendance Time</h3>
-                <div id="clock" class="flex justify-center items-center space-x-2 text-3xl font-bold text-gray-800">
-                    <span id="hours">--</span><span>:</span><span id="minutes">--</span><span class="text-lg"
-                        id="ampm">--</span>
-                </div>
-                <p class="text-xs text-gray-500 mt-2">Jl. Kampung Siluman No. 123, Tambun Selatan</p>
-                <form action="{{ route('students.attendance.store') }}" method="POST" class="mt-4" id="attendanceForm">
-                    @csrf
-                    <button type="submit" id="checkoutBtn" {{ isset($canAttend) && $canAttend ? '' : 'disabled' }}
-                        class="w-full bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold py-2 px-6 rounded-xl shadow {{ isset($canAttend) && $canAttend ? '' : 'opacity-50 cursor-not-allowed' }}">
-                        Checkout
-                    </button>
-                </form>
-                <p id="scheduleMsg" class="text-xs text-gray-500 mt-2">
-                    @if (isset($hasAttended) && $hasAttended)
-                        Anda sudah absen hari ini
-                    @elseif(isset($todaySchedules) && count($todaySchedules) === 0)
-                        Tidak ada jadwal hari ini.
-                    @else
-                        @if (isset($canAttend) && $canAttend)
-                            Tersedia sekarang untuk jadwal Anda.
+
+                @if (session('success'))
+                    <div class="mt-4 p-3 rounded-lg bg-green-50 text-green-700 text-sm">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                <div class="mt-6 bg-amber-50 rounded-2xl p-5 text-center">
+                    <h3 class="text-sm font-semibold text-gray-600 mb-3">Attendance Time</h3>
+                    <div id="clock"
+                        class="flex justify-center items-center space-x-2 text-3xl font-bold text-gray-800">
+                        <span id="hours">--</span><span>:</span><span id="minutes">--</span><span class="text-lg"
+                            id="ampm">--</span>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">Jl. Kampung Siluman No. 123, Tambun Selatan</p>
+                    <form action="{{ route('students.attendance.store') }}" method="POST" class="mt-4"
+                        id="attendanceForm">
+                        @csrf
+                        <button type="submit" id="checkoutBtn"
+                            {{ isset($canAttend) && $canAttend ? '' : 'disabled' }}
+                            class="w-full bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold py-2 px-6 rounded-xl shadow {{ isset($canAttend) && $canAttend ? '' : 'opacity-50 cursor-not-allowed' }}">
+                            Checkout
+                        </button>
+                    </form>
+                    <p id="scheduleMsg" class="text-xs text-gray-500 mt-2">
+                        @if (isset($hasAttended) && $hasAttended)
+                            Anda sudah absen hari ini
+                        @elseif(isset($todaySchedules) && count($todaySchedules) === 0)
+                            Tidak ada jadwal hari ini.
                         @else
-                            Akses hanya pada waktu sesi yang terdaftar untuk hari ini.
+                            @if (isset($canAttend) && $canAttend)
+                                Tersedia sekarang untuk jadwal Anda.
+                            @else
+                                Akses hanya pada waktu sesi yang terdaftar untuk hari ini.
+                            @endif
                         @endif
-                    @endif
-                </p>
-            </div>
-            <!-- Total Attendance (dari DB per bulan) -->
+                    </p>
+                </div>
+
+                <!-- Total Attendance (dari DB per bulan) -->
                 <div class="mt-6">
                     <div class="flex items-center justify-between mb-3">
                         <h4 class="text-sm font-semibold text-gray-800">Total Attendance (Days)</h4>
@@ -75,6 +94,7 @@
                         </div>
                     </div>
                 </div>
+
                 <!-- Working Hours -->
                 <div class="mt-6">
                     <div class="flex items-center justify-between mb-3">
@@ -110,12 +130,9 @@
                         @endif
                     </div>
                 </div>
-              </div>
+            </div>
         </div>
-        </div>
-    </section>
-@endsection
-@push('scripts')
+    </div>
     <script>
         const officeLocation = {
             lat: -6.2062592,
@@ -152,7 +169,9 @@
         }, err => {
             alert("Tidak bisa mendeteksi lokasi. Harap izinkan akses GPS.");
         });
+    </script>
 
+    <script>
         document.getElementById('monthSelect').addEventListener('change', function() {
             const m = this.value;
             const url = new URL(window.location.href);
@@ -289,4 +308,6 @@
         updateClock();
         setInterval(updateClock, 1000);
     </script>
-@endpush
+</body>
+
+</html>
