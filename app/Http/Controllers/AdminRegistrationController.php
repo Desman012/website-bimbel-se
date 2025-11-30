@@ -80,4 +80,8 @@ class AdminRegistrationController extends Controller
          return redirect()->route('admin.registrations.index')
                          ->with('success', 'Admin berhasil dihapus.');
     }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 }

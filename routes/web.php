@@ -20,7 +20,8 @@ use App\Models\Admins;
 use App\Mail\ResetPasswordMail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\FacilitiesController;
 
 Route::post('/forgot-password', function (Request $request) {
     $email = $request->email;
@@ -135,8 +136,20 @@ Route::middleware(['role'])->group(function () {
 
 // ADMIN ROUTES
 Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () {
-    // Dashboard
+    Route::get('/landing/create', [LandingController::class, 'create'])->name('admin.landing_create');
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/landing', [LandingController::class, 'index'])->name('admin.landing');
+    Route::get('/landing/{id}/edit', [LandingController::class, 'edit'])->name('admin.landing_edit');
+    Route::post('/landing', [LandingController::class, 'store'])->name('admin.landing_store');
+    Route::delete('/landing/{id}', [LandingController::class, 'destroy'])->name('admin.landing_destroy');
+    Route::put('/landing/{data}', [LandingController::class, 'update'])->name('admin.landing_update');
+    
+    // manajemen landing facilities
+    Route::get('/landing/create/facilities', [FacilitiesController::class, 'landing_facilities_create'])->name('admin.landing_facilities_create');
+    Route::get('/landing/{id}/facilities/edit', [FacilitiesController::class, 'landing_facilities_edit'])->name('admin.landing_facilities_edit');
+    Route::post('/landing/facilities', [FacilitiesController::class, 'landing_facilities_store'])->name('admin.landing_facilities_store');
+    Route::delete('/landing/{id}/facilities', [FacilitiesController::class, 'landing_facilities_destroy'])->name('admin.landing_facilities_destroy');
+    Route::put('/landing/{data}', [FacilitiesController::class, 'landing_facilities_update'])->name('admin.landing_facilities_update');
 
     // Students
     Route::get('/students', [AdminStudentController::class, 'index'])->name('admin.students.index');

@@ -3184,8 +3184,20 @@ button:focus {
   color: #ffffff;
 }
 
+<<<<<<< Updated upstream
 .dropdown .dropdown-menu {
   font-family: "Nunito", sans-serif;
+=======
+
+
+/* Konten */
+.home-section {
+  position: relative;
+  background: #ffffff;
+  width: calc(100% - 260px);
+  left: 260px;
+  transition: all 0.5s ease;
+>>>>>>> Stashed changes
 }
 
 .dropdown-menu {
@@ -3245,6 +3257,7 @@ button:focus {
   font-weight: 600;
 }
 
+<<<<<<< Updated upstream
 .dropup .dropdown-toggle::after {
   display: inline-block;
   margin-inline-start: 0.25rem;
@@ -3253,6 +3266,46 @@ button:focus {
   font-family: "Font Awesome 5 Free";
   border: 0;
   font-size: 0.6rem;
+=======
+/* ===============================
+    HEADER BAR (ADD)
+=============================== */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 260px;
+  height: 60px;
+  width: calc(100% - 260px);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 25px;
+  border-bottom: 1px solid #e6e6e6;
+  z-index: 99;
+  transition: all 0.5s ease;
+}
+
+.sidebar.close ~ .home-section .topbar {
+  left: 78px;
+  width: calc(100% - 78px);
+}
+
+.topbar .left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.toptbar .left .bx-menu {
+  font-size: 28px;
+  cursor: pointer;
+  color: #d32c4a;
+}
+
+.topbar .page-title {
+  font-size: 20px;
+>>>>>>> Stashed changes
   font-weight: 600;
 }
 
@@ -3559,6 +3612,7 @@ button:focus {
   -webkit-box-align: center;
   -ms-flex-align: center;
   justify-content: center;
+<<<<<<< Updated upstream
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   font-size: 18px;
@@ -3575,6 +3629,19 @@ button:focus {
   background-color: #e8ebed;
   height: 0.75rem;
   border-radius: 0.25rem;
+=======
+  min-height: unset !important;
+}
+
+
+.content-card {
+  width: 70%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 25px 30px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+>>>>>>> Stashed changes
 }
 
 .progress-stacked {

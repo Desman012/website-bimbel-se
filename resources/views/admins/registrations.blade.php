@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 
+<<<<<<< Updated upstream
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,6 +46,29 @@
                                 <li class="breadcrumb-item active">Pendaftar</li>
                             </ol>
                         </div>
+=======
+@section('content') 
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- Card -->
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="studentsTable" class="table table-bordered table-hover" width="100%" cellspacing="0">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama Lengkap</th>
+                                    <th>Email</th>
+                                    <th>Jenjang</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+>>>>>>> Stashed changes
                     </div>
                 </div>
             </section>
@@ -170,8 +194,14 @@
         <!-- AdminLTE for demo purposes -->
         <script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script>
 
+<<<<<<< Updated upstream
         <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap4.min.js"></script>
+=======
+    <script src="https://cdn.datatables.net/2.3.5/js/dataTables.js"></script>
+    {{-- <script src="https://cdn.datatables.net/2.3.5/js/dataTables.bootstrap5.min.js"></script> --}}
+    
+>>>>>>> Stashed changes
 
         <script>
             $(document).ready(function() {
