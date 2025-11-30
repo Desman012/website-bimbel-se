@@ -3,7 +3,6 @@
         <img src="{{ Vite::asset('resources/img/logo.png') }}" alt="logo" srcset="">
         <span class="logo_name">Sinar Education</span>
     </div>
-
     <ul class="nav-links">
         <li>
             <a href="{{ route('admin.dashboard') }}">
@@ -23,22 +22,15 @@
                 <li><a class="link_name" href="{{ route('admin.students.registration.index') }}">Pendaftar</a></li>
             </ul>
         </li>
-
         <li>
-            <div class="iocn-link">
-                <a href="#">
-                    <i class='bx bx-layer'></i>
-                    <span class="link_name">Landing</span>
-                </a>
-                <i class='bx bxs-chevron-down arrow'></i>
-            </div>
-            <ul class="sub-menu">
-                <!-- <li><a class="link_name" href="">Landing</a></li> -->
-                <li><a href="">Testimoni</a></li>
-                <li><a href="">Fasilitas</a></li>
+            <a href="{{ route('admin.landing') }}">
+                <i class='bx bx-layer'></i>
+                <span class="link_name">Landing</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="{{ route('admin.landing') }}">Landing</a></li>
             </ul>
         </li>
-
         <li>
             <div class="iocn-link">
                 <a class="#">
@@ -50,6 +42,7 @@
             <ul class="sub-menu">
                 <!-- <li><a class="link_name" href="">Landing</a></li> -->
                 <li><a href="{{ route('admin.levels.index') }}">Jenjang</a></li>
+                <li><a href="{{ route('admin.classes.index') }}">Kelas</a></li>
                 <li><a href="{{ route('admin.curriculums.index') }}">Kurikulum</a></li>
                 <li><a href="{{ route('admin.prices.index') }}">Harga</a></li>
                 <li><a href="{{ route('admin.programs.index') }}">Program</a></li>

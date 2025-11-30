@@ -1,93 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sinar Education | Classes</title>
+@extends('admins.layouts.app')
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+@section('title', 'Sinar Education | Kelas')
+@section('title-content', 'Manajemen Kelas')
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ Vite::asset('resources/css/fontawesome-free/css/all.min.css') }}">
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+@section('content')
+    <!-- MAIN CONTENT -->
+    <section class="content mx-auto p-4">
+        <div class="container-fluid">
 
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="{{ Vite::asset('resources/css/overlayScrollbars/css/overlayScrollbars.min.css') }}">
+            <div class="bg-white p-8 rounded-xl shadow">
 
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{ Vite::asset('resources/css/css/adminlte.min.css') }}">
+                <!-- HEADER -->
+                <div class="flex justify-between items-center mb-5">
+                    <h2 class="text-2xl font-bold text-gray-800">Manajemen Kelas</h2>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
-
-    {{-- Navbar --}}
-    @include('admins.layouts.navbar')
-
-    {{-- Sidebar --}}
-    @include('admins.layouts.sidebar')
-
-
-    <!-- Content Wrapper -->
-    <div class="content-wrapper">
-
-        <!-- Header -->
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2 pl-2.5">
-
-                    <div class="col-sm-6">
-                        <h1>Kelas</h1>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">
-                                <a href="{{ route('admin.dashboard') }}">Kelas</a>
-                            </li>
-                        </ol>
-                    </div>
-
+                    <a href="{{ route('admin.classes.create') }}"
+                        class="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-4 rounded-lg font-semibold">
+                        + Tambah Kelas
+                    </a>
                 </div>
-            </div>
-        </section>
 
-        <section class="content-header"></section>
+                <!-- TABLE -->
+                <table class="min-w-full border rounded-lg">
+                    <thead class="bg-yellow-100">
+                        <tr>
+                            <th class="px-4 py-3 text-left">ID</th>
+                            <th class="px-4 py-3 text-left">Level</th>
+                            <th class="px-4 py-3 text-left">Nama Kelas</th>
+                            <th class="px-4 py-3 text-left">Action</th>
+                        </tr>
+                    </thead>
 
-        <!-- MAIN CONTENT -->
-        <section class="content mx-auto p-4">
-            <div class="container-fluid">
-
-                <div class="bg-white p-8 rounded-xl shadow">
-
-                    <!-- HEADER -->
-                    <div class="flex justify-between items-center mb-5">
-                        <h2 class="text-2xl font-bold text-gray-800">Manajemen Kelas</h2>
-
-                        <a href="{{ route('admin.classes.create') }}"
-                            class="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-4 rounded-lg font-semibold">
-                            + Tambah Kelas
-                        </a>
-                    </div>
-
-                    <!-- TABLE -->
-                    <table class="min-w-full border rounded-lg">
-                        <thead class="bg-yellow-100">
-                            <tr>
-                                <th class="px-4 py-3 text-left">ID</th>
-                                <th class="px-4 py-3 text-left">Level</th>
-                                <th class="px-4 py-3 text-left">Nama Kelas</th>
-                                <th class="px-4 py-3 text-left">Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
+                    <tbody>
                         @forelse ($classes as $class)
                             <tr class="border-b hover:bg-yellow-50">
                                 <td class="px-4 py-3">{{ $class->id }}</td>
@@ -131,18 +75,15 @@
                                 </td>
                             </tr>
                         @endforelse
-                        </tbody>
+                    </tbody>
 
-                    </table>
-
-                </div>
+                </table>
 
             </div>
-        </section>
 
-    </div>
-
-</div>
+        </div>
+    </section>
+@endsection
 
     <!-- jQuery -->
     <script src="{{ Vite::asset('resources/js/jquery/jquery.min.js') }}"></script>
@@ -154,7 +95,3 @@
     <script src="{{ Vite::asset('resources/js/js/adminlte.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script>
-
-
-</body>
-</html>

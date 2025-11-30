@@ -1,65 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sinar Education | Add Class</title>
+@extends('admins.layouts.app')
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+@section('title', 'Sinar Education | Kelas')
+@section('title-content', 'Tambah Kelas')
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ Vite::asset('resources/css/fontawesome-free/css/all.min.css') }}">
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="{{ Vite::asset('resources/css/overlayScrollbars/css/overlayScrollbars.min.css') }}">
-
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{ Vite::asset('resources/css/css/adminlte.min.css') }}">
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
-
-    {{-- Navbar --}}
-    @include('admins.layouts.navbar')
-
-    {{-- Sidebar --}}
-    @include('admins.layouts.sidebar')
-
-
+@section('content')
     <!-- Content Wrapper -->
     <div class="content-wrapper">
-
-        <!-- Header -->
-        <section class="content-header">
-            <div class="container-fluid">
-
-                <div class="row mb-2 mt-1">
-                    <div class="col-sm-6 pl-4 flex items-center">
-                        <a href="{{ route('admin.classes.index') }}"
-                           class="text-gray-600 hover:text-yellow-700 mr-4 text-lg">
-                            <i class="fas fa-arrow-left"></i>
-                        </a>
-                        <h1 class="text-xl font-semibold">Tambah Kelas Baru</h1>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.classes.index') }}">Kelas</a></li>
-                            <li class="breadcrumb-item active">Tambah Kelas</li>
-                        </ol>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
         <!-- Main Content -->
         <section class="content">
             <div class="container mx-auto p-4">
@@ -84,7 +30,7 @@
                             </label>
 
                             <select name="level_id"
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-xl 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl 
                                            focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm
                                            @error('level_id') border-red-500 @enderror">
 
@@ -109,14 +55,11 @@
                                 Nama Kelas
                             </label>
 
-                            <input type="text"
-                                   id="name_class"
-                                   name="name_class"
-                                   placeholder="Contoh: Kelas 1 SD"
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-xl 
+                            <input type="text" id="name_class" name="name_class" placeholder="Contoh: Kelas 1 SD"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-xl 
                                           focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm
                                           @error('name_class') border-red-500 @enderror"
-                                   value="{{ old('name_class') }}">
+                                value="{{ old('name_class') }}">
 
                             @error('name_class')
                                 <p class="text-red-600 mt-1">{{ $message }}</p>
@@ -137,9 +80,9 @@
 
             </div>
         </section>
-
     </div>
 </div>
+@endsection
 
     <!-- jQuery -->
     <script src="{{ Vite::asset('resources/js/jquery/jquery.min.js') }}"></script>
@@ -152,5 +95,3 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script>
 
-</body>
-</html>

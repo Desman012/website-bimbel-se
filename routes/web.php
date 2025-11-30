@@ -29,6 +29,8 @@ use App\Http\Controllers\GuestController;
 use App\Mail\ResetPasswordMail;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\FacilitiesController;
 
 Route::post('/forgot-password', function (Request $request) {
     $email = $request->email;
@@ -156,6 +158,7 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::delete('/landing/{id}', [AdminRegistrationController::class, 'landing_destroy'])->name('admin.landing_destroy');
     Route::get('/landing/create', [AdminRegistrationController::class, 'landing_create'])->name('admin.landing_create');
     Route::put('/landing/{data}', [AdminRegistrationController::class, 'landing_update'])->name('admin.landing_update');
+    Route::post('/landing', [LandingController::class, 'store'])->name('admin.landing_store');
     
     // manajemen landing facilities
     Route::get('/landing/create/facilities', [FacilitiesController::class, 'landing_facilities_create'])->name('admin.landing_facilities_create');
@@ -172,6 +175,8 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/students/{id}/edit', [AdminStudentController::class, 'edit'])->name('admin.students.edit');
     Route::put('/students/{id}', [AdminStudentController::class, 'update'])->name('admin.students.update');
     Route::delete('/students/{id}', [AdminStudentController::class, 'destroy'])->name('admin.students.destroy');
+    // Students Payment History Import
+    Route::post('/students/import-payments', [AdminStudentController::class, 'importPayments'])->name('admin.students.import-payments');
 
     // Payments
     Route::get('/payments', [AdminPaymentController::class, 'index'])->name('admin.payments.index');

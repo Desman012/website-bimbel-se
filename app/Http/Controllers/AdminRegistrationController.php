@@ -150,6 +150,4 @@ class AdminRegistrationController extends Controller
         return redirect()->route('admin.landing')
                          ->with('success', 'Informasi admin telah di update.');
     }
-
-    
 }

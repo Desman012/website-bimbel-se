@@ -1,12 +1,10 @@
 @extends('admins.layouts.app')
 @section('title', 'Sinar Education | Pendaftar')
 @section('title-content', 'Data Pendaftar')
-
 @section('content') 
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-
             <!-- Card -->
             <div class="card shadow mb-4">
                 <div class="card-body">
@@ -147,6 +145,8 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script>
 
+    <script src="https://cdn.datatables.net/2.3.5/js/dataTables.js"></script>
+    {{-- <script src="https://cdn.datatables.net/2.3.5/js/dataTables.bootstrap5.min.js"></script> --}}
     <script src="https://cdn.datatables.net/2.3.5/js/dataTables.js"></script>
     {{-- <script src="https://cdn.datatables.net/2.3.5/js/dataTables.bootstrap5.min.js"></script> --}}
 
