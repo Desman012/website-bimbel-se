@@ -47,7 +47,6 @@
                     </div>
                 </div><!-- /.container-fluid -->
             </section>
-
             <!-- Main content -->
             <section class="content">
                 <div class="container mx-auto p-4">
@@ -66,7 +65,10 @@
                         <x-dashboard-card title="Total Sudah Bayar" count="{{ $sudahBayar }}"
                             iconClass="fas fa-check-circle" bgColor="bg-yellow-100" iconBgColor="bg-green-600" />
                     </div>
-                    <div class="mt-4 bg-yellow-100 p-8 rounded-xl shadow border">
+                    <h2 class="text-xl font-bold text-gray-800 mt-8">
+                    Tabel Siswa
+                    </h2>
+                    <div class="mt-4 bg-white p-8 rounded-xl shadow border">
                         <div class="overflow-x-auto shadow-md rounded-lg">
                                 <table class="min-w-full divide-y divide-gray-200">
                                     <thead class="bg-yellow-200/50">
@@ -89,7 +91,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="bg-white divide-y divide-gray-200">
+                                    <tbody class="bg-gray-100 divide-y divide-gray-200">
                                         <!-- Asumsi: $student->attendances adalah relasi dari Model Absensi -->
                                         @forelse ($students as $student)
                                             <tr>

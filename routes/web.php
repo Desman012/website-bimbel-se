@@ -136,7 +136,7 @@ Route::middleware(['role'])->group(function () {
 // ADMIN ROUTES
 Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () {
     // Dashboard
-    Route::get('/dashboard/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     // Students
     Route::get('/students', [AdminStudentController::class, 'index'])->name('admin.students.index');
@@ -146,6 +146,8 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/students/{id}/edit', [AdminStudentController::class, 'edit'])->name('admin.students.edit');
     Route::put('/students/{id}', [AdminStudentController::class, 'update'])->name('admin.students.update');
     Route::delete('/students/{id}', [AdminStudentController::class, 'destroy'])->name('admin.students.destroy');
+    // Students Payment History Import
+    Route::post('/students/import-payments', [AdminStudentController::class, 'importPayments'])->name('admin.students.import-payments');
 
     // Payments
     Route::get('/payments', [AdminPaymentController::class, 'index'])->name('admin.payments.index');

@@ -79,4 +79,14 @@ class AdminStudentController extends Controller
     {
         // hapus siswa
     }
+
+    public function importPayments(Request $request)
+    {
+        // logika untuk mengimpor riwayat pembayaran siswa dari file yang diunggah
+    }
+
+    public function importAttendances(Request $request)
+    {
+        // logika untuk mengimpor riwayat kehadiran siswa dari file yang diunggah
+    }
 }
