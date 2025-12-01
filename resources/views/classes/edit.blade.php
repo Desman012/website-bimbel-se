@@ -8,7 +8,7 @@
     <section class="content">
         <div class="container mx-auto p-4">
 
-            <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
+            <div class="bg-[#FFFFFF] p-8 rounded-xl shadow-lg">
 
                 <form method="POST" action="{{ route('admin.classes.update', $class->id) }}">
                     @csrf
@@ -59,13 +59,13 @@
                     <div class="flex justify-end mt-4">
 
                         <a href="{{ route('admin.classes.index') }}"
-                            class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white 
+                            class="px-6 py-2 bg-yellow-500 hover:bg-yellow-700 text-white 
                                       font-semibold rounded-lg shadow-md transition duration-150 mr-3">
                             <i class="fas fa-arrow-left mr-2"></i> Kembali
                         </a>
 
                         <button type="submit"
-                            class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white 
+                            class="px-6 py-2 bg-blue-500 hover:bg-blue-700 text-white 
                                        font-semibold rounded-lg shadow-md transition duration-150">
                             <i class="fas fa-save mr-2"></i> Simpan Perubahan
                         </button>
