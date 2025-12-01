@@ -1,7 +1,7 @@
 @extends('admins.layouts.app')
 
-@section('title', 'Sinar Education | Dashboard')
-@section('title-content', 'Dashboard')
+@section('title', 'Sinar Education | Testimoni')
+@section('title-content', 'Edit Testimoni')
 
 @section('content')
     <!-- Main content -->

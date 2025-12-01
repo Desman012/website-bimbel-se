@@ -1,61 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Sinar Education | Admin</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="{{ Vite::asset('resources/css/fontawesome-free/css/all.min.css') }}">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="{{ Vite::asset('resources/css/overlayScrollbars/css/overlayScrollbars.min.css') }}">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="{{ Vite::asset('resources/css/css/adminlte.min.css') }}">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-   @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="hold-transition sidebar-mini layout-fixed ">
-<!-- Site wrapper -->
-<div class="wrapper">
-  <!-- Navbar -->
-  @include('admins.layouts.navbar')
-  <!-- /.navbar -->
-  <!-- Main Sidebar Container -->
-  @include('admins.layouts.sidebar')
-  
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-    <div class="row mb-2 mt-1">
-        <div class="col-sm-6 pl-4">
-            <div class="flex items-center"> 
-                <a href="{{ route('admin.landing') }}" class="text-gray-600 hover:text-yellow-700 mr-4 text-l">
-                    <i class="fas fa-arrow-left"></i>
-                </a>
-                <h1>Buat Fasilitas Baru</h1>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{{ route('admin.landing') }}">Landing</a></li>
-                <li class="breadcrumb-item"><a href="#">Buat Fasilitas</a></li>
-            </ol>
-        </div>
-    </div>
-</div><!-- /.container-fluid -->
-    </section>
+@extends('admins.layouts.app')
+@section('title', 'Sinar Education | Fasilitas')
+@section('title-content', 'Buat Fasilitas Baru')
 
-    <!-- Main content -->
+@section('content')    
+<!-- Main content -->
     <section class="content">
         <div class="container mx-auto p-4">
             <div class="container mx-auto p-4">
-                <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
+                <div class="bg-[#FFFFFF] p-8 rounded-xl shadow-lg">
                     <form method="POST" action="{{ route('admin.landing_facilities_store') }}">
                         @csrf
                         @if ($errors->any())
@@ -78,7 +30,7 @@
                             </textarea>
                         </div>
                         <div class="flex justify-end mt-8">
-                            <button type="submit" class="px-6 py-2 bg-orange-300 hover:bg-orange-400 text-white font-semibold rounded-lg shadow-md transition duration-150">
+                            <button type="submit" class="px-6 py-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-150">
                                 Send
                             </button>
                         </div>
@@ -88,16 +40,7 @@
         </div>
     </section>
     <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark"> 
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
+@endsection
 <!-- jQuery -->
 <script src="{{ Vite::asset('resources/js/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
