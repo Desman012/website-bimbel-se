@@ -2,7 +2,7 @@
 @section('title', 'Sinar Education | Riwayat Siswa')
 @section('title-content', 'Riwayat Siswa')
 @section('content')
-    <section class="content px-4 pb-4">
+    <section class="px-4 pb-4">
 
         <div class="flex items-center justify-between mb-4">
             <div class="text-sm text-gray-600">Daftar absensi per bulan</div>

@@ -71,7 +71,7 @@
 @endsection
 
     <!-- jQuery -->
-    <script src="{{ Vite::asset('resources/js/jquery/jquery.min.js') }}"></script>
+    {{-- <script src="{{ Vite::asset('resources/js/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ Vite::asset('resources/js/boostrap/js/bootstrap.min.js') }}"></script>
     <!-- overlayScrollbars -->
@@ -79,5 +79,5 @@
     <!-- AdminLTE App -->
     <script src="{{ Vite::asset('resources/js/js/adminlte.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script>
+    <script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script> --}}
 

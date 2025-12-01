@@ -15,7 +15,7 @@ class GuestController extends Controller
     public function index()
     {
         //
-        $getData = Registrations::where('status', 'pending')->where('student_email', Auth::guard('guest')->user()->student_email)->get();
+        $getData = Registrations::where('status', 'pending')->where('student_email', Auth::guard('guest')->user()->student_email)->first();
         // return $getData;
         return view('guest.index', compact('getData'));
     }

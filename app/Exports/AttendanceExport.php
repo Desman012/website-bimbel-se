@@ -33,7 +33,7 @@ class AttendanceExport implements FromQuery, WithMapping, WithHeadings
     public function map($absent): array
     {
         $date = \Carbon\Carbon::parse($absent->date)->format('Y-m-d');
-        $studentName = $absent->student->name ?? $absent->student_id;
+        $studentName = $absent->student->full_name ?? $absent->student_id;
         $status = ucfirst($absent->attendance_status);
         return [$date, $studentName, $status];
     }
