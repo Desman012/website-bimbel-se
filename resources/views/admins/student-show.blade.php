@@ -8,7 +8,7 @@
     <section class="content">
         <div class="container mx-auto p-4">
             <div class="container mx-auto p-4">
-                <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
+                <div class="bg-[#FFFFFF] p-8 rounded-xl shadow-lg">
                     <h2 class="text-lg font-bold mb-4 text-gray-800">Data Pribadi & Akademik</h2>
                     <!-- Grid Layout untuk Detail Utama -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8">

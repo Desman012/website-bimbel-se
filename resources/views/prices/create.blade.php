@@ -8,7 +8,7 @@
         <section class="content">
             <div class="container mx-auto p-4">
 
-                <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
+                <div class="bg-[#FFFFFF] p-8 rounded-xl shadow-lg">
 
                     <form method="POST" action="{{ route('admin.prices.store') }}">
                         @csrf
@@ -28,14 +28,9 @@
                             </label>
 
                             <select name="level_id"
-<<<<<<< HEAD
                                     class="w-full px-4 py-3 border border-gray-300 rounded-xl 
-=======
-                                class="w-full px-4 py-3 border border-gray-300 rounded-xl 
->>>>>>> 1708f347530efa02a1546a0b016a40095a82ee89
                                            focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm
                                            @error('level_id') border-red-500 @enderror">
-
                                 <option value="">-- Pilih Level --</option>
 
                                 @foreach ($levels as $level)
@@ -96,7 +91,7 @@
                         {{-- SUBMIT --}}
                         <div class="flex justify-end mt-8">
                             <button type="submit"
-                                class="px-6 py-2 bg-orange-400 hover:bg-orange-500 text-white font-semibold rounded-lg shadow-md transition duration-150">
+                                class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-md transition duration-150">
                                 Simpan Harga
                             </button>
                         </div>

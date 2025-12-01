@@ -8,7 +8,7 @@
     <section class="content">
         <div class="container mx-auto p-4">
 
-            <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
+            <div class="bg-[#FFFFFF] p-8 rounded-xl shadow-lg">
 
                 <form method="POST" action="{{ route('admin.curriculums.update', $curriculum->id) }}">
                     @csrf
