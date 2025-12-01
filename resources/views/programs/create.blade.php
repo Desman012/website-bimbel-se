@@ -8,7 +8,7 @@
     <section class="content">
         <div class="container mx-auto p-4">
 
-            <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
+            <div class="bg-[#FFFFFF] p-8 rounded-xl shadow-lg">
 
                 <form method="POST" action="{{ route('admin.programs.store') }}">
                     @csrf
@@ -26,7 +26,7 @@
 
                     <div class="flex justify-end mt-8">
                         <button type="submit"
-                            class="px-6 py-2 bg-orange-400 hover:bg-orange-500 text-white font-semibold rounded-lg shadow-md transition">
+                            class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-lg shadow-md transition">
                             Simpan Program
                         </button>
                     </div>

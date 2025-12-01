@@ -8,7 +8,7 @@
     <section class="content">
         <div class="container mx-auto p-4">
             <div class="container mx-auto p-4">
-                <div class="bg-[#FFF9E3] p-8 rounded-xl shadow-lg">
+                <div class="bg-[#FFFFFF] p-8 rounded-xl shadow-lg">
 
                     <!-- FORM START -->
                     <!-- Pastikan route 'admin.students.update' sudah didefinisikan dengan metode PUT/PATCH -->
