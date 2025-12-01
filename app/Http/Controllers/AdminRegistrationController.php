@@ -6,12 +6,13 @@ use App\Models\Admins;
 use App\Models\Facilities;
 use App\Models\Reviews;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AdminRegistrationController extends Controller
 {
     public function index()
     {
-        $admins = Admins::latest()->paginate(10);
+        $admins = Admins::latest()->whereNot('id', Auth::guard('admin')->user()->id)->paginate(10);
         return view('admins.admin', compact('admins'));
     }
 

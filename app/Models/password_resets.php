@@ -11,7 +11,7 @@ class password_resets extends Model
     protected $table = 'password_resets';
 
     protected $fillable = [
-       'email',
+    'email',
     'token',
     'guard', // 'admin' atau '
     ];

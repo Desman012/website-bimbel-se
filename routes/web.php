@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\FacilitiesController;
+use App\Models\password_resets;
 
 Route::post('/forgot-password', function (Request $request) {
     $email = $request->email;
@@ -62,29 +63,7 @@ Route::post('/forgot-password', function (Request $request) {
     return back()->with('status', 'Link reset password sudah dikirim ke email Anda.');
 })->name('forgot-password');
 
-Route::post('/reset-password-submit', function (Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required|confirmed|min:6',
-        'token' => 'required',
-        'guard' => 'required',
-    ]);
-
-    $record = DB::table('password_resets')
-        ->where('email', $request->email)
-        ->where('guard', $request->guard)
-        ->first();
-
-    if (! $record || $record->token !== $request->token) {
-        Log::warning('Token reset password invalid untuk: '.$request->email);
-
-        return back()->withErrors(['email' => 'Token reset password tidak valid']);
-    }
-
-    app(ResetUserPassword::class)->reset($request->email, $request->password, $request->guard);
-
-    return redirect('/login')->with('status', 'Password berhasil direset.');
-});
+Route::post('/reset-password-submit', [AuthController::class,'resetPassword'])->name('password.update');
 
 // Tampilkan form reset password
 Route::get('/reset-password', function (Request $request) {
@@ -146,6 +125,7 @@ Route::middleware(['role'])->group(function () {
 
 Route::middleware(['auth:guest', 'role:0'])->prefix('guest')->group(function () {
     Route::get('/dashboard', [GuestController::class, 'index'])->name('guest.dashboard');
+    Route::get('/profile', [GuestController::class, 'profile'])->name('guest.profile');
 });
 
 // ADMIN ROUTES

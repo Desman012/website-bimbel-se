@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Registrations;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GuestController extends Controller
 {
@@ -13,7 +15,9 @@ class GuestController extends Controller
     public function index()
     {
         //
-        return view('guest.index');
+        $getData = Registrations::where('status', 'pending')->where('student_email', Auth::guard('guest')->user()->student_email)->get();
+        // return $getData;
+        return view('guest.index', compact('getData'));
     }
 
     /**
@@ -38,6 +42,11 @@ class GuestController extends Controller
     public function show(string $id)
     {
         //
+    }
+    public function profile()
+    {
+        //
+        return view('guest.profile');
     }
 
     /**

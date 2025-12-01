@@ -74,7 +74,7 @@ class FortifyServiceProvider extends ServiceProvider
             }
             // 3) Login Guest (pending registration)
             $guest = Registrations::where('student_email', $request->email)->first();
-            if ($guest && Hash::check($request->password, $guest->password)) {
+            if ($guest && Hash::check($request->password, $guest->password) && !$student) {
                 Auth::guard('guest')->login($guest);
 
                 session([
