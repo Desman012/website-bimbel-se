@@ -14,46 +14,91 @@
                             <div class="col-md-2">
                                 <p class="text-gray-600 font-semibold">Nama Lengkap</p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <p class="text-lg">{{ $getData->full_name }}</p>
                             </div>
+                            @if ($getData->status == 'pending')
+                                <div class="col-md-2">
+                                    <p class="text-gray-600 font-semibold">Status</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="text-md badge bg-warning">
+                                        {{ $getData->status }}
+                                    </p>
+                                </div>
+                            @elseif ($getData->status == 'ditolak')
+                                <div class="col-md-2">
+                                    <p class="text-gray-600 font-semibold">Status</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="text-md badge bg-danger">
+                                        {{ $getData->status }}
+                                    </p>
+                                </div>
+                            @endif
                         </div>
-
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-md-2">
                                 <p class="text-gray-600 font-semibold">Email Siswa</p>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <p class="text-lg">
                                     {{ $getData->student_email }}
                                 </p>
                             </div>
-                        </div>
-                        @if($getData->status == 'pending')
-                        <div class="row">
                             <div class="col-md-2">
-                                <p class="text-gray-600 font-semibold">Status</p>
+                                <p class="text-gray-600 font-semibold">Telepon</p>
                             </div>
-                            <div class="col-md-6">
-                                <p class="text-md badge bg-warning text-white">
-                                    {{ $getData->status }}
+                            <div class="col-md-4">
+                                <p class="text-lg">
+                                    {{ $getData->phone_number }}
                                 </p>
                             </div>
                         </div>
-                        
-                            @elseif ($getData->status == 'ditolak')
-                            <div class="col-md-6">
-                                <p class="text-md badge bg-danger text-white">
-                                    {{ $getData->status }}
+                        <div class="row mb-2">
+                            <div class="col-md-2">
+                                <p class="text-gray-600 font-semibold">Nama Orang Tua</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="text-lg">
+                                    {{ $getData->parent_name }}
                                 </p>
                             </div>
-                            @endif
+                            <div class="col-md-2">
+                                <p class="text-gray-600 font-semibold">Email Orang Tua</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="text-lg">
+                                    {{ $getData->parent_email }}
+                                </p>
+                            </div>
                         </div>
+                        @if ($getData->status == 'ditolak')
+                        <div class="row mb-2">
+                            <div class="col-md-2">
+                                <p class="text-gray-600 font-semibold">Bukti Gambar</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="text-lg">
+                                    {{ $getData->reason }}
+                                </p>
+                            </div>
+                            <div class="col-md-2">
+                                <p class="text-gray-600 font-semibold">Keterangan</p>
+                            </div>
+                            <div class="col-md-4">
+                                <p class="text-lg">
+                                    {{ $getData->reason }}
+                                </p>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
+            </div>
 
-                <!-- BUTTON -->
-                {{-- <div class="flex justify-end mt-6">
+            <!-- BUTTON -->
+            {{-- <div class="flex justify-end mt-6">
 
                     <a href="{{ route('guest.classes.index') }}"
                         class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white 
@@ -67,7 +112,7 @@
                         <i class="fas fa-edit mr-2"></i> Edit
                     </a>
                 </div> --}}
-            </div>
+        </div>
         </div>
     </section>
 @endsection

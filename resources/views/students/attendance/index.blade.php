@@ -134,23 +134,23 @@
             return R * c; // jarak dalam km
         }
 
-    //     navigator.geolocation.getCurrentPosition(pos => {
-    //         const userLat = pos.coords.latitude;
-    //         const userLon = pos.coords.longitude;
-    //         console.log(userLat, userLon)
-    //         const distance = getDistance(userLat, userLon, officeLocation.lat, officeLocation.lon);
-    //         if (distance > maxDistance) {
-    //             document.querySelector('.content').innerHTML = `
-    //   <div class="flex h-screen items-center justify-center bg-gray-100 text-center">
-    //     <p class="text-red-600 font-semibold text-lg">
-    //       Akses ditolak! Anda tidak berada di area bimbel.
-    //     </p>
-    //   </div>
-    // `;
-    //         }
-    //     }, err => {
-    //         alert("Tidak bisa mendeteksi lokasi. Harap izinkan akses GPS.");
-    //     });
+        navigator.geolocation.getCurrentPosition(pos => {
+            const userLat = pos.coords.latitude;
+            const userLon = pos.coords.longitude;
+            console.log(userLat, userLon)
+            const distance = getDistance(userLat, userLon, officeLocation.lat, officeLocation.lon);
+            if (distance > maxDistance) {
+                document.querySelector('.content').innerHTML = `
+      <div class="flex h-screen items-center justify-center bg-gray-100 text-center">
+        <p class="text-red-600 font-semibold text-lg">
+          Akses ditolak! Anda tidak berada di area bimbel.
+        </p>
+      </div>
+    `;
+            }
+        }, err => {
+            alert("Tidak bisa mendeteksi lokasi. Harap izinkan akses GPS.");
+        });
 
         document.getElementById('monthSelect').addEventListener('change', function() {
             const m = this.value;
