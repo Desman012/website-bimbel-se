@@ -14,13 +14,13 @@
                 </div>
                 <div class="flex flex-wrap -mx-2">
                     <x-dashboard-card title="Total Siswa" count="{{ $totalSiswa }}" iconClass="fas fa-user-graduate"
-                        bgColor="bg-yellow-100" iconBgColor="bg-blue-500" />
+                        bgColor="bg-blue-200" iconBgColor="bg-blue-500" />
 
                     <x-dashboard-card title="Total Belum Bayar" count="{{ $unpaid }}"
-                        iconClass="fas fa-hand-holding-usd" bgColor="bg-yellow-100" iconBgColor="bg-yellow-500" />
+                        iconClass="fas fa-hand-holding-usd" bgColor="bg-yellow-200" iconBgColor="bg-yellow-500" />
 
                     <x-dashboard-card title="Total Sudah Bayar" count="{{ $sudahBayar }}" iconClass="fas fa-check-circle"
-                        bgColor="bg-yellow-100" iconBgColor="bg-green-600" />
+                        bgColor="bg-green-200" iconBgColor="bg-green-600" />
                 </div>
                 <h2 class="text-xl font-bold text-gray-800 mt-8">
                     Tabel Siswa

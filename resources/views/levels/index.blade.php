@@ -12,16 +12,16 @@
             <div class="bg-white p-8 rounded-xl shadow">
 
                 <div class="flex justify-between items-center mb-5">
-                    <h2 class="text-2xl font-bold text-gray-800">Manajemen Level</h2>
+                    <h2 class="text-2xl font-bold text-gray-800">Manajemen Jenjang</h2>
 
                     <a href="{{ route('admin.levels.create') }}"
-                        class="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-4 rounded-lg font-semibold">
-                        + Tambah Level
+                        class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold">
+                        + Tambah Jenjang
                     </a>
                 </div>
 
                 <table class="min-w-full border rounded-lg">
-                    <thead class="bg-yellow-100">
+                    <thead class="bg-gray-200/50">
                         <tr>
                             <th class="px-4 py-3 text-left">ID</th>
                             <th class="px-4 py-3 text-left">Level</th>

@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\FacilitiesController;
-use App\Models\password_resets;
+
 
 Route::post('/forgot-password', function (Request $request) {
     $email = $request->email;
@@ -63,7 +63,7 @@ Route::post('/forgot-password', function (Request $request) {
     return back()->with('status', 'Link reset password sudah dikirim ke email Anda.');
 })->name('forgot-password');
 
-Route::post('/reset-password-submit', [AuthController::class,'resetPassword'])->name('password.update');
+Route::post('/reset-password-submit', [AuthController::class, 'resetPassword'])->name('password.update');
 
 // Tampilkan form reset password
 Route::get('/reset-password', function (Request $request) {
@@ -138,7 +138,7 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/landing/create', [AdminRegistrationController::class, 'landing_create'])->name('admin.landing_create');
     Route::put('/landing/{data}', [AdminRegistrationController::class, 'landing_update'])->name('admin.landing_update');
     Route::post('/landing', [LandingController::class, 'store'])->name('admin.landing_store');
-    
+
     // manajemen landing facilities
     Route::get('/landing/create/facilities', [FacilitiesController::class, 'landing_facilities_create'])->name('admin.landing_facilities_create');
     Route::get('/landing/{id}/facilities/edit', [FacilitiesController::class, 'landing_facilities_edit'])->name('admin.landing_facilities_edit');
@@ -156,6 +156,10 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::delete('/students/{id}', [AdminStudentController::class, 'destroy'])->name('admin.students.destroy');
     // Students Payment History Import
     Route::post('/students/import-payments', [AdminStudentController::class, 'importPayments'])->name('admin.students.import-payments');
+
+    // Students Export Routes
+    Route::get('/students/{id}/export-payments', [AdminStudentController::class, 'exportPayments'])->name('admin.students.export-payments');
+    Route::get('/students/{id}/export-attendances', [AdminStudentController::class, 'exportAttendances'])->name('admin.students.export-attendances');
 
     // Payments
     Route::get('/payments', [AdminPaymentController::class, 'index'])->name('admin.payments.index');
