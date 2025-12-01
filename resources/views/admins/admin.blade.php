@@ -7,10 +7,10 @@
     <!-- Main content -->
     <section class="content">
         <div class="container mx-auto p-4">
-            <div class="bg-[#FFF9E3] p-6 rounded-xl shadow-lg">
+            <div class="bg-[#FFFFFF] p-6 rounded-xl shadow-lg">
                 <div class="mb-6">
                     <a href="{{ route('admin.registrations.create') }}"
-                        class="inline-flex items-center px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white font-semibold rounded-lg shadow-md transition duration-150">
+                        class="inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-150">
                         <i class="fas fa-plus mr-2"></i> Buat Admin Baru
                     </a>
                 </div>
@@ -21,7 +21,7 @@
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
-                            <tr class="bg-yellow-200/50">
+                            <tr class="bg-gray-200/50">
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-1/3">
                                     Email

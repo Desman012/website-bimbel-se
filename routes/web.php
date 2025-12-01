@@ -76,7 +76,7 @@ Route::post('/reset-password-submit', function (Request $request) {
         ->first();
 
     if (! $record || $record->token !== $request->token) {
-        Log::warning('Token reset password invalid untuk: '.$request->email);
+        Log::warning('Token reset password invalid untuk: ' . $request->email);
 
         return back()->withErrors(['email' => 'Token reset password tidak valid']);
     }
@@ -158,7 +158,7 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/landing/create', [AdminRegistrationController::class, 'landing_create'])->name('admin.landing_create');
     Route::put('/landing/{data}', [AdminRegistrationController::class, 'landing_update'])->name('admin.landing_update');
     Route::post('/landing', [LandingController::class, 'store'])->name('admin.landing_store');
-    
+
     // manajemen landing facilities
     Route::get('/landing/create/facilities', [FacilitiesController::class, 'landing_facilities_create'])->name('admin.landing_facilities_create');
     Route::get('/landing/{id}/facilities/edit', [FacilitiesController::class, 'landing_facilities_edit'])->name('admin.landing_facilities_edit');
@@ -176,6 +176,10 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::delete('/students/{id}', [AdminStudentController::class, 'destroy'])->name('admin.students.destroy');
     // Students Payment History Import
     Route::post('/students/import-payments', [AdminStudentController::class, 'importPayments'])->name('admin.students.import-payments');
+
+    // Students Export Routes
+    Route::get('/students/{id}/export-payments', [AdminStudentController::class, 'exportPayments'])->name('admin.students.export-payments');
+    Route::get('/students/{id}/export-attendances', [AdminStudentController::class, 'exportAttendances'])->name('admin.students.export-attendances');
 
     // Payments
     Route::get('/payments', [AdminPaymentController::class, 'index'])->name('admin.payments.index');

@@ -15,13 +15,13 @@
                         <h2 class="text-2xl font-bold text-gray-800">Manajemen Kurikulum</h2>
 
                         <a href="{{ route('admin.curriculums.create') }}"
-                            class="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-4 rounded-lg font-semibold">
+                            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold">
                             + Tambah Kurikulum
                         </a>
                     </div>
 
                     <table class="min-w-full border rounded-lg">
-                        <thead class="bg-yellow-100">
+                        <thead class="bg-gray-200/50">
                             <tr>
                                 <th class="px-4 py-3 text-left">ID</th>
                                 <th class="px-4 py-3 text-left">Curriculum</th>

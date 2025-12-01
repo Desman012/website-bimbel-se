@@ -7,7 +7,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="container mx-auto p-4">
-            <div class="bg-[#FFF9E3] p-6 rounded-xl shadow-lg">
+            <div class="bg-[#FFFFFF] p-6 rounded-xl shadow-lg">
                 <div class="mb-6">
                     <input type="text" placeholder="Search..."
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm">
@@ -15,7 +15,7 @@
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead>
-                            <tr class="bg-yellow-200/50">
+                            <tr class="bg-gray-200/50">
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider w-1/3">
                                     Nama

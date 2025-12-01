@@ -7,6 +7,9 @@ use App\Models\Students;
 use App\Models\Payment;
 use App\Models\Absents;
 use App\Models\Levels;
+use App\Exports\PaymentExport;
+use App\Exports\AttendanceExport30Days;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminStudentController extends Controller
 {
@@ -47,32 +50,32 @@ class AdminStudentController extends Controller
 
     public function update(Request $request, $student)
     {
-    // 1. Validasi Data
-    $validatedData = $request->validate([
-        'full_name'    => 'required|string|max:255',
-        'phone_number' => 'required|string|max:20|unique:students,phone_number,' . $student, // Asumsi 'No. Siswa' adalah phone_number
-        'parent_phone' => 'nullable|string|max:20', // Asumsi 'No. Orang Tua' adalah parent_phone
-        'status'       => 'required|in:active,inactive',
-        'address'      => 'nullable|string',
-    ]);
+        // 1. Validasi Data
+        $validatedData = $request->validate([
+            'full_name'    => 'required|string|max:255',
+            'phone_number' => 'required|string|max:20|unique:students,phone_number,' . $student, // Asumsi 'No. Siswa' adalah phone_number
+            'parent_phone' => 'nullable|string|max:20', // Asumsi 'No. Orang Tua' adalah parent_phone
+            'status'       => 'required|in:active,inactive',
+            'address'      => 'nullable|string',
+        ]);
 
-    // 2. Cari Data Siswa (Find the record)
-    $students = Students::findOrFail($student);
+        // 2. Cari Data Siswa (Find the record)
+        $students = Students::findOrFail($student);
 
-    // 3. Update Data Siswa dan Simpan (Update and Save)
-    $updateData = [
-        'full_name'    => $validatedData['full_name'],
-        'phone_number' => $validatedData['phone_number'],
-        'parent_phone' => $validatedData['parent_phone'],
-        'status'       => $validatedData['status'],
-        'address'      => $validatedData['address'],
-    ];
+        // 3. Update Data Siswa dan Simpan (Update and Save)
+        $updateData = [
+            'full_name'    => $validatedData['full_name'],
+            'phone_number' => $validatedData['phone_number'],
+            'parent_phone' => $validatedData['parent_phone'],
+            'status'       => $validatedData['status'],
+            'address'      => $validatedData['address'],
+        ];
 
-    // Lakukan update:
-    $students->update($updateData);
+        // Lakukan update:
+        $students->update($updateData);
 
-    // 4. Redirect 
-    return redirect()->route('admin.students.index', $students->id);
+        // 4. Redirect 
+        return redirect()->route('admin.students.index', $students->id);
     }
 
     public function destroy($id)
@@ -88,5 +91,21 @@ class AdminStudentController extends Controller
     public function importAttendances(Request $request)
     {
         // logika untuk mengimpor riwayat kehadiran siswa dari file yang diunggah
+    }
+
+    public function exportPayments($student)
+    {
+        $students = Students::findOrFail($student);
+        $fileName = 'Riwayat_Pembayaran_' . str_replace(' ', '_', $students->full_name) . '_' . date('Y-m-d') . '.xlsx';
+
+        return Excel::download(new PaymentExport($student), $fileName);
+    }
+
+    public function exportAttendances($student)
+    {
+        $students = Students::findOrFail($student);
+        $fileName = 'Riwayat_Absensi_30Hari_' . str_replace(' ', '_', $students->full_name) . '_' . date('Y-m-d') . '.xlsx';
+
+        return Excel::download(new AttendanceExport30Days($student), $fileName);
     }
 }

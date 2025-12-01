@@ -14,13 +14,13 @@
                     <h2 class="text-2xl font-bold text-gray-800">Manajemen Program</h2>
 
                     <a href="{{ route('admin.programs.create') }}"
-                        class="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-4 rounded-lg font-semibold">
+                        class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold">
                         + Tambah Program
                     </a>
                 </div>
 
                 <table class="min-w-full border rounded-lg">
-                    <thead class="bg-yellow-100">
+                    <thead class="bg-gray-200/50">
                         <tr>
                             <th class="px-4 py-3 text-left">ID</th>
                             <th class="px-4 py-3 text-left">Program</th>
