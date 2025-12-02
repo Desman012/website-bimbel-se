@@ -1,16 +1,16 @@
 <div class="sidebar">
     <div class="logo-details">
-        <img src="{{ Vite::asset('resources/img/logo.png') }}" alt="logo" srcset="">
+        <img src="{{ asset('img/logo.png') }}" alt="logo" srcset="">
         <span class="logo_name">Sinar Education</span>
     </div>
     <ul class="nav-links">
-        <li>
-            <a href="{{ route('admin.dashboard') }}">
+        <li class="{{ request()->routeIs('admin.dashboard') ? 'active-menu' : '' }}">
+            <a href="{{ route('admin.dashboard') }}" >
                 <i class='bx bxs-dashboard'></i>
-                <span class="link_name">Dashboard</span>
+                <span class="link_name ">Dashboard</span>
             </a>
             <ul class="sub-menu blank">
-                <li><a class="link_name" href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                <li><a class="link_name " href="{{ route('admin.dashboard') }}">Dashboard</a></li>
             </ul>
         </li>
         <li>
@@ -32,7 +32,7 @@
             </ul>
         </li>
         <li>
-            <div class="iocn-link">
+            <div class="iocn-link {{ request()->routeIs('admin.levels.*') || request()->routeIs('admin.classes.*') ? 'active-menu' : '' }}">
                 <a class="#">
                     <i class='bx bx-grid-alt'></i>
                     <span class="link_name">Jadwal</span>
@@ -59,6 +59,7 @@
                 <li><a class="link_name" href="{{ route('admin.registrations.index') }}">Admin</a></li>
             </ul>
         </li>
+
         <li>
             <a href="{{ route('admin.students.index') }}">
                 <i class='bx bx-group'></i>
@@ -66,6 +67,15 @@
             </a>
             <ul class="sub-menu blank">
                 <li><a class="link_name" href="{{ route('admin.students.index') }}">Siswa</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="{{ route('admin.payments.index') }}">
+                    <i class='bx bx-receipt'></i>
+                <span class="link_name">Pembayaran</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="{{ route('admin.payments.index') }}">Pembayaran</a></li>
             </ul>
         </li>
     </ul>

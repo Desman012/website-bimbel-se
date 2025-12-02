@@ -95,6 +95,8 @@ class AdminRegistrationController extends Controller
 
     }
 
+    
+
     public function landing_edit($id)
     {
         $data=Reviews::findOrFail($id);

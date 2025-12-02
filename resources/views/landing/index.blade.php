@@ -72,7 +72,7 @@
     
     <!-- Logo -->
     <div class="flex items-center gap-3">
-      <img src="{{ Vite::asset('resources/img/logo.jpg') }}" alt="Logo" class="h-10">
+      <img src="{{ asset('img/logo.jpg') }}" alt="Logo" class="h-10">
       <h1 class="text-2xl font-bold">
         <span class="text-orange-600">Sinar</span>
         <span class="text-red-600">Education</span>
@@ -161,7 +161,7 @@
       </div>
 
       <div class="flex-1 mt-10 md:mt-0 flex justify-center md:justify-end" data-aos="fade-left">
-      <img src="{{ Vite::asset('resources/img/foto(beranda).png') }}"
+      <img src="{{ asset('img/foto(beranda).png') }}"
            class="w-full max-w-lg md:max-w-lg"> </div>
   </div>
 
@@ -179,16 +179,16 @@
                 
                 <!-- GANTI DENGAN FOTO GALERIMU -->
                 <div class="swiper-slide">
-                    <img src="{{ Vite::asset('resources/img/foto1(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                    <img src="{{ asset('img/foto1(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
                 </div>
                 <div class="swiper-slide">
-                    <img src="{{ Vite::asset('resources/img/foto2(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                    <img src="{{ asset('img/foto2(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
                 </div>
                 <div class="swiper-slide">
-                    <img src="{{ Vite::asset('resources/img/foto3(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                    <img src="{{ asset('img/foto3(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
                 </div>
                 <div class="swiper-slide">
-                    <img src="{{ Vite::asset('resources/img/foto4(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                    <img src="{{ asset('img/foto4(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
                 </div>
 
             </div>

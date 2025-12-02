@@ -12,13 +12,22 @@
             <div class="bg-white p-8 rounded-xl shadow">
 
                 <div class="flex justify-between items-center mb-5">
-                    <h2 class="text-2xl font-bold text-gray-800">Manajemen Jenjang</h2>
+    <h2 class="text-2xl font-bold text-gray-800">Manajemen Jenjang</h2>
+    
+    <div class="flex gap-2">
+        {{-- Tambah Jenjang di kiri --}}
+        <a href="{{ route('admin.levels.create') }}"
+            class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold">
+            + Tambah Jenjang
+        </a>
 
-                    <a href="{{ route('admin.levels.create') }}"
-                        class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-semibold">
-                        + Tambah Jenjang
-                    </a>
-                </div>
+        {{-- Export di kanan --}}
+        <a href="{{ route('admin.levels.export') }}"
+            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-500 hover:bg-green-600 rounded-lg shadow-md transition">
+            <i class="fas fa-file-excel mr-2"></i> Export
+        </a>
+    </div>
+</div>
 
                 <table class="min-w-full border rounded-lg">
                     <thead class="bg-gray-200/50">
@@ -71,18 +80,6 @@
                             </tr>
                         @endforelse
                     </tbody>
-
-                    <!-- jQuery -->
-                    <script src="{{ Vite::asset('resources/js/jquery/jquery.min.js') }}"></script>
-                    <!-- Bootstrap 4 -->
-                    <script src="{{ Vite::asset('resources/js/boostrap/js/bootstrap.min.js') }}"></script>
-                    <!-- overlayScrollbars -->
-                    <script src="{{ Vite::asset('resources/css/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-                    <!-- AdminLTE App -->
-                    <script src="{{ Vite::asset('resources/js/js/adminlte.min.js') }}"></script>
-                    <!-- AdminLTE for demo purposes -->
-                    <script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script>
-
                 </table>
             </div>
         </div>

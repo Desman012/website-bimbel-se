@@ -9,10 +9,21 @@
         <div class="container mx-auto p-4">
             <div class="bg-[#FFFFFF] p-6 rounded-xl shadow-lg">
                 <div class="mb-6">
-                    <a href="{{ route('admin.registrations.create') }}"
-                        class="inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-150">
-                        <i class="fas fa-plus mr-2"></i> Buat Admin Baru
-                    </a>
+                    <div class="row">
+                        <div class="mb-6 d-flex justify-content-between align-items-center">
+                            <!-- Tombol kiri -->
+                            <a href="{{ route('admin.registrations.create') }}"
+                                class="inline-flex items-center px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-150">
+                                <i class="fas fa-plus mr-2"></i> Buat Admin Baru
+                            </a>
+
+                            <!-- Tombol kanan -->
+                            <a href="{{ route('admin.admins.export') }}"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-green-500 hover:bg-green-600 rounded-lg shadow-md transition">
+                                <i class="fas fa-file-excel mr-2"></i> Export
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-6">
                     <input type="text" placeholder="Search..."
@@ -95,24 +106,3 @@
         </div>
     </section>
 @endsection
-<!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-<!-- Control Sidebar -->
-{{-- <aside class="control-sidebar control-sidebar-dark"> --}}
-    <!-- Control sidebar content goes here -->
-</aside>
-<!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-{{-- <!-- jQuery -->
-<script src="{{ Vite::asset('resources/js/jquery/jquery.min.js') }}"></script>
-<!-- Bootstrap 4 -->
-<script src="{{ Vite::asset('resources/js/boostrap/js/bootstrap.min.js') }}"></script>
-<!-- overlayScrollbars -->
-<script src="{{ Vite::asset('resources/css/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-<!-- AdminLTE App -->
-<script src="{{ Vite::asset('resources/js/js/adminlte.min.js') }}"></script>
-<!-- AdminLTE for demo purposes --> --}}
-<script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script>

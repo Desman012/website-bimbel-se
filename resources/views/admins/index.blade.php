@@ -76,12 +76,3 @@
         </section>
     </section>
 @endsection
-
-@push('scripts')
-    <!-- overlayScrollbars -->
-    {{-- <script src="{{ Vite::asset('resources/css/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script> --}}
-    <!-- AdminLTE App -->
-    {{-- <script src="{{ Vite::asset('resources/js/js/adminlte.min.js') }}"></script> --}}
-    <!-- AdminLTE for demo purposes -->
-    <script src="{{ Vite::asset('resources/js/js/demo.js') }}"></script>
-@endpush

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Facilities;
 use App\Models\Reviews;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TestimoniExport;
 
 
 class LandingController extends Controller
@@ -57,7 +59,13 @@ class LandingController extends Controller
         // return $request;
     }
 
-    
+    public function export_testimoni()
+    {
+        // return 'ciu';
+        return Excel::download(new TestimoniExport, 'testimoni-data.xlsx');
+    }
+
+
     public function create()
     {
         return view('admins.landing-create');

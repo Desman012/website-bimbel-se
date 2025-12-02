@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Payment;
+use App\Exports\AdminPaymentStudentExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminPaymentController extends Controller
 {
@@ -31,6 +33,13 @@ class AdminPaymentController extends Controller
     /**
      * Update status pembayaran
      */
+
+    public function export()
+    {
+        // return 'ciu';
+        return Excel::download(new AdminPaymentStudentExport, 'payment-data.xlsx');
+    }
+
     public function updateStatus(Request $request, $id)
     {
         $request->validate([

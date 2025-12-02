@@ -1,4 +1,8 @@
-<h4>Detail Pembayaran Siswa</h4>
+@extends('admins.layouts.app')
+@section('title', 'Sinar Education | Pembayaran Detail')
+@section('title-content', 'Pembayaran Detail')
+
+@section('content')<h4>Detail Pembayaran Siswa</h4>
 
 <p><strong>Nama:</strong> {{ $payment->student->name }}</p>
 <p><strong>Bulan:</strong> {{ $payment->month }}</p>
@@ -18,3 +22,4 @@
         <option value="rejected" {{ $payment->status == 'rejected' ? 'selected' : '' }}>Rejected</option>
     </select>
 </form>
+@endsection

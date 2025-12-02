@@ -138,6 +138,7 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/landing/create', [AdminRegistrationController::class, 'landing_create'])->name('admin.landing_create');
     Route::put('/landing/{data}', [AdminRegistrationController::class, 'landing_update'])->name('admin.landing_update');
     Route::post('/landing', [LandingController::class, 'store'])->name('admin.landing_store');
+    Route::get('/testimoni-export', [LandingController::class, 'export_testimoni'])->name('admin.testimoni.export');
 
     // manajemen landing facilities
     Route::get('/landing/create/facilities', [FacilitiesController::class, 'landing_facilities_create'])->name('admin.landing_facilities_create');
@@ -150,12 +151,17 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/students', [AdminStudentController::class, 'index'])->name('admin.students.index');
     Route::get('/students/create', [AdminStudentController::class, 'create'])->name('admin.students.create');
     Route::post('/students', [AdminStudentController::class, 'store'])->name('admin.students.store');
+    Route::get('/students/data', [AdminStudentController::class, 'getData'])->name('admin.students.data');
     Route::get('/students/{id}', [AdminStudentController::class, 'show'])->name('admin.students.show');
     Route::get('/students/{id}/edit', [AdminStudentController::class, 'edit'])->name('admin.students.edit');
     Route::put('/students/{id}', [AdminStudentController::class, 'update'])->name('admin.students.update');
     Route::delete('/students/{id}', [AdminStudentController::class, 'destroy'])->name('admin.students.destroy');
     // Students Payment History Import
     Route::post('/students/import-payments', [AdminStudentController::class, 'importPayments'])->name('admin.students.import-payments');
+
+    // Student Export import
+    Route::get('/students-export', [AdminStudentController::class, 'export'])->name('admin.students.export');
+    Route::post('/students-import', [AdminStudentController::class, 'import'])->name('admin.students.import');
 
     // Students Export Routes
     Route::get('/students/{id}/export-payments', [AdminStudentController::class, 'exportPayments'])->name('admin.students.export-payments');
@@ -166,7 +172,12 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/payments/{id}', [AdminPaymentController::class, 'show'])->name('admin.payments.show');
     Route::put('/admin/payments/{id}', [AdminPaymentController::class, 'updateStatus'])->name('admin.payments.update');
 
+    Route::get('/payments-export', [AdminPaymentController::class, 'export'])->name('admin.payments.export');
+
     // ADMIN ROUTES
+    Route::get('/admins-export', [AdminController::class, 'export'])->name('admin.admins.export');
+
+
     Route::get('/registrations', [AdminRegistrationController::class, 'index'])->name('admin.registrations.index');
     Route::get('/registrations/create', [AdminRegistrationController::class, 'create'])->name('admin.registrations.create');
     Route::post('/registrations', [AdminRegistrationController::class, 'store'])->name('admin.registrations.store');
@@ -174,15 +185,6 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::get('/registrations/{admin}/edit', [AdminRegistrationController::class, 'edit'])->name('admin.registrations.edit');
     Route::put('/registrations/{admin}', [AdminRegistrationController::class, 'update'])->name('admin.registrations.update');
     Route::delete('/registrations/{admin}', [AdminRegistrationController::class, 'destroy'])->name('admin.registrations.destroy');
-
-    // ADMIN STUDENT ROUTES
-    Route::get('/students', [AdminStudentController::class, 'index'])->name('admin.students.index');
-    Route::get('/students/create', [AdminStudentController::class, 'create'])->name('admin.students.create');
-    Route::get('/students/{student}', [AdminStudentController::class, 'show'])->name('admin.students.show');
-    Route::get('/students/{student}/edit', [AdminStudentController::class, 'edit'])->name('admin.students.edit');
-    Route::post('/students', [AdminStudentController::class, 'store'])->name('admin.students.store');
-    Route::put('/students/{student}', [AdminStudentController::class, 'update'])->name('admin.students.update');
-    Route::delete('/students/{student}', [AdminStudentController::class, 'destroy'])->name('admin.students.destroy');
 
     // ROUTE PENDAFTARAN
     Route::get('/student-registration', [AdminStudentRegistrationController::class, 'index'])->name('admin.students.registration.index');
@@ -196,6 +198,7 @@ Route::middleware(['auth:admin', 'role:1'])->prefix('admin')->group(function () 
     Route::post('/schedules', [ScheduleController::class, 'store'])->name('admin.schedules.store');
 
     // LEVELS
+    Route::get('/levels-export', [LevelController::class, 'export'])->name('admin.levels.export');
     Route::get('/levels', [LevelController::class, 'index'])->name('admin.levels.index');
     Route::get('/levels/create', [LevelController::class, 'create'])->name('admin.levels.create');
     Route::post('/levels', [LevelController::class, 'store'])->name('admin.levels.store');

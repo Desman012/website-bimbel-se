@@ -13507,6 +13507,18 @@ td .checkboxs .checkmarks::after {
   display: block;
 }
 
+/* Active-menu */
+.sidebar .nav-links li a.active-menu i,
+.sidebar .nav-links li a.active-menu .link_name,
+.sidebar .nav-links li div.active-menu i,
+.sidebar .nav-links li div.active-menu .link_name {
+  color: #f6f4f1 !important;
+}
+.sidebar .nav-links li a.active-menu,
+.sidebar .nav-links li div.active-menu {
+  background: #e24800 !important;
+} */
+
 .sidebar .nav-links li i {
   height: 50px;
   min-width: 78px;

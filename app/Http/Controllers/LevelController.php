@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Levels;
 use Illuminate\Http\Request;
+use App\Exports\LevelsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LevelController extends Controller
 {
@@ -64,5 +66,11 @@ class LevelController extends Controller
     {
         $level = Levels::findOrFail($id);
         return view('levels.show', compact('level'));
+    }
+
+    public function export()
+    {
+        // return 'ciu';
+        return Excel::download(new LevelsExport, 'levels-data.xlsx');
     }
 }

@@ -1,4 +1,8 @@
- /* Tambahan halus untuk animasi label */
+@import "bootstrap/dist/css/bootstrap.min.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Tambahan halus untuk animasi label */
     .input-group {
       position: relative;
       margin-bottom: 1.5rem;

@@ -24,7 +24,8 @@
 <body class="min-h-screen bg-gradient-to-r from-orange-50 to-red-50 overflow-x-hidden">
     <div class="grid lg:grid-cols-2 min-h-screen">
         <!-- LEFT SECTION: FORM -->
-        <div class="flex justify-center w-[600px] items-center bg-white rounded-tr-[44px] rounded-br-[44px] shadow-lg ">
+        <div
+            class="flex justify-center w-full lg:w-[600px] items-center bg-white rounded-tr-[44px] rounded-br-[44px] shadow-lg mx-auto">
             <div class="w-full max-w-[450px] px-6 py-8">
                 <h2 class="text-3xl lg:text-4xl font-bold mb-6 text-start">
                     PENDAFTARAN AKUN SISWA
@@ -234,21 +235,19 @@
         </div>
 
         <!-- RIGHT SECTION -->
-        <div class="flex flex-col justify-center px-16 text-gray-900 mr-6 bg-gradient-to-r from-orange-50 to-red-50">
+        <div
+            class="hidden lg:flex flex-col justify-center px-16 text-gray-900 mr-6 bg-gradient-to-r from-orange-50 to-red-50">
             <div class="w-[600px]">
-
-                <img src="{{ Vite::asset('resources/img/logo-panjang.png') }}" alt="Logo"
+                <img src="{{ asset('img/logo-panjang.png') }}" alt="Logo"
                     class="w-[295px] mb-3 brightness-0 invert-0" />
                 <h1 class="text-4xl font-bold text-red-500 leading-tight mb-4">
-                    Gabung Bersama Bimbel<br> <span class="text-orange-600"> Sinar Education</span>
+                    Gabung Bersama Bimbel<br> <span class="text-orange-600">Sinar Education</span>
                 </h1>
                 <p class="text-lg mb-4 mr-6 text-gray-800">
                     Belajar lebih seru dan efektif bersama mentor berpengalaman yang siap membimbingmu meraih potensi
                     terbaik!
                 </p>
-                <p class="text-lg text-gray-500">
-                    Sudah punya akun?
-                </p>
+                <p class="text-lg text-gray-500">Sudah punya akun?</p>
                 <a href="{{ route('login') }}"
                     class="mt-2 w-[100px] justify-start items-start flex px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg hover:-translate-y-1 transition-transform">
                     Masuk

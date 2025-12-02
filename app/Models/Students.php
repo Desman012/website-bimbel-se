@@ -51,4 +51,13 @@ class Students extends Authenticatable
     {
         return $this->hasOne(Levels::class, 'id', 'levels_id');
     }
+
+    public function level()
+    {
+        return $this->belongsTo(Levels::class, 'levels_id');
+    }
+    public function class()
+    {
+        return $this->belongsTo(Classes::class, 'class_id');
+    }
 }

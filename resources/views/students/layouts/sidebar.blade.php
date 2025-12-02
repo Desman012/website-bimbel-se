@@ -1,6 +1,6 @@
 <div class="sidebar">
     <div class="logo-details">
-        <img src="{{ Vite::asset('resources/img/logo.png') }}" alt="logo" srcset="">
+        <img src="{{ asset('img/logo.png') }}" alt="logo" srcset="">
         <span class="logo_name">Sinar Education</span>
     </div>
 
