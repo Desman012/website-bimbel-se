@@ -16,6 +16,7 @@ class Students extends Authenticatable
 
     protected $table = 'students';
     protected $fillable = [
+        'role_id',
         'full_name',
         'address',
         'phone_number',
@@ -24,10 +25,11 @@ class Students extends Authenticatable
         'parent_name',
         'parent_email',
         'parent_phone',
-        'programs_id',
+        'levels_id',
         'class_id',
+        'programs_id',
+        'curriculum_id',
         'status',
-        'role_id',
     ];
 
     protected $hidden = [
@@ -48,5 +50,14 @@ class Students extends Authenticatable
     public function jenjang()
     {
         return $this->hasOne(Levels::class, 'id', 'levels_id');
+    }
+
+    public function level()
+    {
+        return $this->belongsTo(Levels::class, 'levels_id');
+    }
+    public function class()
+    {
+        return $this->belongsTo(Classes::class, 'class_id');
     }
 }

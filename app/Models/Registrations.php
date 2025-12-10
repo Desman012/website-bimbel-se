@@ -27,6 +27,7 @@ class Registrations extends Authenticatable
         'programs_id',
         'curriculum_id',
         'month',
+        'status',
         'amount_paid',
         'payment_proof',
     ];

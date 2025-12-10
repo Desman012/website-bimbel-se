@@ -9,12 +9,13 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use App\Models\Students;
 use App\Models\Admins;
+use App\Models\password_resets;
 
 class ResetUserPassword
 {
     public function reset($email, $password, $guard)
     {
-        Log::info("Reset password request diterima untuk $email, guard: $guard");
+        // Log::info("Reset password request diterima untuk $email, guard: $guard");
 
         if ($guard === 'admin') {
             $user = Admins::where('email', $email)->first();
@@ -32,8 +33,7 @@ class ResetUserPassword
         $user->save();
 
         // Hapus token setelah digunakan
-        DB::table('password_resets')
-            ->where('email', $email)
+        password_resets::where('email', $email)
             ->where('guard', $guard)
             ->delete();
 

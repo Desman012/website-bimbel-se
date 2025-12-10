@@ -6,12 +6,13 @@ use App\Models\Admins;
 use App\Models\Facilities;
 use App\Models\Reviews;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AdminRegistrationController extends Controller
 {
     public function index()
     {
-        $admins = Admins::latest()->paginate(10);
+        $admins = Admins::latest()->whereNot('id', Auth::guard('admin')->user()->id)->paginate(10);
         return view('admins.admin', compact('admins'));
     }
 
@@ -87,11 +88,14 @@ class AdminRegistrationController extends Controller
     {
         
         $review=Reviews::all();
-        $facilities=Facilities::all();
+        $facility=Facilities::all();
         $reviews = Reviews::paginate(5);
-        return view('admins.landing', compact('review', 'reviews', 'facilities'));
+        $facilities = Facilities::paginate(5);
+        return view('admins.landing', compact('review', 'reviews', 'facilities', 'facility'));
 
     }
+
+    
 
     public function landing_edit($id)
     {
@@ -108,6 +112,7 @@ class AdminRegistrationController extends Controller
                         ->with('success', 'Review berhasil dihapus.');
     }
 
+
     public function landing_store(Request $request)
     {
         $request->validate([
@@ -120,25 +125,24 @@ class AdminRegistrationController extends Controller
             'name_student' => $request->name_student,
             'school'       => $request->school,
             'review_text'  => $request->review_text,
+            
         ]);
 
         return redirect()->route('admin.landing')
                         ->with('success', 'Review berhasil ditambahkan.');
+
+        // return $request;
     }
 
+    
     public function landing_create()
     {
         return view('admins.landing-create');
     }
 
+    
     public function landing_update(Request $request, $data)
     {
-        // return $request;
-        // $request->validate([
-        //     'name_student' => 'required|string|max:50',
-        //     'school'       => 'required|string|max:35',
-        //     'review_text'  => 'required|string',
-        // ]);
         $review=Reviews::findOrFail($data);
         $review->update([
             'name_student' => $request->name_student,

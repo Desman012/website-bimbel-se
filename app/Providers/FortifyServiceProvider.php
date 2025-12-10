@@ -20,6 +20,7 @@ use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use App\Http\Responses\RegisterResponse;
+use App\Models\Registrations;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 
@@ -71,6 +72,18 @@ class FortifyServiceProvider extends ServiceProvider
 
                 return $student;
             }
+            // 3) Login Guest (pending registration)
+            $guest = Registrations::where('student_email', $request->email)->first();
+            if ($guest && Hash::check($request->password, $guest->password) && !$student) {
+                Auth::guard('guest')->login($guest);
+
+                session([
+                    'role_id' => 0, // guest
+                    'name' => $guest->full_name,
+                    'email' => $guest->student_email,
+                ]);
+                return $guest;
+            }
 
             return null;
         });
@@ -86,9 +99,11 @@ class FortifyServiceProvider extends ServiceProvider
                     return redirect()->intended('/admin/dashboard');
                 } elseif ($role_id == 2) {
                     return redirect()->intended('/students/dashboard');
+                } elseif ($role_id == 0) {
+                    return redirect()->intended('/guest/dashboard');
                 }
 
-                return redirect('/');
+                return redirect('/login'); // fallback
             }
         });
 

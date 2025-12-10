@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\Students;
-use App\Models\Levels;
+use App\Exports\AdminExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -21,5 +22,11 @@ class AdminController extends Controller
             'sudahBayar',
             'unpaid'
         ));
+    }
+
+    public function export()
+    {
+        // return 'ciu';
+        return Excel::download(new AdminExport, 'admins-data.xlsx');
     }
 }

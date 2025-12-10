@@ -13,7 +13,7 @@
     <div
         class="bg-white rounded-[44px] shadow-lg w-full max-w-md p-8 sm:p-12 flex flex-col items-center">
 
-        <img src="{{ Vite::asset('resources/img/logo-panjang.png') }}" alt="Logo"
+        <img src="{{ asset('img/logo-panjang.png') }}" alt="Logo"
             class="w-[200px] mb-6 brightness-0 invert-0" />
 
         <h2 class="text-3xl font-bold text-red-500 mb-4 text-center">Atur Ulang Password</h2>
@@ -34,11 +34,13 @@
         <form method="POST" action="{{ route('password.update') }}" class="w-full">
             @csrf
             <input type="hidden" name="token" value="{{ $token }}">
+                        <input type="hidden" name="guard" value="{{ $guard }}">
+
 
             <!-- Email -->
             <div class="mb-4 w-full">
                 <label for="email" class="block mb-1 text-gray-700 font-medium text-sm">Email Anda</label>
-                <input type="email" name="email" id="email" value="{{ $email }}" required
+                <input type="email" readonly name="email" id="email" value="{{ $email }}"
                     class="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 text-sm focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
             </div>
 

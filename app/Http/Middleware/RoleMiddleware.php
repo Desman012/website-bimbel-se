@@ -15,11 +15,13 @@ class RoleMiddleware
 
             // Jika middleware dipakai untuk route publik
             if (is_null($role)) {
-                // Redirect sesuai role
-                if ($role_id == 1) {
-                    return redirect('/admin/dashboard');
-                } elseif ($role_id == 2) {
-                    return redirect('/students/dashboard');
+                switch ($role_id) {
+                    case 1:
+                        return redirect('/admin/dashboard');
+                    case 2:
+                        return redirect('/students/dashboard');
+                    case 0:
+                        return redirect('/guest/dashboard');
                 }
             }
 

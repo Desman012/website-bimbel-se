@@ -58,30 +58,38 @@
   .faq-content {
         transition: max-height 0.35s ease;
   }
+  
 </style>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
 </head>
 <body class="font-sans text-gray-800">
   <!-- NAVBAR -->
-  <nav class="bg-white shadow-md fixed top-0 w-full z-50 transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <img src="{{ Vite::asset('resources/img/logo.jpg') }}" alt="Logo" class="h-10">
-        <h1 class="text-2xl font-bold">
-          <span class="text-orange-600">Sinar</span>
-          <span class="text-red-600">Education</span>
-        </h1>
-      </div>
+  <nav 
+    x-data="{ open: false }"
+    class="bg-white shadow-md fixed top-0 w-full z-50 transition-all duration-300">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <img src="{{ asset('img/logo.jpg') }}" alt="Logo" class="h-10">
+      <h1 class="text-2xl font-bold">
+        <span class="text-orange-600">Sinar</span>
+        <span class="text-red-600">Education</span>
+      </h1>
+    </div>
 
-     
-      <ul class="hidden md:flex gap-6 font-medium">
-        <li><a href="#home" class="hover:text-orange-600">Beranda</a></li>
-        <li><a href="#about" class="hover:text-orange-600">Tentang</a></li>
-        <li><a href="#program" class="hover:text-orange-600">Program</a></li>
-        <li><a href="#fasilitas" class="hover:text-orange-600">Fasilitas</a></li>
-        <li><a href="#review" class="hover:text-orange-600">Testimoni</a></li>
-        <li><a href="#faq" class="hover:text-orange-600">FAQ</a></li>
-        <li><a href="#contact" class="hover:text-orange-600">Kontak</a></li>
-        <li>
+
+    <!-- Desktop Menu -->
+    <ul class="hidden md:flex gap-6 font-medium">
+      <li><a href="#home" class="hover:text-orange-600">Beranda</a></li>
+      <li><a href="#about" class="hover:text-orange-600">Tentang</a></li>
+      <li><a href="#program" class="hover:text-orange-600">Program</a></li>
+      <li><a href="#fasilitas" class="hover:text-orange-600">Fasilitas</a></li>
+      <li><a href="#review" class="hover:text-orange-600">Testimoni</a></li>
+      <li><a href="#faq" class="hover:text-orange-600">FAQ</a></li>
+      <li><a href="#contact" class="hover:text-orange-600">Kontak</a></li>
+      <li>
         <a href="/login"
            class="px-4 py-2 rounded-lg font-semibold 
                   bg-gradient-to-r from-orange-500 to-red-600 
@@ -89,9 +97,51 @@
           Masuk
         </a>
       </li>
-      </ul>
-    </div>
-  </nav>
+    </ul>
+
+    <!-- Hamburger -->
+    
+    <button 
+        @click="open = !open"
+        class="md:hidden text-3xl focus:outline-none"
+    >
+        <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" fill="none" 
+             viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+
+        <svg x-show="open" xmlns="http://www.w3.org/2000/svg" fill="none" 
+             viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M6 18L18 6M6 6l12 12" />
+        </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div 
+      x-show="open"
+      x-transition
+      class="md:hidden bg-white shadow-lg py-4 px-6 space-y-4 font-medium"
+  >
+    <a href="#home" class="block">Beranda</a>
+    <a href="#about" class="block">Tentang</a>
+    <a href="#program" class="block">Program</a>
+    <a href="#fasilitas" class="block">Fasilitas</a>
+    <a href="#review" class="block">Testimoni</a>
+    <a href="#faq" class="block">FAQ</a>
+    <a href="#contact" class="block">Kontak</a>
+
+    <a href="/login"
+       class="block text-center px-4 py-2 rounded-lg font-semibold 
+              bg-gradient-to-r from-orange-500 to-red-600 
+              text-white shadow hover:scale-105 transition">
+      Masuk
+    </a>
+  </div>
+</nav>
+
 
   <!-- HERO -->
   <section id="home" class="pt-32 bg-gradient-to-r from-orange-400 to-red-500 text-white">
@@ -111,7 +161,7 @@
       </div>
 
       <div class="flex-1 mt-10 md:mt-0 flex justify-center md:justify-end" data-aos="fade-left">
-      <img src="{{ Vite::asset('resources/img/foto(beranda).png') }}"
+      <img src="{{ asset('img/foto(beranda).png') }}"
            class="w-full max-w-lg md:max-w-lg"> </div>
   </div>
 
@@ -129,16 +179,16 @@
                 
                 <!-- GANTI DENGAN FOTO GALERIMU -->
                 <div class="swiper-slide">
-                    <img src="{{ Vite::asset('resources/img/foto1(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                    <img src="{{ asset('img/foto1(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
                 </div>
                 <div class="swiper-slide">
-                    <img src="{{ Vite::asset('resources/img/foto2(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                    <img src="{{ asset('img/foto2(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
                 </div>
                 <div class="swiper-slide">
-                    <img src="{{ Vite::asset('resources/img/foto3(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                    <img src="{{ asset('img/foto3(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
                 </div>
                 <div class="swiper-slide">
-                    <img src="{{ Vite::asset('resources/img/foto4(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
+                    <img src="{{ asset('img/foto4(about).jpeg') }}" class="w-full h-72 object-cover rounded-xl">
                 </div>
 
             </div>

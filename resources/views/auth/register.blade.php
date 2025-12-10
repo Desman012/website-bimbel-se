@@ -24,20 +24,21 @@
 <body class="min-h-screen bg-gradient-to-r from-orange-50 to-red-50 overflow-x-hidden">
     <div class="grid lg:grid-cols-2 min-h-screen">
         <!-- LEFT SECTION: FORM -->
-        <div class="flex justify-center w-[600px] items-center bg-white rounded-tr-[44px] rounded-br-[44px] shadow-lg ">
+        <div
+            class="flex justify-center w-full lg:w-[600px] items-center bg-white rounded-tr-[44px] rounded-br-[44px] shadow-lg mx-auto">
             <div class="w-full max-w-[450px] px-6 py-8">
                 <h2 class="text-3xl lg:text-4xl font-bold mb-6 text-start">
                     PENDAFTARAN AKUN SISWA
                 </h2>
-@if ($errors->any())
-    <div class="mb-4 p-3 border border-red-300 rounded bg-red-50 text-red-700">
-        <ul class="list-disc list-inside">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                @if ($errors->any())
+                    <div class="mb-4 p-3 border border-red-300 rounded bg-red-50 text-red-700">
+                        <ul class="list-disc list-inside">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" id="registerForm">
                     @csrf
 
@@ -234,21 +235,19 @@
         </div>
 
         <!-- RIGHT SECTION -->
-        <div class="flex flex-col justify-center px-16 text-gray-900 mr-6 bg-gradient-to-r from-orange-50 to-red-50">
+        <div
+            class="hidden lg:flex flex-col justify-center px-16 text-gray-900 mr-6 bg-gradient-to-r from-orange-50 to-red-50">
             <div class="w-[600px]">
-
-                <img src="{{ Vite::asset('resources/img/logo-panjang.png') }}" alt="Logo"
+                <img src="{{ asset('img/logo-panjang.png') }}" alt="Logo"
                     class="w-[295px] mb-3 brightness-0 invert-0" />
                 <h1 class="text-4xl font-bold text-red-500 leading-tight mb-4">
-                    Gabung Bersama Bimbel<br> <span class="text-orange-600"> Sinar Education</span>
+                    Gabung Bersama Bimbel<br> <span class="text-orange-600">Sinar Education</span>
                 </h1>
                 <p class="text-lg mb-4 mr-6 text-gray-800">
                     Belajar lebih seru dan efektif bersama mentor berpengalaman yang siap membimbingmu meraih potensi
                     terbaik!
                 </p>
-                <p class="text-lg text-gray-500">
-                    Sudah punya akun?
-                </p>
+                <p class="text-lg text-gray-500">Sudah punya akun?</p>
                 <a href="{{ route('login') }}"
                     class="mt-2 w-[100px] justify-start items-start flex px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg hover:-translate-y-1 transition-transform">
                     Masuk
@@ -397,6 +396,9 @@
         // ==========================================================
         // STEP 5: NOMINAL & JADWAL DINAMIS
         // ==========================================================
+        // ==========================================================
+        // STEP 5: NOMINAL & JADWAL DINAMIS
+        // ==========================================================
         const meetingContainer = document.getElementById("meetingContainer");
         const next5 = document.getElementById("next5");
 
@@ -433,6 +435,8 @@
             try {
                 const resDayTime = await fetch(`/api/day_time/${kelasId}`);
                 const dataDayTime = await resDayTime.json();
+
+                // mapping hari → list times
                 const dayMap = {};
                 dataDayTime.forEach(dt => {
                     if (!dayMap[dt.day_id]) dayMap[dt.day_id] = {
@@ -440,7 +444,7 @@
                         times: []
                     };
                     dayMap[dt.day_id].times.push({
-                        time_id: dt.time_id,
+                        time_id: dt.time_id, // pastikan dari DB
                         name_time: dt.name_time,
                         time_in: dt.time_in,
                         time_out: dt.time_out
@@ -448,11 +452,12 @@
                 });
 
                 meetingContainer.innerHTML = "";
+
                 Object.keys(dayMap).forEach((dayId, i) => {
                     const div = document.createElement("div");
                     div.classList.add("mb-4", "p-3", "border", "rounded-lg", "bg-gray-50");
 
-                    // Hari
+                    // LABEL HARI
                     const labelDay = document.createElement("label");
                     labelDay.classList.add("font-semibold");
                     labelDay.textContent = `Hari Pertemuan ${i+1}`;
@@ -460,6 +465,8 @@
 
                     const selectDay = document.createElement("select");
                     selectDay.classList.add("meeting-day", "w-full", "border", "p-2", "mb-2");
+                    selectDay.name = "day_id[]";
+
                     const defaultDay = document.createElement("option");
                     defaultDay.value = "";
                     defaultDay.disabled = true;
@@ -467,15 +474,16 @@
                     defaultDay.textContent = "Pilih Hari";
                     selectDay.appendChild(defaultDay);
 
-                    Object.values(dayMap).forEach(d => {
+                    // semua hari
+                    Object.keys(dayMap).forEach(dId => {
                         const opt = document.createElement("option");
-                        opt.value = d.name;
-                        opt.textContent = d.name;
+                        opt.value = dId;
+                        opt.textContent = dayMap[dId].name;
                         selectDay.appendChild(opt);
                     });
                     div.appendChild(selectDay);
 
-                    // Waktu
+                    // LABEL WAKTU
                     const labelTime = document.createElement("label");
                     labelTime.classList.add("font-semibold");
                     labelTime.textContent = `Waktu Pertemuan ${i+1}`;
@@ -483,30 +491,47 @@
 
                     const selectTime = document.createElement("select");
                     selectTime.classList.add("meeting-time", "w-full", "border", "p-2");
+                    selectTime.name = "time_id[]";
+
                     const defaultTime = document.createElement("option");
                     defaultTime.value = "";
                     defaultTime.disabled = true;
                     defaultTime.selected = true;
                     defaultTime.textContent = "Pilih Waktu";
                     selectTime.appendChild(defaultTime);
-
-                    dataDayTime.forEach(dt => {
-                        const opt = document.createElement("option");
-                        opt.value =
-                            `${dt.day_name}|${dt.name_time}|${dt.time_in}-${dt.time_out}`;
-                        opt.textContent = `${dt.name_time} (${dt.time_in} - ${dt.time_out})`;
-                        selectTime.appendChild(opt);
-                    });
                     div.appendChild(selectTime);
+
+                    // ketika hari dipilih → tampilkan semua waktu untuk hari itu
+                    selectDay.addEventListener("change", function() {
+                        const selectedDay = this.value;
+                        selectTime.innerHTML = '';
+                        selectTime.appendChild(defaultTime.cloneNode(true));
+
+                        dayMap[selectedDay].times.forEach(t => {
+                            const opt = document.createElement("option");
+                            opt.value = t.time_id; // kirim ke backend
+                            opt.textContent =
+                                `${t.name_time} (${t.time_in} - ${t.time_out})`;
+                            selectTime.appendChild(opt);
+                        });
+
+                        validateStep5();
+                    });
+
+                    // event pilih waktu
+                    selectTime.addEventListener("change", validateStep5);
 
                     meetingContainer.appendChild(div);
                 });
 
                 validateStep5();
+
             } catch (err) {
                 console.error(err);
                 meetingContainer.innerHTML = '<p class="text-red-500">Gagal memuat jadwal</p>';
             }
+
+
         });
 
         // Validasi Step 5

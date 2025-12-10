@@ -9,7 +9,7 @@
 <body class="h-screen bg-gradient-to-r from-orange-50 to-red-50 flex items-center justify-center">
 
     <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-8 flex flex-col items-center">
-        <img src="{{ Vite::asset('resources/img/logo-panjang.png') }}" alt="Logo" class="w-[200px] mb-6" />
+        <img src="{{ asset('img/logo-panjang.png') }}" alt="Logo" class="w-[200px] mb-6" />
         <h2 class="text-3xl font-bold text-red-500 mb-4 text-center">Pendaftaran Berhasil!</h2>
         <p class="text-gray-700 text-center mb-6">
             Proses pendaftaran akun Anda sedang diproses oleh Admin.<br>

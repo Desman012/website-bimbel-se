@@ -1,0 +1,43 @@
+@extends('admins.layouts.app')
+@section('title', 'Sinar Education | Fasilitas')
+@section('title-content', 'Buat Fasilitas Baru')
+
+@section('content')    
+<!-- Main content -->
+    <section class="content">
+        <div class="container mx-auto p-4">
+            <div class="container mx-auto p-4">
+                <div class="bg-[#FFFFFF] p-8 rounded-xl shadow-lg">
+                    <form method="POST" action="{{ route('admin.landing_facilities_store') }}">
+                        @csrf
+                        @if ($errors->any())
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                                <strong class="font-bold">Oops!</strong>
+                                <span class="block sm:inline">Terdapat kesalahan saat mengisi form.</span>
+                            </div>
+                        @endif
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 font-semibold mb-2">Nama Fasilitas</label>
+                            <input type="text" id="name" name="name_facilities" placeholder="Nama Fasilitas" 
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm border-red-500"
+                            value="{{ old('name_facilities') }}">
+                        </div>
+                        <div class="mb-6">
+                            <label for="description" class="block text-gray-700 font-semibold mb-2">Deskripsi</label>
+                            <textarea id="description" name="description" placeholder="Fasilitas" rows="3"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 shadow-sm border-red-500"
+                            {{ old('description') }}>
+                            </textarea>
+                        </div>
+                        <div class="flex justify-end mt-8">
+                            <button type="submit" class="px-6 py-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition duration-150">
+                                Send
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+@endsection
