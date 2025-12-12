@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\FacilitiesController;
+use App\Http\Controllers\Api\SiswaMobileController;
 
 
 Route::post('/forgot-password', function (Request $request) {
@@ -270,4 +271,20 @@ Route::middleware(['auth:student', 'role:2'])->prefix('students')->group(functio
     Route::post('/payment', [StudentPaymentController::class, 'store'])->name('students.payment.store');
     Route::get('/payment-history', [StudentPaymentController::class, 'history'])->name('students.payment.history');
     // Route::get('/payment/cancel/{id}', [StudentPaymentController::class, 'cancel'])->name('students.payment.cancel');
+});
+
+
+// API ROUTES
+Route::prefix('api')->group(function () {
+    Route::get('/students', [SiswaMobileController::class, 'index']);
+    Route::post('/students', [SiswaMobileController::class, 'store']);
+    Route::get('/students/{id}', [SiswaMobileController::class, 'show']);
+    Route::put('/students/{id}', [SiswaMobileController::class, 'update']);
+    Route::delete('/students/{id}', [SiswaMobileController::class, 'destroy']);
+
+    Route::get('/students-data', [SiswaMobileController::class, 'getData']);
+
+    Route::get('/students/{id}/export-payments', [SiswaMobileController::class, 'exportPayments']);
+    Route::get('/students/{id}/export-attendances', [SiswaMobileController::class, 'exportAttendances']);
+
 });
