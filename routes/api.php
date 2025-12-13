@@ -52,12 +52,12 @@ Route::get('/day_time/{class_id}', function($class_id) {
 });
 
 // Route API untuk Classes
-    Route::get('/kelas', [KelasController::class, 'index']);
-    Route::post('/kelas', [KelasController::class, 'store']);
-    Route::get('/kelas/{id}', [KelasController::class, 'show']);
-    Route::put('/kelas/{id}', [KelasController::class, 'update']);
-    Route::delete('/kelas/{id}', [KelasController::class, 'destroy']);
-
+    Route::get('/classes', [ClassesController::class, 'index']);
+    Route::post('/classes', [ClassesController::class, 'store']);
+    Route::get('/classes/{id}', [ClassesController::class, 'show']);
+    Route::put('/classes/{id}', [ClassesController::class, 'update']);
+    Route::delete('/classes/{id}', [ClassesController::class, 'destroy']);
+    
 // Route API untuk Levels
     Route::get('/levels', [LevelController::class, 'index']);
     Route::post('/levels', [LevelController::class, 'store']);

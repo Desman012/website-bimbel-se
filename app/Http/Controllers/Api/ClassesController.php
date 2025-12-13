@@ -14,12 +14,12 @@ class ClassesController extends Controller
      */
     public function index()
     {
-        $kelas = Classes::with('level')->get();
+        $classes = Classes::with('level')->get();
 
         return response()->json([
             'success' => true,
             'message' => 'Data kelas berhasil diambil',
-            'data' => $kelas
+            'data' => $classes
         ], 200);
     }
 
@@ -40,7 +40,7 @@ class ClassesController extends Controller
             ], 422);
         }
 
-        $kelas = Classes::create([
+        $classes = Classes::create([
             'level_id'   => $request->level_id,
             'name_class' => $request->name_class
         ]);
@@ -48,7 +48,7 @@ class ClassesController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Kelas berhasil ditambahkan',
-            'data'    => $kelas
+            'data'    => $classes
         ], 201);
     }
 
@@ -57,9 +57,9 @@ class ClassesController extends Controller
      */
     public function show($id)
     {
-        $kelas = Classes::with(['level', 'prices'])->find($id);
+        $classes = Classes::with(['level', 'prices'])->find($id);
 
-        if (!$kelas) {
+        if (!$classes) {
             return response()->json([
                 'success' => false,
                 'message' => 'Kelas tidak ditemukan'
@@ -68,7 +68,7 @@ class ClassesController extends Controller
 
         return response()->json([
             'success' => true,
-            'data'    => $kelas
+            'data'    => $classes
         ], 200);
     }
 
@@ -77,9 +77,9 @@ class ClassesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $kelas = Classes::find($id);
+        $classes = Classes::find($id);
 
-        if (!$kelas) {
+        if (!$classes) {
             return response()->json([
                 'success' => false,
                 'message' => 'Kelas tidak ditemukan'
@@ -98,7 +98,7 @@ class ClassesController extends Controller
             ], 422);
         }
 
-        $kelas->update([
+        $classes->update([
             'level_id'   => $request->level_id,
             'name_class' => $request->name_class
         ]);
@@ -106,7 +106,7 @@ class ClassesController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Kelas berhasil diperbarui',
-            'data'    => $kelas
+            'data'    => $classes
         ], 200);
     }
 
@@ -115,16 +115,16 @@ class ClassesController extends Controller
      */
     public function destroy($id)
     {
-        $kelas = Classes::find($id);
+        $classes = Classes::find($id);
 
-        if (!$kelas) {
+        if (!$classes) {
             return response()->json([
                 'success' => false,
                 'message' => 'Kelas tidak ditemukan'
             ], 404);
         }
 
-        $kelas->delete();
+        $classes->delete();
 
         return response()->json([
             'success' => true,
