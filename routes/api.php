@@ -12,6 +12,8 @@ use App\Http\Controllers\Api\ProgramController;
 use App\Http\Controllers\Api\TimeController;
 use App\Http\Controllers\Api\PriceMobileController;
 use App\Http\Controllers\Api\CurriculumMobileController;
+use App\Http\Controllers\Api\ClassesController;
+use App\Http\Controllers\Api\LevelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,3 +89,16 @@ Route::apiResource('prices', PriceMobileController::class);
 
 // Curriculum API
 Route::apiResource('curriculums', CurriculumMobileController::class);
+// Route API untuk Classes
+    Route::get('/classes', [ClassesController::class, 'index']);
+    Route::post('/classes', [ClassesController::class, 'store']);
+    Route::get('/classes/{id}', [ClassesController::class, 'show']);
+    Route::put('/classes/{id}', [ClassesController::class, 'update']);
+    Route::delete('/classes/{id}', [ClassesController::class, 'destroy']);
+    
+// Route API untuk Levels
+    Route::get('/levels', [LevelController::class, 'index']);
+    Route::post('/levels', [LevelController::class, 'store']);
+    Route::get('/levels/{id}', [LevelController::class, 'show']);
+    Route::put('/levels/{id}', [LevelController::class, 'update']);
+    Route::delete('/levels/{id}', [LevelController::class, 'destroy']);
