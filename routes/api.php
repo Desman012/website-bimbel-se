@@ -6,6 +6,8 @@ use App\Models\Prices;
 use App\Models\DayTime;
 use App\Models\Day;
 use App\Models\Time;
+use App\Http\Controllers\Api\ProgramController;
+use App\Http\Controllers\Api\TimeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +49,16 @@ Route::get('/day_time/{class_id}', function($class_id) {
             ];
         });
     return response()->json($data);
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/programs', [ProgramController::class, 'index']);
+    Route::post('/programs', [ProgramController::class, 'store']);
+    Route::put('/programs/{id}', [ProgramController::class, 'update']);
+    Route::delete('/programs/{id}', [ProgramController::class, 'destroy']);
+
+    Route::get('/times', [TimeController::class, 'index']);
+    Route::post('/times', [TimeController::class, 'store']);
+    Route::put('/times/{id}', [TimeController::class, 'update']);
+    Route::delete('/times/{id}', [TimeController::class, 'destroy']);
 });
