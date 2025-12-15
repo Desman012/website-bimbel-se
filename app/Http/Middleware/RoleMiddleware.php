@@ -20,8 +20,8 @@ class RoleMiddleware
                         return redirect('/admin/dashboard');
                     case 2:
                         return redirect('/students/dashboard');
-                    case 0:
-                        return redirect('/guest/dashboard');
+                    // case 0:
+                    //     return redirect('/guest/dashboard');
                 }
             }
 

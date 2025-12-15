@@ -15,7 +15,7 @@
                                 <p class="text-gray-600 font-semibold">Nama Lengkap</p>
                             </div>
                             <div class="col-md-4">
-                                <p class="text-lg">{{ $getData->full_name }}</p>
+                                <p class="text-lg">{{ $getData }}</p>
                             </div>
                             @if ($getData->status == 'pending')
                                 <div class="col-md-2">
@@ -74,24 +74,24 @@
                             </div>
                         </div>
                         @if ($getData->status == 'ditolak')
-                        <div class="row mb-2">
-                            <div class="col-md-2">
-                                <p class="text-gray-600 font-semibold">Bukti Gambar</p>
+                            <div class="row mb-2">
+                                <div class="col-md-2">
+                                    <p class="text-gray-600 font-semibold">Bukti Gambar</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="text-lg">
+                                        {{ $getData->reason }}
+                                    </p>
+                                </div>
+                                <div class="col-md-2">
+                                    <p class="text-gray-600 font-semibold">Keterangan</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <p class="text-lg">
+                                        {{ $getData->reason }}
+                                    </p>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <p class="text-lg">
-                                    {{ $getData->reason }}
-                                </p>
-                            </div>
-                            <div class="col-md-2">
-                                <p class="text-gray-600 font-semibold">Keterangan</p>
-                            </div>
-                            <div class="col-md-4">
-                                <p class="text-lg">
-                                    {{ $getData->reason }}
-                                </p>
-                            </div>
-                        </div>
                         @endif
                     </div>
                 </div>

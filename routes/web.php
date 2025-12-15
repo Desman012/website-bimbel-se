@@ -33,6 +33,7 @@ use App\Http\Controllers\FacilitiesController;
 use App\Http\Controllers\Api\SiswaMobileController;
 
 
+
 Route::post('/forgot-password', function (Request $request) {
     $email = $request->email;
 
@@ -286,5 +287,4 @@ Route::prefix('api')->group(function () {
 
     Route::get('/students/{id}/export-payments', [SiswaMobileController::class, 'exportPayments']);
     Route::get('/students/{id}/export-attendances', [SiswaMobileController::class, 'exportAttendances']);
-
 });
