@@ -6,6 +6,7 @@ use App\Models\Prices;
 use App\Models\DayTime;
 use App\Models\Day;
 use App\Models\Time;
+use App\Http\Controllers\Api\SiswaMobileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,16 @@ Route::get('/day_time/{class_id}', function($class_id) {
             ];
         });
     return response()->json($data);
+});
+
+    //Buat Mobile Siswa
+    Route::get('/students', [SiswaMobileController::class, 'index']);
+    Route::post('/students', [SiswaMobileController::class, 'store']);
+    Route::get('/students/{id}', [SiswaMobileController::class, 'show']);
+    Route::put('/students/{id}', [SiswaMobileController::class, 'update']);
+    Route::delete('/students/{id}', [SiswaMobileController::class, 'destroy']);
+    Route::get('/students-data', [SiswaMobileController::class, 'getData']);
+
+    Route::get('/ping', function () {
+    return response()->json(['ping' => 'ok']);
 });
