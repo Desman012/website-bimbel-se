@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\PriceMobileController;
 use App\Http\Controllers\Api\CurriculumMobileController;
 use App\Http\Controllers\Api\ClassesController;
 use App\Http\Controllers\Api\LevelController;
+use App\Http\Controllers\Api\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/Classes/{level_id}', function ($level_id) {
     return Classes::where('level_id', $level_id)->get();
 });
-
 
 
 // Ambil harga berdasarkan level_id & class_id
@@ -102,3 +102,7 @@ Route::apiResource('curriculums', CurriculumMobileController::class);
     Route::get('/levels/{id}', [LevelController::class, 'show']);
     Route::put('/levels/{id}', [LevelController::class, 'update']);
     Route::delete('/levels/{id}', [LevelController::class, 'destroy']);
+
+
+// Admin API
+Route::apiResource('admins', AdminController::class);
