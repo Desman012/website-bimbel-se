@@ -34,36 +34,34 @@ use App\Http\Controllers\Api\SiswaMobileController;
 
 
 
-Route::post('/forgot-password', function (Request $request) {
-    $email = $request->email;
+// Route::post('/forgot-password', function (Request $request) {
+//     $email = $request->email;
+//     // Cek di table admins & students
+//     $guard = null;
+//     if (Admins::where('email', $email)->exists()) {
+//         $guard = 'admin';
+//     } elseif (Students::where('student_email', $email)->exists()) {
+//         $guard = 'student';
+//     }
 
-    // Cek di table admins & students
-    $guard = null;
-    if (Admins::where('email', $email)->exists()) {
-        $guard = 'admin';
-    } elseif (Students::where('student_email', $email)->exists()) {
-        $guard = 'student';
-    }
+//     if (! $guard) {
+//         Log::warning("Email tidak terdaftar: $email");
+//         return back()->withErrors(['email' => 'Email tidak terdaftar']);
+//     }
 
-    if (! $guard) {
-        Log::warning("Email tidak terdaftar: $email");
+//     // Buat token
+//     $token = app(ResetUserPassword::class)->createToken($email, $guard);
 
-        return back()->withErrors(['email' => 'Email tidak terdaftar']);
-    }
+//     // Reset link
+//     $resetLink = url("/reset-password?token=$token&email=$email&guard=$guard");
 
-    // Buat token
-    $token = app(ResetUserPassword::class)->createToken($email, $guard);
+//     // Kirim email dengan template cantik
+//     Mail::to($email)->send(new ResetPasswordMail($resetLink));
 
-    // Reset link
-    $resetLink = url("/reset-password?token=$token&email=$email&guard=$guard");
+//     Log::info("Email reset password dikirim ke: $email");
 
-    // Kirim email dengan template cantik
-    Mail::to($email)->send(new ResetPasswordMail($resetLink));
-
-    Log::info("Email reset password dikirim ke: $email");
-
-    return back()->with('status', 'Link reset password sudah dikirim ke email Anda.');
-})->name('forgot-password');
+//     return back()->with('status', 'Link reset password sudah dikirim ke email Anda.');
+// })->name('forgot-password');
 
 Route::post('/reset-password-submit', [AuthController::class, 'resetPassword'])->name('password.update');
 
@@ -276,15 +274,126 @@ Route::middleware(['auth:student', 'role:2'])->prefix('students')->group(functio
 
 
 // API ROUTES
-Route::prefix('api')->group(function () {
-    Route::get('/students', [SiswaMobileController::class, 'index']);
-    Route::post('/students', [SiswaMobileController::class, 'store']);
-    Route::get('/students/{id}', [SiswaMobileController::class, 'show']);
-    Route::put('/students/{id}', [SiswaMobileController::class, 'update']);
-    Route::delete('/students/{id}', [SiswaMobileController::class, 'destroy']);
+// Route::prefix('api')->group(function () {
+//     Route::get('/students', [SiswaMobileController::class, 'index']);
+//     Route::post('/students', [SiswaMobileController::class, 'store']);
+//     Route::get('/students/{id}', [SiswaMobileController::class, 'show']);
+//     Route::put('/students/{id}', [SiswaMobileController::class, 'update']);
+//     Route::delete('/students/{id}', [SiswaMobileController::class, 'destroy']);
 
-    Route::get('/students-data', [SiswaMobileController::class, 'getData']);
+//     Route::get('/students-data', [SiswaMobileController::class, 'getData']);
 
-    Route::get('/students/{id}/export-payments', [SiswaMobileController::class, 'exportPayments']);
-    Route::get('/students/{id}/export-attendances', [SiswaMobileController::class, 'exportAttendances']);
-});
+//     Route::get('/students/{id}/export-payments', [SiswaMobileController::class, 'exportPayments']);
+//     Route::get('/students/{id}/export-attendances', [SiswaMobileController::class, 'exportAttendances']);
+
+
+// PUBLIC ROUTES
+Route::get('/', function () {
+    return view('landing-index');
+})->name('landing');
+
+Route::get('/login', function () {
+    return view('auth-login');
+})->name('login');
+
+Route::post('/login', function () {
+    // proses login
+})->name('login-post');
+
+Route::get('/register', function () {
+    return view('auth-register');
+})->name('register');
+
+Route::post('/register', function () {
+    // proses register
+})->name('register-post');
+
+
+// ADMIN ROUTES
+// Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+
+//     Route::get('/dashboard', function () {
+//         return view('admin-dashboard');
+//     })->name('admin-dashboard');
+
+//     // Students
+//     Route::get('/students', function () {
+//         return view('admin-students-index');
+//     })->name('admin.students.index');
+
+//     Route::get('/students/create', function () {
+//         return view('admin.students.create');
+//     })->name('admin.students.create');
+
+//     Route::post('/students', function () {
+//         // simpan data siswa
+//     })->name('admin.students.store');
+
+//     Route::get('/students/{id}', function ($id) {
+//         return view('admin.students.show', compact('id'));
+//     })->name('admin.students.show');
+
+//     Route::get('/students/{id}/edit', function ($id) {
+//         return view('admin.students.edit', compact('id'));
+//     })->name('admin.students.edit');
+
+//     Route::put('/students/{id}', function ($id) {
+//         // update data siswa
+//     })->name('admin.students.update');
+
+//     Route::delete('/students/{id}', function ($id) {
+//         // hapus siswa
+//     })->name('admin.students.destroy');
+
+//     // Payments
+//     Route::get('/payments', function () {
+//         return view('admin.payments.index');
+//     })->name('admin.payments.index');
+
+//     Route::get('/payments/{id}', function ($id) {
+//         return view('admin.payments.show', compact('id'));
+//     })->name('admin.payments.show');
+
+//     // Registrations
+//     Route::get('/registrations', function () {
+//         return view('admin.registrations.index');
+//     })->name('admin.registrations.index');
+
+//     Route::get('/registrations/{id}', function ($id) {
+//         return view('admin.registrations.show', compact('id'));
+//     })->name('admin.registrations.show');
+// });
+
+
+// STUDENT ROUTES
+// Route::middleware(['auth', 'role:student'])->prefix('student')->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('student.dashboard');
+//     })->name('student.dashboard');
+
+//     // Attendance
+//     Route::get('/attendance', function () {
+//         return view('student.attendance.index');
+//     })->name('student.attendance.index');
+
+//     Route::post('/attendance', function () {
+//         // simpan absensi
+//     })->name('student.attendance.store');
+
+//     Route::get('/attendance/history', function () {
+//         return view('student.attendance.history');
+//     })->name('student.attendance.history');
+
+//     // Payment
+//     Route::get('/payment', function () {
+//         return view('student.payment.index');
+//     })->name('student.payment.index');
+
+//     Route::post('/payment', function () {
+//         // kirim bukti pembayaran
+//     })->name('student.payment.store');
+
+//     Route::get('/payment/history', function () {
+//         return view('student.payment.history');
+//     })->name('student.payment.history');
+// });
