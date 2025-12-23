@@ -18,18 +18,21 @@ class Students extends Authenticatable
     protected $fillable = [
         'role_id',
         'full_name',
-        'address',
-        'phone_number',
         'student_email',
         'password',
+
+        'phone_number',
+        'address',
+        'status',
+
         'parent_name',
         'parent_email',
         'parent_phone',
+
         'levels_id',
         'class_id',
         'programs_id',
         'curriculum_id',
-        'status',
     ];
 
     protected $hidden = [

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Students;
 use App\Models\Payment;
 use App\Models\Absents;
@@ -33,25 +34,43 @@ class SiswaMobileController extends Controller
     // CREATE STUDENT
     // ============================
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'full_name'    => 'required|string|max:255',
-            'student_email'=> 'required|email|unique:students',
-            'phone_number' => 'required|string|max:20|unique:students',
-            'parent_phone' => 'nullable|string|max:20',
-            'status'       => 'required|in:active,inactive',
-            'address'      => 'nullable|string',
-            'levels_id'    => 'required|exists:levels,id'
-        ]);
+{
+    $validated = $request->validate([
+        'full_name'     => 'required|string|max:255',
+        'student_email' => 'required|email|unique:students',
+        'phone_number'  => 'required|string|max:20|unique:students',
+        'parent_name'   => 'required|string|max:255',
+        'parent_phone'  => 'nullable|string|max:20',
+        'status'        => 'required|in:active,inactive',
+        'address'       => 'nullable|string',
+        'levels_id'     => 'required|exists:levels,id',
+        'programs_id'   => 'required|exists:programs,id',
+        'curriculum_id'  => 'required|exists:curriculums,id'
+    ]);
 
-        $student = Students::create($validated);
+    $validated['role_id']  = 2;        // siswa
+    $validated['password'] = '123456'; // auto-hashed oleh model
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Siswa berhasil ditambahkan',
-            'data' => $student
-        ], 201);
-    }
+    $student = Students::create($validated);
+
+    return response()->json([
+        'status'  => true,
+        'message' => 'Siswa berhasil ditambahkan',
+        'data'    => $student
+    ], 201);
+
+    $validated['role_id'] = 2;
+    $validated['password'] = Hash::make('123456');
+
+    $student = Students::create($validated);
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Siswa berhasil ditambahkan',
+        'data' => $student
+    ], 201);
+}
+
 
     // ============================
     // DATATABLES SERVER-SIDE
@@ -75,7 +94,7 @@ class SiswaMobileController extends Controller
         if (!empty($search)) {
             $query->where(function ($q) use ($search) {
                 $q->where('full_name', 'LIKE', "%{$search}%")
-                  ->orWhere('student_email', 'LIKE', "%{$search}%");
+                    ->orWhere('student_email', 'LIKE', "%{$search}%");
             });
 
             $totalFiltered = $query->count();
@@ -183,29 +202,5 @@ class SiswaMobileController extends Controller
             'status' => true,
             'message' => 'Siswa berhasil dihapus'
         ]);
-    }
-
-    // ============================
-    // EXPORT PAYMENT HISTORY
-    // ============================
-    public function exportPayments($id)
-    {
-        $student = Students::findOrFail($id);
-
-        $fileName = 'Riwayat_Pembayaran_' . str_replace(' ', '_', $student->full_name) . '.xlsx';
-
-        return Excel::download(new PaymentExport($id), $fileName);
-    }
-
-    // ============================
-    // EXPORT ATTENDANCE
-    // ============================
-    public function exportAttendances($id)
-    {
-        $student = Students::findOrFail($id);
-
-        $fileName = 'Riwayat_Absensi_30Hari_' . str_replace(' ', '_', $student->full_name) . '.xlsx';
-
-        return Excel::download(new AttendanceExport30Days($id), $fileName);
     }
 }

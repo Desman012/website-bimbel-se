@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ProgramController;
 use App\Http\Controllers\Api\TimeController;
+use App\Http\Controllers\Api\SiswaMobileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -121,3 +122,14 @@ Route::apiResource('curriculums', CurriculumMobileController::class);
 
 // Admin API
 Route::apiResource('admins', AdminController::class);
+    //Buat Mobile Siswa
+    Route::get('/students', [SiswaMobileController::class, 'index']);
+    Route::post('/students', [SiswaMobileController::class, 'store']);
+    Route::get('/students/{id}', [SiswaMobileController::class, 'show']);
+    Route::put('/students/{id}', [SiswaMobileController::class, 'update']);
+    Route::delete('/students/{id}', [SiswaMobileController::class, 'destroy']);
+    Route::get('/students-data', [SiswaMobileController::class, 'getData']);
+
+    Route::get('/ping', function () {
+    return response()->json(['ping' => 'ok']);
+});
