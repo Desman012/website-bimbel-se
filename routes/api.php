@@ -2,10 +2,17 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Classes;
+use App\Models\Levels;
 use App\Models\Prices;
 use App\Models\DayTime;
 use App\Models\Day;
 use App\Models\Time;
+use App\Http\Controllers\Api\PriceMobileController;
+use App\Http\Controllers\Api\CurriculumMobileController;
+use App\Http\Controllers\Api\ClassesController;
+use App\Http\Controllers\Api\LevelController;
+use App\Http\Controllers\Api\ProgramController;
+use App\Http\Controllers\Api\TimeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +55,38 @@ Route::get('/day_time/{class_id}', function($class_id) {
         });
     return response()->json($data);
 });
+
+// Ambil kelas berdasarkan level_id
+// Route::get('/classes', function () {
+//     return response()->json([
+//         'success' => true,
+//         'data' => Classes::all()
+//     ]);
+// });
+
+// // Ambil kelas berdasarkan level_id
+// Route::get('/levels', function () {
+//     return response()->json([
+//         'success' => true,
+//         'data' => Levels::all()
+//     ]);
+// });
+
+
+// Price Programs
+Route::apiResource('programs', ProgramController::class);
+
+// Price Times
+Route::apiResource('times', TimeController::class);
+
+// Price Classes
+Route::apiResource('classes', ClassesController::class);
+
+// Price Levels
+Route::apiResource('levels', LevelController::class);
+
+// Price API
+Route::apiResource('prices', PriceMobileController::class);
+
+// Curriculum API
+Route::apiResource('curriculums', CurriculumMobileController::class);
