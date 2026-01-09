@@ -6,6 +6,8 @@ use App\Models\Prices;
 use App\Models\DayTime;
 use App\Models\Day;
 use App\Models\Time;
+use App\Http\Controllers\Api\ClassesController;
+use App\Http\Controllers\Api\LevelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +50,17 @@ Route::get('/day_time/{class_id}', function($class_id) {
         });
     return response()->json($data);
 });
+
+// Route API untuk Classes
+    Route::get('/classes', [ClassesController::class, 'index']);
+    Route::post('/classes', [ClassesController::class, 'store']);
+    Route::get('/classes/{id}', [ClassesController::class, 'show']);
+    Route::put('/classes/{id}', [ClassesController::class, 'update']);
+    Route::delete('/classes/{id}', [ClassesController::class, 'destroy']);
+    
+// Route API untuk Levels
+    Route::get('/levels', [LevelController::class, 'index']);
+    Route::post('/levels', [LevelController::class, 'store']);
+    Route::get('/levels/{id}', [LevelController::class, 'show']);
+    Route::put('/levels/{id}', [LevelController::class, 'update']);
+    Route::delete('/levels/{id}', [LevelController::class, 'destroy']);
